@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package api.book;
+
+import "book.types.proto";
+
+service BookService {
+    rpc CreateBook (CreateBookReq) returns (Book) {
+    }
+
+    rpc RemoveBook (RemoveBookReq) returns (BookStatusRes) {
+    }
+
+    rpc UpdateBook (Book) returns (BookStatusRes) {
+    }
+
+    rpc GetBook (Book) returns (Book) {
+    }
+
+    rpc UserBooksStream (UserBooksStreamReq) returns (stream UserBooksStreamRes) {
+    }
+}
+
+message BookStatusRes {
+    EBookStatus status = 1;
+}
+
+message CreateBookReq {
+    string userId = 1;
+    string name = 2;
+    string autor = 3;
+    string preview = 4;
+}
+
+message RemoveBookReq {
+    string id = 1;
+}
+
+message UserBooksStreamReq {
+    string userId = 1;
+}
+
+message UserBooksStreamRes {
+    repeated Book books = 1;
+}

@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package api.book;
+
+enum EBookStatus {
+    UNKNOWN_BOOK_ACTION = 0;
+    BOOK_ACTION_SUCCESS = 1;
+    BOOK_ACTION_ERROR = 2;
+}
+
+message Book {
+    string id = 1;
+    string userId = 2;
+    string name = 3;
+    string autor = 4;
+    string preview = 5;
+}

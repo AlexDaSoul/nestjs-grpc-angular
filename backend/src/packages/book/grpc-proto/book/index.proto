@@ -1,0 +1,5 @@
+syntax = "proto3";
+
+package api.book;
+
+import public "book.proto";

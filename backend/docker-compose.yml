@@ -1,0 +1,41 @@
+version: "3.7"
+
+volumes:
+  user-postgresql:
+    external: true
+  user-debug:
+    external: true
+
+services:
+
+  ##### user
+  user:
+    image: user:latest
+    container_name: user
+    working_dir: /home/user
+    build:
+      context: ./src/packages/user
+    command: npm run docker:debug
+    depends_on:
+      - user-postgres
+    ports:
+      - 9000:9229 # node inspect user
+    env_file:
+      - ./docker/env/common.env
+      - ./docker/env/user.env
+    volumes:
+      - user-debug:/e/projects/nestjs-grpc-angular/backend/src/packages/user
+
+  user-postgres:
+    image: postgres:latest
+    container_name: user-postgres
+    restart: always
+    ports: # for debug puproses, remove in the production
+      - 5433:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - PGPORT=5432
+    volumes:
+      - user-postgresql:/var/lib/postgresql/data

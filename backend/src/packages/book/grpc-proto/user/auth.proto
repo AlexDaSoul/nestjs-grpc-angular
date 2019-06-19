@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package api.user;
+
+service AuthService {
+    rpc Auth(AuthReq) returns (AuthRes) {
+    }
+
+    rpc UpdateAuth(UpdateAuthReq) returns (UpdateAuthRes) {
+    }
+}
+
+message AuthReq {
+    string email = 1;
+    string password = 2;
+}
+message AuthRes {
+    string token = 1;
+}
+
+message UpdateAuthReq {
+}
+message UpdateAuthRes {
+    string token = 1;
+}
