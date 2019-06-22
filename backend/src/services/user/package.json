@@ -1,0 +1,38 @@
+{
+    "name": "user",
+    "version": "1.0.0",
+    "description": "user service",
+    "author": "",
+    "repository": {
+        "type": "git",
+        "url": "repository"
+    },
+    "license": "ISC",
+    "scripts": {
+        "docker:debug": "ts-node-dev --inspect=0.0.0.0 --respawn --transpileOnly -r tsconfig-paths/register main.ts"
+    },
+    "dependencies": {
+        "@grpc/proto-loader": "^0.4.0",
+        "@nestjs/common": "^5.7.2",
+        "@nestjs/core": "^5.7.2",
+        "@nestjs/microservices": "^5.7.2",
+        "@nestjs/typeorm": "^5.3.0",
+        "class-transformer": "^0.2.0",
+        "class-validator": "^0.9.1",
+        "grpc": "^1.19.0",
+        "jsonwebtoken": "^8.5.0",
+        "pg": "^7.7.1",
+        "reflect-metadata": "^0.1.13",
+        "rxjs": "^6.5.2",
+        "typeorm": "^0.2.9",
+        "uuid": "^3.3.2"
+    },
+    "devDependencies": {
+        "@types/jsonwebtoken": "^8.3.0",
+        "@types/bcrypt": "^3.0.0",
+        "ts-node": "^8.0.2",
+        "ts-node-dev": "^1.0.0-pre.32",
+        "tsconfig-paths": "^3.7.0",
+        "typescript": "^3.2.4"
+    }
+}

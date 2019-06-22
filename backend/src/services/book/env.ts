@@ -16,9 +16,9 @@ const env = {
     grpc: {
         transport: Transport.GRPC,
         options: {
-            url: processEnv.GRPC_ACCOUNT_SERVICE,
-            package: 'api.user',
-            protoPath: './grpc-proto/user/index.proto',
+            url: processEnv.GRPC_BOOK_SERVICE,
+            package: 'api.book',
+            protoPath: './grpc-proto/book/index.proto',
         },
     } as GrpcOptions,
 

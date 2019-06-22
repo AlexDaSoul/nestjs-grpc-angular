@@ -10,7 +10,11 @@ const ROOT = path.resolve(__dirname, '..');
 const root = path.join.bind(path, ROOT);
 const grpcDir = root('src/grpc-proto');
 const libDir = root('src/lib');
-const packagesDir = root('/src/packages');
+const packagesDir = root('/src/services');
+
+const BIN_PATH = execSync('npm bin', {cwd: root()})
+    .toString()
+    .replace(/\n/, '');
 
 const getProtosList = () => {
     return glob.sync('/**/index.proto', {
@@ -34,8 +38,8 @@ getProtosList().forEach(protoFile => {
     console.log(`Generate NestJS typings for ${protoFileDir}`);
 
     execSync( // npm i -g protobufjs
-        `pbjs --no-encode --no-decode --no-verify --no-convert --no-delimited --no-beautify -l -t static ${protoFile} | ` +
-        `pbts --no-comments -o ${protoFileDir}/index.d.ts -`,
+        `${BIN_PATH}/pbjs --no-encode --no-decode --no-verify --no-convert --no-delimited --no-beautify -l -t static ${protoFile} | ` +
+        `${BIN_PATH}/pbts --no-comments -o ${protoFileDir}/index.d.ts -`,
         { cwd: root(), stdio: 'inherit' }
     );
 

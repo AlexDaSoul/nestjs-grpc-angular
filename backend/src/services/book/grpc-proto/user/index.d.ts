@@ -8,14 +8,10 @@ export namespace api {
         class UserService extends $protobuf.rpc.Service {
             constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
             public static create(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean): UserService;
-            public createUser(request: api.user.ICreateUserReq, callback: api.user.UserService.CreateUserCallback): void;
-            public createUser(request: api.user.ICreateUserReq): Observable<api.user.UserRes>;
-            public updateUser(request: api.user.IUser, callback: api.user.UserService.UpdateUserCallback): void;
-            public updateUser(request: api.user.IUser): Observable<api.user.UserRes>;
-            public deleteUser(request: api.user.IUserReq, callback: api.user.UserService.DeleteUserCallback): void;
-            public deleteUser(request: api.user.IUserReq): Observable<api.user.UserRes>;
-            public getUser(request: api.user.IUserReq, callback: api.user.UserService.GetUserCallback): void;
-            public getUser(request: api.user.IUserReq): Observable<api.user.User>;
+            public createUser(request: api.user.ICreateUserReq, metadata?: Metadata): Observable<api.user.UserRes>;
+            public updateUser(request: api.user.IUser, metadata?: Metadata): Observable<api.user.UserRes>;
+            public deleteUser(request: api.user.IUserReq, metadata?: Metadata): Observable<api.user.UserRes>;
+            public getUser(request: api.user.IUserReq, metadata?: Metadata): Observable<api.user.User>;
         }
 
         namespace UserService {
@@ -88,10 +84,8 @@ export namespace api {
         class AuthService extends $protobuf.rpc.Service {
             constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
             public static create(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean): AuthService;
-            public auth(request: api.user.IAuthReq, callback: api.user.AuthService.AuthCallback): void;
-            public auth(request: api.user.IAuthReq): Observable<api.user.AuthRes>;
-            public updateAuth(request: api.user.IUpdateAuthReq, callback: api.user.AuthService.UpdateAuthCallback): void;
-            public updateAuth(request: api.user.IUpdateAuthReq): Observable<api.user.UpdateAuthRes>;
+            public auth(request: api.user.IAuthReq, metadata?: Metadata): Observable<api.user.AuthRes>;
+            public updateAuth(request: api.user.IUpdateAuthReq, metadata?: Metadata): Observable<api.user.UpdateAuthRes>;
         }
 
         namespace AuthService {

@@ -1,7 +1,7 @@
 {
-    "name": "account",
+    "name": "book",
     "version": "1.0.0",
-    "description": "account service",
+    "description": "book service",
     "author": "",
     "repository": {
         "type": "git",

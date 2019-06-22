@@ -8,16 +8,11 @@ export namespace api {
         class BookService extends $protobuf.rpc.Service {
             constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
             public static create(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean): BookService;
-            public createBook(request: api.book.ICreateBookReq, callback: api.book.BookService.CreateBookCallback): void;
-            public createBook(request: api.book.ICreateBookReq): Observable<api.book.Book>;
-            public removeBook(request: api.book.IRemoveBookReq, callback: api.book.BookService.RemoveBookCallback): void;
-            public removeBook(request: api.book.IRemoveBookReq): Observable<api.book.BookStatusRes>;
-            public updateBook(request: api.book.IBook, callback: api.book.BookService.UpdateBookCallback): void;
-            public updateBook(request: api.book.IBook): Observable<api.book.BookStatusRes>;
-            public getBook(request: api.book.IBook, callback: api.book.BookService.GetBookCallback): void;
-            public getBook(request: api.book.IBook): Observable<api.book.Book>;
-            public userBooksStream(request: api.book.IUserBooksStreamReq, callback: api.book.BookService.UserBooksStreamCallback): void;
-            public userBooksStream(request: api.book.IUserBooksStreamReq): Observable<api.book.UserBooksStreamRes>;
+            public createBook(request: api.book.ICreateBookReq, metadata?: Metadata): Observable<api.book.Book>;
+            public removeBook(request: api.book.IRemoveBookReq, metadata?: Metadata): Observable<api.book.BookStatusRes>;
+            public updateBook(request: api.book.IBook, metadata?: Metadata): Observable<api.book.BookStatusRes>;
+            public getBook(request: api.book.IBook, metadata?: Metadata): Observable<api.book.Book>;
+            public userBooksStream(request: api.book.IUserBooksStreamReq, metadata?: Metadata): Observable<api.book.UserBooksStreamRes>;
         }
 
         namespace BookService {
