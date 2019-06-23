@@ -1,68 +1,41 @@
-import {Controller, UseGuards, Logger} from '@nestjs/common';
-import {GrpcMethod, RpcException} from '@nestjs/microservices';
-import {Observable} from 'rxjs';
-import {catchError} from 'rxjs/operators';
-import {status} from 'grpc';
+import { Controller, UseFilters } from '@nestjs/common';
+import { GrpcMethod } from '@nestjs/microservices';
+import { Observable } from 'rxjs';
 
-import {JwtGuard} from '../lib/jwt/jwt.guard';
-import {IUserMeta} from '../lib/jwt/jwt.interface';
-import {api} from '../grpc-proto/user';
+import { GrpcExceptionFilter } from '../lib/exceptions/exception.filter';
+import { api } from '../grpc-proto/user/user';
 
-import {UserService} from '../common/services/user.service';
+import { UserService } from '../common/services/user.service';
 
 type Identity<T> = T;
 
-@Controller('user')
+@Controller()
 export class UserController {
-    private readonly logger = new Logger('UserController');
 
     constructor(private readonly userService: UserService) {
     }
 
     @GrpcMethod('UserService', 'CreateUser')
-    public createUser(data: Identity<api.user.ICreateUserReq>): Observable<api.user.IUserRes> {
-        return this.userService.createUser(data).pipe(
-            catchError(err => {
-                const msg = `CreateUser: ${err}`;
-                this.logger.error(msg);
-                throw new RpcException({code: status.INTERNAL, message: msg});
-            }),
-        );
+    @UseFilters(new GrpcExceptionFilter('UserController::createUser'))
+    public createUser(data: Identity<api.user.CreateUserReq>): Observable<api.user.UserRes> {
+        return this.userService.createUser(data);
     }
 
-    @UseGuards(JwtGuard)
     @GrpcMethod('UserService', 'UpdateUser')
-    public updateUser(data: Identity<api.user.IUser>): Observable<api.user.IUserRes> {
-        return this.userService.updateUser(data).pipe(
-            catchError(err => {
-                const msg = `UpdateUser: ${err}`;
-                this.logger.error(msg);
-                throw new RpcException({code: status.INTERNAL, message: msg});
-            }),
-        );
+    @UseFilters(new GrpcExceptionFilter('UserController::updateUser'))
+    public updateUser(data: Identity<api.user.UpdateUserReq>): Observable<api.user.UserRes> {
+            return this.userService.updateUser(data);
     }
 
-    @UseGuards(JwtGuard)
     @GrpcMethod('UserService', 'DeleteUser')
-    public deleteUser(data: Identity<api.user.IUserReq>): Observable<api.user.IUserRes> {
-        return this.userService.deleteUser(data).pipe(
-            catchError(err => {
-                const msg = `DeleteUser: ${err}`;
-                this.logger.error(msg);
-                throw new RpcException({code: status.INTERNAL, message: msg});
-            }),
-        );
+    @UseFilters(new GrpcExceptionFilter('UserController::deleteUser'))
+    public deleteUser(data: Identity<api.user.UserReq>): Observable<api.user.UserRes> {
+        return this.userService.deleteUser(data.id);
     }
 
-    @UseGuards(JwtGuard)
     @GrpcMethod('UserService', 'GetUser')
-    public getUser(data: Identity<api.user.IUserReq>, meta: IUserMeta): Observable<api.user.IUser> {
-        return this.userService.getUser(meta.user).pipe(
-            catchError(err => {
-                const msg = `GetUser: ${err}`;
-                this.logger.error(msg);
-                throw new RpcException({code: status.INTERNAL, message: msg});
-            }),
-        );
+    @UseFilters(new GrpcExceptionFilter('UserController::getUser'))
+    public getUser(data: Identity<api.user.UserReq>): Observable<api.user.User> {
+        return this.userService.getUser(data.id);
     }
 }

@@ -1,4 +1,0 @@
-FROM envoyproxy/envoy:latest
-COPY ./envoy.yaml /etc/envoy/envoy.yaml
-COPY *.pem /etc/envoy/cert/
-CMD /usr/local/bin/envoy -c /etc/envoy/envoy.yaml

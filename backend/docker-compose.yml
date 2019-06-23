@@ -7,7 +7,7 @@ services:
     image: node:dubnium
     container_name: user
     working_dir: /opt/api/user
-    command: npm run docker:debug
+    command: npm run docker:debug && npm run db:restore
     depends_on:
       - user-postgres
     ports:
@@ -32,25 +32,25 @@ services:
     volumes:
       - ./src/services/user/db:/opt/api/user/db
 
-##### book
-  book:
+##### chat
+  chat:
     image: node:dubnium
-    container_name: book
-    working_dir: /opt/api/book
+    container_name: chat
+    working_dir: /opt/api/chat
     command: npm run docker:debug
     depends_on:
-      - book-postgres
+      - chat-postgres
     ports:
-      - 8002:9901 # node inspect book
+      - 8002:9901 # node inspect chat
     env_file:
       - ./docker/env/common.env
-      - ./docker/env/book.env
+      - ./docker/env/chat.env
     volumes:
-      - ./src/services/book:/opt/api/book
+      - ./src/services/chat:/opt/api/chat
 
-  book-postgres:
+  chat-postgres:
     image: postgres:latest
-    container_name: book-postgres
+    container_name: chat-postgres
     restart: always
     ports: # for debug puproses, remove in the production
       - 5534:5432
@@ -60,4 +60,14 @@ services:
       - POSTGRES_DB=postgres
       - PGPORT=5432
     volumes:
-      - ./src/services/book/db:/opt/api/book/db
+      - ./src/services/chat/db:/opt/api/chat/db
+
+#### envoy-api
+  envoy-api:
+    image: envoy:latest
+    container_name: envoy-api
+    build:
+      context: ./docker/envoy
+      dockerfile: Dockerfile
+    ports:
+      - 550:550

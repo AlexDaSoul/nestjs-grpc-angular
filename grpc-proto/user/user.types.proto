@@ -11,5 +11,5 @@ enum EUserStatus {
 message User {
     string id = 1;
     string name = 2;
-    string email = 3;
+    string avatar = 4;
 }

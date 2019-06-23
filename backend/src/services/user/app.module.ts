@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import env from './env';
+import { typeorm } from './env';
 
 import { CommonModule } from './common/common.module';
 
@@ -10,7 +10,7 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
     imports: [
-        TypeOrmModule.forRoot(env.typeorm),
+        TypeOrmModule.forRoot(typeorm),
         CommonModule,
         AuthModule,
         UserModule,

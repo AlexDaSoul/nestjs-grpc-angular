@@ -4,81 +4,44 @@ import {
     PrimaryGeneratedColumn,
     CreateDateColumn,
     UpdateDateColumn,
-    BeforeInsert,
-    BeforeUpdate,
-    AfterLoad,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { createHmac } from 'crypto';
-import env from '../../env';
+
+import { SALT } from '../../env';
+import { api } from '../../grpc-proto/user/user';
 
 @Entity('user')
-export class User {
+export class User implements api.user.User {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
     @Column({
-        nullable: true,
+        nullable: false,
         length: 50,
     })
     name: string;
 
     @Column({
-        nullable: false,
-        unique: true,
-        length: 50,
+        nullable: true,
+        length: 2000,
     })
-    email: string;
+    avatar: string;
 
     @Exclude()
     @Column({
         nullable: false,
         length: 128,
+        transformer: {
+            from: value => value,
+            to: value => createHmac('sha512', SALT).update(value).digest('hex'),
+        },
     })
     password: string;
 
-    @CreateDateColumn({
-        type: 'timestamp',
-        transformer: {
-            to: d => new Date(d),
-            from: d => new Date(d).getTime(),
-        },
-    })
+    @CreateDateColumn()
     createdAt: number;
 
-    @UpdateDateColumn({
-        type: 'timestamp',
-        transformer: {
-            to: d => new Date(d),
-            from: d => new Date(d).getTime(),
-        },
-    })
+    @UpdateDateColumn()
     updatedAt: number;
-
-    @BeforeUpdate()
-    beforeUpdate() {
-        this.hashPassword();
-    }
-
-    @BeforeInsert()
-    beforeInsert() {
-        this.hashPassword();
-    }
-
-    @AfterLoad()
-    afterLoad() {
-
-    }
-
-    private hashPassword(): void {
-        if (this.password) {
-            this.password = createHmac('sha512', env.SALT)
-                .update(this.password)
-                .digest('hex');
-        }
-    }
-
-    public comparePasswords(userPassword: string): boolean {
-        return this.password === userPassword;
-    }
 }

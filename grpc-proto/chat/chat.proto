@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package api.chat;
+
+import "chat.types.proto";
+
+service ChatService {
+    rpc AddMessage (MessageRes) returns (MessageStatusRes) {
+    }
+
+    rpc DeleteMessage (DeleteMessageReq) returns (MessageStatusRes) {
+    }
+
+    rpc UpdateMessage (MessageRes) returns (MessageStatusRes) {
+    }
+
+    rpc GetMessagesStream (ChatStub) returns (stream MessageList) {
+    }
+}
+
+message ChatStub {
+}
+
+message MessageStatusRes {
+    EChatStatus status = 1;
+}
+
+message MessageRes {
+    string message = 1;
+}
+
+message DeleteMessageReq {
+    string id = 1;
+}
+
+message MessageList {
+    repeated Message messages = 1;
+}

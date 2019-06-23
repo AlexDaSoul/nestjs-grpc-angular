@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package api.chat;
+
+enum EChatStatus {
+    CHAT_ACTION_UNKNOWN = 0;
+    CHAT_ACTION_SUCCESS = 1;
+    CHAT_ACTION_ERROR = 2;
+}
+
+message Message {
+    string id = 1;
+    string user = 2;
+    string message = 3;
+}

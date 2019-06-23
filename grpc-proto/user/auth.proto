@@ -2,20 +2,23 @@ syntax = "proto3";
 
 package api.user;
 
+import "user.types.proto";
+
 service AuthService {
-    rpc Auth(AuthReq) returns (AuthRes) {
+    rpc Auth (AuthReq) returns (AuthRes) {
     }
 
-    rpc UpdateAuth(UpdateAuthReq) returns (UpdateAuthRes) {
+    rpc UpdateAuth (UpdateAuthReq) returns (UpdateAuthRes) {
     }
 }
 
 message AuthReq {
-    string email = 1;
+    string name = 1;
     string password = 2;
 }
 message AuthRes {
     string token = 1;
+    User user = 2;
 }
 
 message UpdateAuthReq {

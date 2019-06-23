@@ -12,7 +12,6 @@
         "test:cov": "jest --coverage",
         "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
         "test:e2e": "jest --config ./test/jest-e2e.json",
-        "typings-and-lib:generate": "node devtools/build-typings-and-lib.js",
         "docker:dev:up": "docker-compose -p api up -d",
         "docker:dev:down": "docker-compose -p api down",
         "docker:dev:restart": "npm run docker:dev:down && npm run docker:dev:up"

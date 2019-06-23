@@ -4,13 +4,8 @@ import { Repository } from 'typeorm';
 import { from, Observable, throwError } from 'rxjs';
 import { catchError, switchMap, map } from 'rxjs/operators';
 
-import { api } from '../../grpc-proto/user';
+import { api } from '../../grpc-proto/user/user';
 import { User } from '../entities/user.entity';
-
-type IUser = api.user.IUser;
-type ICreateUserReq = api.user.ICreateUserReq;
-type IUserReq = api.user.IUserReq;
-type IUserRes = api.user.IUserRes;
 
 const USER_ACTION_SUCCESS = 1;
 const USER_ACTION_ERROR = 2;
@@ -24,14 +19,14 @@ export class UserService {
     ) {
     }
 
-    public createUser(data: ICreateUserReq): Observable<IUserRes> {
+    public createUser(data: api.user.CreateUserReq): Observable<api.user.UserRes> {
         const createUser = this.userRepository.create({ ...data });
 
         return from(this.userRepository.save(createUser)).pipe(
             map(res => {
                 return {
                     status: USER_ACTION_SUCCESS,
-                    message: `User created successfully: ID:${res}`,
+                    message: `User created successfully: ID: ${res.id}`,
                 };
             }),
             catchError(err => {
@@ -43,18 +38,18 @@ export class UserService {
         );
     }
 
-    public updateUser(data: IUser): Observable<IUserRes> {
-        const findUser = this.userRepository.findOne(data);
+    public updateUser(data: api.user.UpdateUserReq): Observable<api.user.UserRes> {
+        const findUser = this.userRepository.findOne({ id: data.id });
 
         return from(findUser).pipe(
             switchMap(user => {
-                const updateUser = this.userRepository.update(user, data);
+                const updateUser = this.userRepository.update({ id: user.id }, data);
 
                 return from(updateUser).pipe(
-                    map(res => {
+                    map(() => {
                         return {
                             status: USER_ACTION_SUCCESS,
-                            message: `User update successfully: ID:${res}`,
+                            message: `User update successfully: ID: ${user.id}`,
                         };
                     }),
                     catchError(err => {
@@ -65,27 +60,21 @@ export class UserService {
                     }),
                 );
             }),
-            catchError(err => {
-                return throwError({
-                    status: USER_ACTION_ERROR,
-                    message: `User not found: ${err}`,
-                });
-            }),
         );
     }
 
-    public deleteUser(data: IUserReq): Observable<IUserRes> {
-        const findUser = this.userRepository.findOne(data);
+    public deleteUser(id: string): Observable<api.user.UserRes> {
+        const findUser = this.userRepository.findOne({ id });
 
         return from(findUser).pipe(
             switchMap(user => {
-                const deleteUser = this.userRepository.delete(user);
+                const deleteUser = this.userRepository.delete({ id: user.id });
 
                 return from(deleteUser).pipe(
                     map(res => {
                         return {
                             status: USER_ACTION_SUCCESS,
-                            message: `User delete successfully: ID:${res}`,
+                            message: `User delete successfully: ID: ${user.id}`,
                         };
                     }),
                     catchError(err => {
@@ -96,17 +85,11 @@ export class UserService {
                     }),
                 );
             }),
-            catchError(err => {
-                return throwError({
-                    status: USER_ACTION_ERROR,
-                    message: `User not found: ${err}`,
-                });
-            }),
         );
     }
 
-    public getUser(data: IUserReq): Observable<IUser> {
-        const findUser = this.userRepository.findOne(data);
+    public getUser(id: string): Observable<api.user.User> {
+        const findUser = this.userRepository.findOne({ id });
 
         return from(findUser).pipe(
             catchError(err => {

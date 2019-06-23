@@ -3,14 +3,14 @@ process.title = 'node-user';
 import { NestFactory } from '@nestjs/core';
 import { Logger, ValidationPipe } from '@nestjs/common';
 
-import env from './env';
+import { grpc } from './env';
 
 import { AppModule } from './app.module';
 
 const logger = new Logger('bootstrap');
 
 async function bootstrap() {
-    const app = await NestFactory.createMicroservice(AppModule, env.grpc);
+    const app = await NestFactory.createMicroservice(AppModule, grpc);
 
     app.useGlobalPipes(new ValidationPipe());
     await app.listenAsync();

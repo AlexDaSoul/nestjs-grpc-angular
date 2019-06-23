@@ -5,23 +5,30 @@ package api.user;
 import "user.types.proto";
 
 service UserService {
-    rpc CreateUser(CreateUserReq) returns (UserRes) {
+    rpc CreateUser (CreateUserReq) returns (UserRes) {
     }
 
-    rpc UpdateUser(User) returns (UserRes) {
+    rpc UpdateUser (UpdateUserReq) returns (UserRes) {
     }
 
-    rpc DeleteUser(UserReq) returns (UserRes) {
+    rpc DeleteUser (UserReq) returns (UserRes) {
     }
 
-    rpc GetUser(UserReq) returns (stream User) {
+    rpc GetUser (UserReq) returns (User) {
     }
 }
 
 message CreateUserReq {
     string name = 1;
-    string email = 2;
+    string avatar = 2;
     string password = 3;
+}
+
+message UpdateUserReq {
+    string id = 1;
+    string name = 2;
+    string avatar = 3;
+    string password = 4;
 }
 
 message UserReq {

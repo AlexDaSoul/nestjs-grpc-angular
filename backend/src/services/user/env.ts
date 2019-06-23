@@ -3,37 +3,32 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 import { JWT_KEY_PRIV, JWT_KEY_PUB } from './lib/jwt/keys';
 
-const processEnv = process.env;
-const env = {
-    SALT: processEnv.SALT,
+const env = process.env;
 
-    JWT_EXPIRE: processEnv.JWT_EXPIRE,
-    JWT_PRIV: JWT_KEY_PRIV,
-    JWT_PUB: JWT_KEY_PUB,
+export const SALT = env.SALT;
+export const JWT_PRIV = JWT_KEY_PRIV;
+export const JWT_PUB = JWT_KEY_PUB;
+export const JWT_EXPIRE = env.JWT_EXPIRE;
+export const USER_EXPIRE = env.USER_EXPIRE;
 
-    USER_EXPIRE: processEnv.USER_EXPIRE || 900,
+export const grpc = {
+    transport: Transport.GRPC,
+    options: {
+        url: env.GRPC_USER_SERVICE,
+        package: 'api.user',
+        protoPath: './grpc-proto/user/index.proto',
+    },
+} as GrpcOptions;
 
-    grpc: {
-        transport: Transport.GRPC,
-        options: {
-            url: processEnv.GRPC_USER_SERVICE,
-            package: 'api.user',
-            protoPath: './grpc-proto/user/index.proto',
-        },
-    } as GrpcOptions,
-
-    typeorm: {
-        type: processEnv.TYPEORM_CONNECTION || 'postgres',
-        host: processEnv.TYPEORM_HOST || 'localhost',
-        port: processEnv.TYPEORM_PORT || 5432,
-        username: processEnv.TYPEORM_USERNAME || 'postgres',
-        password: processEnv.TYPEORM_PASSWORD || 'postgres',
-        database: processEnv.TYPEORM_DATABASE || 'postgres',
-        entities: [processEnv.TYPEORM_ENTITIES || './**/*.entity.{ts,js}'],
-        migrations: [processEnv.TYPEORM_MIGRATIONS || './**/*.migration.{ts,js}'],
-        synchronize: processEnv.TYPEORM_SYNCHRONIZE === 'true',
-        logging: processEnv.TYPEORM_LOGGING === 'true',
-    } as TypeOrmModuleOptions,
-};
-
-export default env;
+export const typeorm = {
+    type: env.TYPEORM_CONNECTION,
+    host: env.TYPEORM_HOST,
+    port: env.TYPEORM_PORT,
+    username: env.TYPEORM_USERNAME,
+    password: env.TYPEORM_PASSWORD,
+    database: env.TYPEORM_DATABASE,
+    entities: [env.TYPEORM_ENTITIES],
+    migrations: [env.TYPEORM_MIGRATIONS],
+    synchronize: JSON.parse(env.TYPEORM_SYNCHRONIZE),
+    logging: JSON.parse(env.TYPEORM_LOGGING),
+} as TypeOrmModuleOptions;
