@@ -6,9 +6,9 @@ const env = process.env;
 export const grpc = {
     transport: Transport.GRPC,
     options: {
-        url: env.GRPC_CHAT_SERVICE,
-        package: 'api.chat',
-        protoPath: './grpc-proto/chat/index.proto',
+        url: env.GRPC_TODO_SERVICE,
+        package: 'api.todo',
+        protoPath: './grpc-proto/todo/index.proto',
     },
 } as GrpcOptions;
 

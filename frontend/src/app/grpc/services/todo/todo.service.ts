@@ -5,15 +5,15 @@ import { Metadata } from 'grpc-web';
 import { grpcUnary } from '@grpc/helpers/grpc-unary';
 import { grpcStream } from '@grpc/helpers/grpc-stream';
 import { grpcJwtMetadata } from '@grpc/helpers/grpc-metadata';
-import { ChatServicePromiseClient } from '@grpc/proto/chat/chat_grpc_web_pb';
-import { MessageRes, MessageStatusRes, DeleteMessageReq, ChatStub, MessageList } from '@grpc/proto/chat/chat_pb';
+import { TodoServicePromiseClient } from '@grpc/proto/todo/todo_grpc_web_pb';
+import { MessageRes, MessageStatusRes, DeleteMessageReq, TodoStub, MessageList } from '@grpc/proto/todo/todo_pb';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ChatService {
+export class TodoService {
 
-    constructor(private client: ChatServicePromiseClient) {
+    constructor(private client: TodoServicePromiseClient) {
     }
 
     public addMessage(data: MessageRes.AsObject): Observable<MessageStatusRes.AsObject> {
@@ -44,7 +44,7 @@ export class ChatService {
     }
 
     public getMessagesStream(): Observable<MessageList.AsObject> {
-        const req = new ChatStub();
+        const req = new TodoStub();
 
         return grpcStream<MessageList.AsObject>(this.client.getMessagesStream(req));
     }

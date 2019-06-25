@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ChatService } from './chat.service';
+import { TodoService } from './todo.service';
 
-describe('ChatService', () => {
+describe('TodoService', () => {
     beforeEach(() => TestBed.configureTestingModule({}));
 
     it('should be created', () => {
-        const service: ChatService = TestBed.get(ChatService);
+        const service: TodoService = TestBed.get(TodoService);
         expect(service).toBeTruthy();
     });
 });

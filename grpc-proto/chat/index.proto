@@ -1,5 +1,0 @@
-syntax = "proto3";
-
-package api.chat;
-
-import public "chat.proto";

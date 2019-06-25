@@ -1,7 +1,7 @@
 {
-    "name": "chat",
+    "name": "todo",
     "version": "1.0.0",
-    "description": "chat service",
+    "description": "todo service",
     "author": "",
     "repository": {
         "type": "git",

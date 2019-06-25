@@ -1,11 +1,4 @@
-import {
-    Entity,
-    Column,
-    PrimaryGeneratedColumn,
-    CreateDateColumn,
-    UpdateDateColumn,
-} from 'typeorm';
-import { Exclude } from 'class-transformer';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { createHmac } from 'crypto';
 
 import { SALT } from '../../env';
@@ -17,20 +10,22 @@ export class User implements api.user.User {
     id: string;
 
     @Column({
-        nullable: false,
+        unique: true,
+        length: 50,
+    })
+    email: string;
+
+    @Column({
         length: 50,
     })
     name: string;
 
     @Column({
-        nullable: true,
-        length: 2000,
+        default: 0,
     })
-    avatar: string;
+    role: number;
 
-    @Exclude()
     @Column({
-        nullable: false,
         length: 128,
         transformer: {
             from: value => value,

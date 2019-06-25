@@ -11,7 +11,7 @@ services:
     depends_on:
       - user-postgres
     ports:
-      - 8001:9901 # node inspect user
+      - 8001:9000 # node inspect user
     env_file:
       - ./docker/env/common.env
       - ./docker/env/user.env
@@ -23,7 +23,7 @@ services:
     container_name: user-postgres
     restart: always
     ports: # for debug puproses, remove in the production
-      - 5533:5432
+      - 5532:5432
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -32,35 +32,35 @@ services:
     volumes:
       - ./src/services/user/db:/opt/api/user/db
 
-##### chat
-  chat:
+##### todo
+  todo:
     image: node:dubnium
-    container_name: chat
-    working_dir: /opt/api/chat
+    container_name: todo
+    working_dir: /opt/api/todo
     command: npm run docker:debug
     depends_on:
-      - chat-postgres
+      - todo-postgres
     ports:
-      - 8002:9901 # node inspect chat
+      - 8002:9000 # for debug puproses, remove in the production
     env_file:
       - ./docker/env/common.env
-      - ./docker/env/chat.env
+      - ./docker/env/todo.env
     volumes:
-      - ./src/services/chat:/opt/api/chat
+      - ./src/services/todo:/opt/api/todo
 
-  chat-postgres:
+  todo-postgres:
     image: postgres:latest
-    container_name: chat-postgres
+    container_name: todo-postgres
     restart: always
     ports: # for debug puproses, remove in the production
-      - 5534:5432
+      - 5533:5432
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
       - PGPORT=5432
     volumes:
-      - ./src/services/chat/db:/opt/api/chat/db
+      - ./src/services/todo/db:/opt/api/todo/db
 
 #### envoy-api
   envoy-api:

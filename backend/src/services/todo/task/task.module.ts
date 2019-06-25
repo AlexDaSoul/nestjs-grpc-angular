@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 
 import { CommonModule } from '../common/common.module';
-import { MessageController } from './message.controller';
+import { TaskController } from './task.controller';
 
 @Module({
     imports: [CommonModule],
-    controllers: [MessageController],
+    controllers: [TaskController],
 })
-export class MessageModule {}
+export class TaskModule {}

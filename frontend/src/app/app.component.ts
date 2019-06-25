@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { ChatService } from '@grpc/services/chat/chat.service';
+import { TodoService } from '@grpc/services/todo/todo.service';
 
 
 @Component({
@@ -10,8 +10,8 @@ import { ChatService } from '@grpc/services/chat/chat.service';
 })
 export class AppComponent {
 
-    constructor(private chatService: ChatService) {
-        this.chatService.getMessagesStream()
+    constructor(private todoService: TodoService) {
+        this.todoService.getMessagesStream()
             .subscribe(
                 res => {
                     console.log(res);

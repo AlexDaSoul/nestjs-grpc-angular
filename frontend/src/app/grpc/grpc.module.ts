@@ -5,12 +5,12 @@ import { environment } from '@environments/environment';
 
 import { UserServicePromiseClient } from '@grpc/proto/user/user_grpc_web_pb';
 import { AuthServicePromiseClient } from '@grpc/proto/user/auth_grpc_web_pb';
-import { ChatServicePromiseClient } from '@grpc/proto/chat/chat_grpc_web_pb';
+import { TodoServicePromiseClient } from '@grpc/proto/todo/todo_grpc_web_pb';
 
 const GRPC_CLIENTS = [
     UserServicePromiseClient,
     AuthServicePromiseClient,
-    ChatServicePromiseClient
+    TodoServicePromiseClient
 ];
 
 @NgModule({

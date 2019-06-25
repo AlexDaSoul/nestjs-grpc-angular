@@ -4,13 +4,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeorm } from './env';
 
 import { CommonModule } from './common/common.module';
-import { MessageModule } from './message/message.module';
+import { TaskModule } from './task/task.module';
 
 @Module({
     imports: [
         TypeOrmModule.forRoot(typeorm),
         CommonModule,
-        MessageModule,
+        TaskModule,
     ],
 })
 export class AppModule {}

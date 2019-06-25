@@ -1,6 +1,0 @@
-syntax = "proto3";
-
-package api.user;
-
-import public "user.proto";
-import public "auth.proto";
