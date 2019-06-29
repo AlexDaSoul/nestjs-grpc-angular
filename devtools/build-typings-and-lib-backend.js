@@ -9,7 +9,7 @@ const helpers = require('./helpers');
 
 const grpcDir = root.resolve('backend/src/grpc-proto');
 const libDir = root.resolve('backend/src/lib');
-const packagesDir = root.resolve('backend/src/services');
+const packagesDir = root.resolve('backend/src/packages');
 
 const BIN_PATH = cp.execSync('npm bin', { cwd: root.path })
     .toString()
@@ -46,7 +46,7 @@ helpers.getPackages(IGNORE_PACKAGES, grpcDir).forEach(pkg => {
             { cwd: root.path, stdio: 'inherit' }
         );
 
-        // replace Promise to Observable and add second param to services due NestJS features
+        // replace Promise to Observable and add second param to packages due NestJS features
         cp.execSync(
             `sed -i \
                 -e '2i import { Observable } from "rxjs";' \

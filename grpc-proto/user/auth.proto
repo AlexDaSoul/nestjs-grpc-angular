@@ -13,7 +13,7 @@ service AuthService {
 }
 
 message AuthReq {
-    string name = 1;
+    string email = 1;
     string password = 2;
 }
 message AuthRes {

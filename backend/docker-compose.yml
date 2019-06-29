@@ -16,7 +16,7 @@ services:
       - ./docker/env/common.env
       - ./docker/env/user.env
     volumes:
-      - ./src/services/user:/opt/api/user
+      - ./src/packages/user:/opt/api/user
 
   user-postgres:
     image: postgres:latest
@@ -30,7 +30,7 @@ services:
       - POSTGRES_DB=postgres
       - PGPORT=5432
     volumes:
-      - ./src/services/user/db:/opt/api/user/db
+      - ./src/packages/user/db:/opt/api/user/db
 
 ##### todo
   todo:
@@ -46,7 +46,7 @@ services:
       - ./docker/env/common.env
       - ./docker/env/todo.env
     volumes:
-      - ./src/services/todo:/opt/api/todo
+      - ./src/packages/todo:/opt/api/todo
 
   todo-postgres:
     image: postgres:latest
@@ -60,7 +60,7 @@ services:
       - POSTGRES_DB=postgres
       - PGPORT=5432
     volumes:
-      - ./src/services/todo/db:/opt/api/todo/db
+      - ./src/packages/todo/db:/opt/api/todo/db
 
 #### envoy-api
   envoy-api:
@@ -70,4 +70,4 @@ services:
       context: ./docker/envoy
       dockerfile: Dockerfile
     ports:
-      - 550:550
+      - 443:443
