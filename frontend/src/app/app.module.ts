@@ -1,10 +1,12 @@
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
-import { MatButtonModule } from '@angular/material';
 
-import { GrpcModule } from '@grpc/grpc.module';
+import { ShareModule } from '@share/share.module';
+import { RoutingModule } from './app.routes';
 import { AppComponent } from './app.component';
+import { UserModule } from './modules/user/user.module';
+import { TodoModule } from './modules/todo/todo.module';
 
 @NgModule({
     declarations: [
@@ -13,8 +15,10 @@ import { AppComponent } from './app.component';
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        MatButtonModule,
-        GrpcModule
+        ShareModule,
+        RoutingModule,
+        UserModule,
+        TodoModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

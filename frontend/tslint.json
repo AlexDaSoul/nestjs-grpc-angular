@@ -69,7 +69,14 @@
             true,
             "single"
         ],
-        "trailing-comma": false,
+        "semicolon": [
+            true,
+            "always"
+        ],
+        "trailing-comma": [true, {
+            "multiline": "always",
+            "singleline": "never"
+        }],
         "no-output-on-prefix": true,
         "no-inputs-metadata-property": true,
         "no-outputs-metadata-property": true,

@@ -1,0 +1,28 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-card class="form">
+        <mat-card-title>Sign Up</mat-card-title>
+
+        <mat-card-content>
+            <mat-form-field class="form-field">
+                <input matInput placeholder="Name" formControlName="name" required>
+                <mat-error *ngIf="form.get('name').getError('required')">Enter your name</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field">
+                <input matInput placeholder="Email" formControlName="email" required>
+                <mat-error *ngIf="form.get('email').getError('required')">Enter your email address</mat-error>
+                <mat-error *ngIf="form.get('email').getError('email')">Invalid email address</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field">
+                <input matInput placeholder="Password" formControlName="password" required>
+                <mat-error *ngIf="form.get('password').getError('required')">Enter your password</mat-error>
+                <mat-error *ngIf="form.get('password').getError('minlength')">Min length is 4 symbols</mat-error>
+            </mat-form-field>
+        </mat-card-content>
+
+        <mat-card-actions class="form-actions">
+            <button mat-flat-button color="primary" [disabled]="form.invalid" type="submit">SEND</button>
+        </mat-card-actions>
+    </mat-card>
+</form>

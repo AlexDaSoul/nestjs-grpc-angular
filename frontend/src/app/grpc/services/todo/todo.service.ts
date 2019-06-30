@@ -6,46 +6,69 @@ import { grpcUnary } from '@grpc/helpers/grpc-unary';
 import { grpcStream } from '@grpc/helpers/grpc-stream';
 import { grpcJwtMetadata } from '@grpc/helpers/grpc-metadata';
 import { TodoServicePromiseClient } from '@grpc/proto/todo/todo_grpc_web_pb';
-import { MessageRes, MessageStatusRes, DeleteMessageReq, TodoStub, MessageList } from '@grpc/proto/todo/todo_pb';
+import { AddTaskReq, TaskStatusRes, TaskReq, TaskListRes } from '@grpc/proto/todo/todo_pb';
+import { Task, TodoStub } from '@grpc/proto/todo/todo.types_pb';
 
 @Injectable({
     providedIn: 'root'
 })
-export class TodoService {
+export class TodoGrpcService {
 
     constructor(private client: TodoServicePromiseClient) {
     }
 
-    public addMessage(data: MessageRes.AsObject): Observable<MessageStatusRes.AsObject> {
-        const req = new MessageRes();
+    public addTask(data: AddTaskReq.AsObject): Observable<TaskStatusRes.AsObject> {
+        const req = new AddTaskReq();
         const meta: Metadata = grpcJwtMetadata();
 
-        req.setMessage(data.message);
+        req.setTitle(data.title);
+        req.setText(data.text);
 
-        return grpcUnary<MessageStatusRes.AsObject>(this.client.addMessage(req, meta));
+        return grpcUnary<TaskStatusRes.AsObject>(this.client.addTask(req, meta));
     }
 
-    public deleteMessage(data: DeleteMessageReq.AsObject): Observable<MessageStatusRes.AsObject> {
-        const req = new DeleteMessageReq();
+    public deleteTask(data: TaskReq.AsObject): Observable<TaskStatusRes.AsObject> {
+        const req = new TaskReq();
         const meta: Metadata = grpcJwtMetadata();
 
         req.setId(data.id);
 
-        return grpcUnary<MessageStatusRes.AsObject>(this.client.deleteMessage(req, meta));
+        return grpcUnary<TaskStatusRes.AsObject>(this.client.deleteTask(req, meta));
     }
 
-    public updateMessage(data: MessageRes.AsObject): Observable<MessageStatusRes.AsObject> {
-        const req = new MessageRes();
+    public updateTask(data: Task.AsObject): Observable<TaskStatusRes.AsObject> {
+        const req = new Task();
         const meta: Metadata = grpcJwtMetadata();
 
-        req.setMessage(data.message);
+        req.setId(data.id);
+        req.setUserid(data.userid);
+        req.setTitle(data.title);
+        req.setText(data.text);
+        req.setStatus(data.status);
 
-        return grpcUnary<MessageStatusRes.AsObject>(this.client.updateMessage(req, meta));
+        return grpcUnary<TaskStatusRes.AsObject>(this.client.updateTask(req, meta));
     }
 
-    public getMessagesStream(): Observable<MessageList.AsObject> {
-        const req = new TodoStub();
+    public getTask(data: TaskReq.AsObject): Observable<Task.AsObject> {
+        const req = new TaskReq();
+        const meta: Metadata = grpcJwtMetadata();
 
-        return grpcStream<MessageList.AsObject>(this.client.getMessagesStream(req));
+        req.setId(data.id);
+
+        return grpcUnary<Task.AsObject>(this.client.getTask(req, meta));
+    }
+
+    public getTasksByUserId(): Observable<TaskListRes.AsObject> {
+        const req = new TodoStub();
+        const meta: Metadata = grpcJwtMetadata();
+
+        return grpcUnary<TaskListRes.AsObject>(this.client.getTasksByUserId(req, meta));
+    }
+
+    public getTasksStream(): Observable<Task.AsObject> {
+        const req = new TodoStub();
+        const meta: Metadata = grpcJwtMetadata();
+
+        return grpcStream<Task.AsObject>(this.client.getTasksStream(req, meta));
     }
 }

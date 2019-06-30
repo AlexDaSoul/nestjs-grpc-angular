@@ -8,9 +8,9 @@ import { AuthServicePromiseClient } from '@grpc/proto/user/auth_grpc_web_pb';
 import { AuthReq, AuthRes, UpdateAuthReq, UpdateAuthRes } from '@grpc/proto/user/auth_pb';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
-export class AuthService {
+export class AuthGrpcService {
 
     constructor(private client: AuthServicePromiseClient) {
     }

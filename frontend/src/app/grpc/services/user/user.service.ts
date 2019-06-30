@@ -9,9 +9,9 @@ import { CreateUserReq, UserRes, UserReq } from '@grpc/proto/user/user_pb';
 import { User } from '@grpc/proto/user/user.types_pb';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
-export class UserService {
+export class UserGrpcService {
 
     constructor(private client: UserServicePromiseClient) {
     }
@@ -19,8 +19,8 @@ export class UserService {
     public createUser(data: CreateUserReq.AsObject): Observable<UserRes.AsObject> {
         const req = new CreateUserReq();
 
-        req.setEmail(data.email);
         req.setName(data.name);
+        req.setEmail(data.email);
         req.setPassword(data.password);
 
         return grpcUnary<UserRes.AsObject>(this.client.createUser(req));
@@ -30,7 +30,6 @@ export class UserService {
         const req = new User();
         const meta: Metadata = grpcJwtMetadata();
 
-        req.setId(data.id);
         req.setEmail(data.email);
         req.setName(data.name);
 
@@ -39,19 +38,17 @@ export class UserService {
 
     public deleteUser(data: UserReq.AsObject): Observable<UserRes.AsObject> {
         const req = new UserReq();
-        const meta: Metadata = grpcJwtMetadata();
 
         req.setId(data.id);
 
-        return grpcUnary<UserRes.AsObject>(this.client.deleteUser(req, meta));
+        return grpcUnary<UserRes.AsObject>(this.client.deleteUser(req));
     }
 
     public getUser(data: UserReq.AsObject): Observable<User.AsObject> {
         const req = new UserReq();
-        const meta: Metadata = grpcJwtMetadata();
 
         req.setId(data.id);
 
-        return grpcUnary<User.AsObject>(this.client.getUser(req, meta));
+        return grpcUnary<User.AsObject>(this.client.getUser(req));
     }
 }

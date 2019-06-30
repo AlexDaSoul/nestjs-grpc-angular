@@ -1,5 +1,11 @@
+import { LoggerConfig, NgxLoggerLevel } from 'ngx-logger';
+
 export const environment = {
     production: true,
-    url: 'http://127.0.0.1:550',
-    token: 'pAjjaWcqFQkr'
+    url: '/api',
+    token: 'pAjjaWcqFQkr',
+    authDiff: 60,
+    logger: {
+        level: NgxLoggerLevel.ERROR,
+    } as LoggerConfig,
 };

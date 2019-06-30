@@ -4,7 +4,7 @@ import { StatusCode, ClientReadableStream, Status } from 'grpc-web';
 import * as jspb from 'google-protobuf';
 
 import { StreamType } from '@grpc/enums/stream-type.grpc.enum';
-
+import { jwtAuthError$ } from '@grpc/helpers/grpc-jwt';
 
 export function grpcStream<T>(client): Observable<T> {
     let stream: ClientReadableStream<T> = null;
@@ -21,6 +21,10 @@ export function grpcStream<T>(client): Observable<T> {
         });
 
         stream.on(StreamType.STATUS, (status: Status) => {
+            if (status.code === StatusCode.UNAUTHENTICATED) {
+                jwtAuthError$.next();
+            }
+
             if (status.code !== StatusCode.OK) {
                 observer.error(status);
             }

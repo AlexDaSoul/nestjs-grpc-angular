@@ -23,8 +23,8 @@ export class UserService {
         return from(this.userRepository.save(createUser));
     }
 
-    public updateUser(data: api.user.UpdateUserReq): Observable<void> {
-        const findUser = this.userRepository.findOne({ id: data.id });
+    public updateUser(data: api.user.UpdateUserReq, id: string): Observable<void> {
+        const findUser = this.userRepository.findOne({ id });
 
         return from(findUser).pipe(
             map(user => this.userRepository.merge(user, data)),

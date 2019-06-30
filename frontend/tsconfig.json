@@ -8,6 +8,9 @@
             ],
             "@grpc/*": [
                 "src/app/grpc/*"
+            ],
+            "@share/*": [
+                "src/app/share/*"
             ]
         },
         "downlevelIteration": true,
@@ -20,6 +23,8 @@
         "experimentalDecorators": true,
         "importHelpers": true,
         "target": "es2015",
+        "noUnusedLocals": false,
+        "newLine": "LF",
         "typeRoots": [
             "node_modules/@types"
         ],

@@ -20,15 +20,13 @@ service UserService {
 
 message CreateUserReq {
     string name = 1;
-    string avatar = 2;
+    string email = 2;
     string password = 3;
 }
 
 message UpdateUserReq {
-    string id = 1;
     string name = 2;
-    string avatar = 3;
-    string password = 4;
+    string email = 3;
 }
 
 message UserReq {

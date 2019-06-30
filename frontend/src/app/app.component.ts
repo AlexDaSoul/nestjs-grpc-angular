@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
-import { TodoService } from '@grpc/services/todo/todo.service';
-
+import { AuthService } from '@share/services/auth.service';
 
 @Component({
     selector: 'app-root',
@@ -10,14 +9,14 @@ import { TodoService } from '@grpc/services/todo/todo.service';
 })
 export class AppComponent {
 
-    constructor(private todoService: TodoService) {
-        this.todoService.getMessagesStream()
-            .subscribe(
-                res => {
-                    console.log(res);
-                },
-                err => console.error(err)
-            );
+    public isLoggedIn$ = this.authService.isLoggedIn();
+
+    constructor(
+        private authService: AuthService,
+    ) {
     }
 
+    public logout(): void {
+        this.authService.logout();
+    }
 }
