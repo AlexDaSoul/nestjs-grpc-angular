@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
-import { switchMap } from 'rxjs/operators';
 
-import { AuthGrpcService } from '@grpc/services/user/auth.service';
 import { AuthService } from '@share/services/auth.service';
 import { UserGrpcService } from '@grpc/services/user/user.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-settings',
@@ -23,6 +22,7 @@ export class SettingsComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private router: Router,
+        private snackBar: MatSnackBar,
         private logger: NGXLogger,
         private userGrpcService: UserGrpcService,
         private authService: AuthService,
@@ -47,8 +47,14 @@ export class SettingsComponent implements OnInit {
                     res => {
                         this.logger.log(res);
                     },
-                    err => this.logger.error(err),
-                );
+                    err => {
+                        this.snackBar.open(err.message, 'close', {
+                            duration: 5000,
+                            horizontalPosition: 'right',
+                            verticalPosition: 'top',
+                            panelClass: 'error-message',
+                        });
+                    });
         }
     }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { NGXLogger } from 'ngx-logger';
 import { switchMap } from 'rxjs/operators';
 
@@ -24,6 +25,7 @@ export class RegisterComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private router: Router,
+        private snackBar: MatSnackBar,
         private logger: NGXLogger,
         private userGrpcService: UserGrpcService,
         private authGrpcService: AuthGrpcService,
@@ -45,8 +47,16 @@ export class RegisterComponent implements OnInit {
                         this.form.reset();
                         this.router.navigateByUrl('/dashboard');
                     },
-                    err => this.logger.error(err),
-                );
+                    err => {
+                        const message = err.code === 23505 ? 'User already exist' : err.message;
+
+                        this.snackBar.open(message, 'close', {
+                            duration: 5000,
+                            horizontalPosition: 'right',
+                            verticalPosition: 'top',
+                            panelClass: 'error-message',
+                        });
+                    });
         }
     }
 }

@@ -37,10 +37,7 @@ export class GrpcExceptionFilter implements RpcExceptionFilter<RpcException> {
 
         this.warn(`Error: ${JSON.stringify(exception.getError())} \nStack: ${stack.toString()}`);
 
-        return throwError({
-            code: status.INTERNAL,
-            message: 'Internal Server Error',
-        });
+        return throwError(exception.getError());
     }
 
     private handleTypeOrmException(exception: ITypeormError): Observable<RpcException> {
@@ -48,10 +45,7 @@ export class GrpcExceptionFilter implements RpcExceptionFilter<RpcException> {
 
         this.warn(`${message || name}, \nCode: ${code} \nTypeOrm query: ${query},\nParams: ${parameters} \nStack: ${stack}`);
 
-        return throwError({
-            code: status.INTERNAL,
-            message: 'Internal Server Error',
-        });
+        return throwError({ code: +code, message });
     }
 
     private handleRawError(exception: Error): Observable<RpcException> {

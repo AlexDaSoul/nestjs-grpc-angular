@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { ShareModule } from '@share/share.module';
 import { GrpcModule } from '@grpc/grpc.module';
 import { RoutingModule } from './todo.routes';
 
@@ -13,9 +14,13 @@ import { UpdateTaskComponent } from './update-task/update-task.component';
     declarations: [TodoComponent, TasksComponent, AddTaskComponent, UpdateTaskComponent],
     imports: [
         CommonModule,
+        ShareModule,
         GrpcModule,
         RoutingModule,
-    ]
+    ],
+    exports: [
+        AddTaskComponent,
+    ],
 })
 export class TodoModule {
 }

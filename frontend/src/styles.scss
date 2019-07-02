@@ -3,3 +3,26 @@
 * {
     font-family: 'Roboto', sans-serif;
 }
+
+.form {
+    width: 400px;
+}
+
+.form-field {
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.form-actions {
+    text-align: right;
+}
+
+.error-message {
+    background: #a20c27;
+    font-weight: bold;
+    color: #fefefe;
+
+    .mat-simple-snackbar-action {
+        color: #ca7793;
+    }
+}

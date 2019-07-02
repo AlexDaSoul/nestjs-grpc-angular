@@ -19,10 +19,6 @@
             <button mat-icon-button title="Logout" (click)="logout()">
                 <mat-icon inline="true">exit_to_app</mat-icon>
             </button>
-
-            <button mat-icon-button title="Add task">
-                <mat-icon inline="true">add_circle_outline</mat-icon>
-            </button>
         </ng-container>
 
         <ng-template #isNotLogin>
@@ -37,7 +33,7 @@
 
     </mat-sidenav>
 
-    <mat-sidenav-content class="content">
+    <mat-sidenav-content>
         <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>

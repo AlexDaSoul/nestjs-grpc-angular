@@ -1,12 +1,7 @@
-.form {
-    width: 400px;
-}
-
-.form-field {
+:host {
+    display: grid;
     width: 100%;
-    margin-bottom: 8px;
-}
-
-.form-actions {
-    text-align: right;
+    height: 100%;
+    align-items: center;
+    justify-items: center;
 }

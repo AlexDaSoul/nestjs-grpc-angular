@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { NGXLogger } from 'ngx-logger';
 
 import { AuthGrpcService } from '@grpc/services/user/auth.service';
@@ -21,6 +22,7 @@ export class AuthComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private router: Router,
+        private snackBar: MatSnackBar,
         private logger: NGXLogger,
         private authGrpcService: AuthGrpcService,
         private authService: AuthService,
@@ -39,8 +41,16 @@ export class AuthComponent implements OnInit {
                         this.form.reset();
                         this.router.navigateByUrl('/dashboard');
                     },
-                    err => this.logger.error(err),
-                );
+                    err => {
+                        const message = err.code === 13 ? 'User not found' : err.message;
+
+                        this.snackBar.open(message, 'close', {
+                            duration: 5000,
+                            horizontalPosition: 'right',
+                            verticalPosition: 'top',
+                            panelClass: 'error-message',
+                        });
+                    });
         }
     }
 }
