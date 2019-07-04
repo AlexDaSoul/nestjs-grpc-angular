@@ -4,25 +4,46 @@
     font-family: 'Roboto', sans-serif;
 }
 
-.form {
-    width: 400px;
+html, body {
+    margin: 0;
+    padding: 0;
 }
 
-.form-field {
-    width: 100%;
-    margin-bottom: 8px;
-}
+.todo {
+    .mat-icon-button {
+        width: 50px;
+        height: 50px;
+        font-size: 42px;
+        line-height: 42px;
+        border-radius: 4px;
+        overflow: hidden;
+        margin: 8px 0;
 
-.form-actions {
-    text-align: right;
-}
+        &.active {
+            color: #0090ea;
+        }
+    }
 
-.error-message {
-    background: #a20c27;
-    font-weight: bold;
-    color: #fefefe;
+    .form {
+        width: 400px;
+    }
 
-    .mat-simple-snackbar-action {
-        color: #ca7793;
+    .form-field {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
+    .form-actions {
+        text-align: right;
+    }
+
+    .error-message {
+        background: #a20c27;
+        font-weight: bold;
+        color: #fefefe;
+
+        .mat-simple-snackbar-action {
+            color: #ca7793;
+        }
     }
 }

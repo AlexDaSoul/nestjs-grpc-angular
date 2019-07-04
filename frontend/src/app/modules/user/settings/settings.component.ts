@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 import { NGXLogger } from 'ngx-logger';
 
-import { AuthService } from '@share/services/auth.service';
+import { getUserIdFromJWT } from '@grpc/helpers/grpc-get-id';
+import { User } from '@grpc/proto/user/user.types_pb';
 import { UserGrpcService } from '@grpc/services/user/user.service';
-import { MatSnackBar } from '@angular/material';
+import { AuthService } from '@share/services/auth.service';
+import { UserStoreService } from '@share/services/user-store.service';
 
 @Component({
     selector: 'app-settings',
@@ -13,6 +16,8 @@ import { MatSnackBar } from '@angular/material';
     styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent implements OnInit {
+
+    private user: User.AsObject;
 
     public form: FormGroup = this.fb.group({
         name: [null, [Validators.required]],
@@ -26,12 +31,14 @@ export class SettingsComponent implements OnInit {
         private logger: NGXLogger,
         private userGrpcService: UserGrpcService,
         private authService: AuthService,
+        private userStoreService: UserStoreService,
     ) {
-        const token = this.authService.getToken().split('.')[1];
-        const jwt = JSON.parse(atob(token));
+        const token = this.authService.getToken();
+        const id = getUserIdFromJWT(token);
 
-        this.userGrpcService.getUser(jwt.id)
+        this.userGrpcService.getUser({ id })
             .subscribe(user => {
+                this.user = user;
                 this.form.get('name').setValue(user.name);
                 this.form.get('email').setValue(user.email);
             });
@@ -40,12 +47,17 @@ export class SettingsComponent implements OnInit {
     ngOnInit() {
     }
 
+    private updateUser(): void {
+        this.userStoreService.setUser({ ...this.user, ...this.form.value });
+    }
+
     public onSubmit(): void {
         if (this.form.valid) {
             this.userGrpcService.updateUser(this.form.value)
                 .subscribe(
                     res => {
-                        this.logger.log(res);
+                        this.updateUser();
+                        this.logger.debug(res);
                     },
                     err => {
                         this.snackBar.open(err.message, 'close', {

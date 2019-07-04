@@ -16,6 +16,6 @@ export function grpcUnary<T>(promise): Observable<T> {
             }
 
             return throwError(error);
-        })
+        }),
     );
 }

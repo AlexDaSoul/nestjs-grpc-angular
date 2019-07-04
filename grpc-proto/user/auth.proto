@@ -8,7 +8,7 @@ service AuthService {
     rpc Auth (AuthReq) returns (AuthRes) {
     }
 
-    rpc UpdateAuth (UpdateAuthReq) returns (UpdateAuthRes) {
+    rpc UpdateAuth (Empty) returns (AuthRes) {
     }
 }
 
@@ -19,10 +19,4 @@ message AuthReq {
 message AuthRes {
     string token = 1;
     User user = 2;
-}
-
-message UpdateAuthReq {
-}
-message UpdateAuthRes {
-    string token = 1;
 }

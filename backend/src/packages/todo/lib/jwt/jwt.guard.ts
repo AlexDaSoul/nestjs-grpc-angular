@@ -12,7 +12,7 @@ export class JwtGuard implements CanActivate {
 
         if (token) {
             try {
-                meta.user = verify(token, JWT_KEY_PUB, {
+                meta.payload = verify(token, JWT_KEY_PUB, {
                     algorithms: ['RS256'],
                 });
 

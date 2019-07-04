@@ -15,16 +15,11 @@
     text-align: center;
 }
 
-.mat-icon-button {
-    width: 50px;
-    height: 50px;
-    font-size: 42px;
-    line-height: 42px;
-    border-radius: 4px;
-    overflow: hidden;
-    margin: 8px 0;
+.toolbar {
+    background: rgba(0, 0, 0, 0.12);
+    border-bottom: 1px #d4d4d4 solid;
 
-    &.active {
-        color: #0090ea;
+    .mat-toolbar-row {
+        flex-direction: row-reverse;
     }
 }

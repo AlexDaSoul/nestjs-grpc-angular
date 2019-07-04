@@ -3,6 +3,6 @@ import { environment } from '@environments/environment';
 
 export function grpcJwtMetadata(token: string = null): Metadata {
     return {
-        Authorization: token || localStorage.getItem(environment.token)
+        Authorization: token || localStorage.getItem(environment.token),
     };
 }

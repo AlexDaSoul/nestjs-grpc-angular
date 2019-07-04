@@ -4,13 +4,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { TodoComponent } from './todo.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { AuthGuard } from '@share/guards/auth.guard';
+import { AuthChildGuard } from '@share/guards/auth-child.guard';
 
 const routes: Routes = [
     {
         path: 'dashboard',
         component: TodoComponent,
         canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
+        canActivateChild: [AuthChildGuard],
         children: [
             {
                 path: '',

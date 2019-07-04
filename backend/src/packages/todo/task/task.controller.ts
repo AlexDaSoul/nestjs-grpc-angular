@@ -1,14 +1,14 @@
 import { Controller, UseGuards, UseFilters } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/internal/operators';
 
 import { JwtGuard } from '../lib/jwt/jwt.guard';
-import { IUserMeta } from '../lib/jwt/jwt.interface';
+import { IJwtMeta } from '../../user/lib/jwt/jwt.interface';
 import { api } from '../grpc-proto/todo/todo';
 
 import { TaskService } from '../common/services/task.service';
 import { GrpcExceptionFilter } from '../lib/exceptions/exception.filter';
-import { map } from 'rxjs/internal/operators';
 
 type Identity<T> = T;
 const TODO_ACTION_SUCCESS = 1;
@@ -22,8 +22,8 @@ export class TaskController {
     @UseGuards(JwtGuard)
     @GrpcMethod('TodoService', 'AddTask')
     @UseFilters(new GrpcExceptionFilter('TodoService::addTask'))
-    public addTask(data: Identity<api.todo.AddTaskReq>, meta: IUserMeta): Observable<api.todo.TaskStatusRes> {
-        return this.taskService.addTask(data, meta.user.id).pipe(
+    public addTask(data: Identity<api.todo.AddTaskReq>, meta: IJwtMeta<{ id: string; }>): Observable<api.todo.TaskStatusRes> {
+        return this.taskService.addTask(data, meta.payload.id).pipe(
             map(res => {
                 return {
                     status: TODO_ACTION_SUCCESS,
@@ -71,8 +71,8 @@ export class TaskController {
     @UseGuards(JwtGuard)
     @GrpcMethod('TodoService', 'GetTasksByUserId')
     @UseFilters(new GrpcExceptionFilter('TodoService::getTasksByUserId'))
-    public getTasksByUserId(data: Identity<api.todo.TodoStub>, meta: IUserMeta): Observable<api.todo.TaskListRes> {
-        return this.taskService.getTasksByUserId(meta.user.id).pipe(
+    public getTasksByUserId(data: Identity<api.todo.TodoStub>, meta: IJwtMeta<{ id: string; }>): Observable<api.todo.TaskListRes> {
+        return this.taskService.getTasksByUserId(meta.payload.id).pipe(
             map(tasks => ({ tasks })),
         );
     }
@@ -80,8 +80,8 @@ export class TaskController {
     @UseGuards(JwtGuard)
     @GrpcMethod('TodoService', 'GetTasksStream')
     @UseFilters(new GrpcExceptionFilter('TodoService::getTasksStream'))
-    public getTasksStream(data: Identity<api.todo.TodoStub>, meta: IUserMeta): Observable<api.todo.Task> {
-        return this.taskService.getTasksStream(meta.user.id);
+    public getTasksStream(data: Identity<api.todo.TodoStub>, meta: IJwtMeta<{ id: string; }>): Observable<api.todo.Task> {
+        return this.taskService.getTasksStream(meta.payload.id);
     }
 
 }

@@ -1,7 +1,5 @@
 import { Metadata } from 'grpc';
 
-export interface IUserMeta extends Metadata {
-    user: {
-        id: string;
-    };
+export interface IJwtMeta<T> extends Metadata {
+    payload: T;
 }

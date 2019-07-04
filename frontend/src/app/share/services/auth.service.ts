@@ -1,12 +1,12 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
-import { Observable, ReplaySubject, interval, Subject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { Observable, ReplaySubject, interval, Subject, of } from 'rxjs';
+import { switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { environment } from '@environments/environment';
 import { AuthGrpcService } from '@grpc/services/user/auth.service';
-import { jwtAuthError$ } from '@grpc/helpers/grpc-jwt';
+import { AuthRes } from '@grpc/proto/user/auth_pb';
 
 @Injectable({
     providedIn: 'root',
@@ -21,14 +21,6 @@ export class AuthService {
         private logger: NGXLogger,
         private authGrpcService: AuthGrpcService,
     ) {
-        this.updateAuth();
-
-        jwtAuthError$.asObservable()
-            .pipe(takeUntil(this.ngOnDestroy$))
-            .subscribe(() => {
-                this.logout();
-                this.logger.warn('JWT is not valid');
-            });
     }
 
     public updateToken(): void {
@@ -47,14 +39,12 @@ export class AuthService {
                 err => this.logger.warn(err.message));
     }
 
-    private updateAuth(): void {
+    public updateAuth(): Observable<AuthRes.AsObject> {
         if (this.getToken()) {
-            this.authGrpcService.updateAuth()
-                .subscribe(
-                    res => this.loggedIn(res.token),
-                    err => this.logger.warn(err.message));
+            return this.authGrpcService.updateAuth()
+                .pipe(tap(res => this.loggedIn(res.token)));
         } else {
-            this.loggedInSubject$.next(false);
+            this.logout();
         }
     }
 

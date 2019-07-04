@@ -15,6 +15,7 @@ import {
     MatCheckboxModule,
     MatSnackBarModule,
     MatToolbarModule,
+    MatMenuModule,
 } from '@angular/material';
 
 import { LoggerModule } from 'ngx-logger';
@@ -36,6 +37,7 @@ import { GrpcModule } from '@grpc/grpc.module';
         MatCheckboxModule,
         MatSnackBarModule,
         MatToolbarModule,
+        MatMenuModule,
         LoggerModule.forRoot(environment.logger),
         GrpcModule,
     ],
@@ -50,6 +52,7 @@ import { GrpcModule } from '@grpc/grpc.module';
         HttpClientModule,
         MatSnackBarModule,
         MatToolbarModule,
+        MatMenuModule,
     ],
 })
 export class ShareModule {

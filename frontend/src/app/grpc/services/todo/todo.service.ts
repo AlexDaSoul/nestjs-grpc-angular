@@ -10,7 +10,7 @@ import { AddTaskReq, TaskStatusRes, TaskReq, TaskListRes } from '@grpc/proto/tod
 import { Task, TodoStub } from '@grpc/proto/todo/todo.types_pb';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class TodoGrpcService {
 

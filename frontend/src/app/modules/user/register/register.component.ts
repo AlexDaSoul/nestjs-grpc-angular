@@ -6,8 +6,9 @@ import { NGXLogger } from 'ngx-logger';
 import { switchMap } from 'rxjs/operators';
 
 import { AuthGrpcService } from '@grpc/services/user/auth.service';
-import { AuthService } from '@share/services/auth.service';
 import { UserGrpcService } from '@grpc/services/user/user.service';
+import { AuthService } from '@share/services/auth.service';
+import { UserStoreService } from '@share/services/user-store.service';
 
 @Component({
     selector: 'app-register',
@@ -30,6 +31,7 @@ export class RegisterComponent implements OnInit {
         private userGrpcService: UserGrpcService,
         private authGrpcService: AuthGrpcService,
         private authService: AuthService,
+        private userStoreService: UserStoreService,
     ) {
     }
 
@@ -39,10 +41,11 @@ export class RegisterComponent implements OnInit {
     public onSubmit(): void {
         if (this.form.valid) {
             this.userGrpcService.createUser(this.form.value)
-                .pipe(switchMap(() =>
-                    this.authGrpcService.auth(this.form.value)))
+                .pipe(
+                    switchMap(() => this.authGrpcService.auth(this.form.value)))
                 .subscribe(
                     res => {
+                        this.userStoreService.setUser(res.user);
                         this.authService.loggedIn(res.token);
                         this.form.reset();
                         this.router.navigateByUrl('/dashboard');

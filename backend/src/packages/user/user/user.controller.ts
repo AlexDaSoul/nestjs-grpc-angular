@@ -3,7 +3,7 @@ import { GrpcMethod } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 
 import { JwtGuard } from '../lib/jwt/jwt.guard';
-import { IUserMeta } from '../lib/jwt/jwt.interface';
+import { IJwtMeta } from '../lib/jwt/jwt.interface';
 import { GrpcExceptionFilter } from '../lib/exceptions/exception.filter';
 import { api } from '../grpc-proto/user/user';
 
@@ -35,17 +35,18 @@ export class UserController {
     @UseGuards(JwtGuard)
     @GrpcMethod('UserService', 'UpdateUser')
     @UseFilters(new GrpcExceptionFilter('UserController::updateUser'))
-    public updateUser(data: Identity<api.user.UpdateUserReq>, meta: IUserMeta): Observable<api.user.UserRes> {
-        return this.userService.updateUser(data, meta.user.id).pipe(
+    public updateUser(data: Identity<api.user.UpdateUserReq>, meta: IJwtMeta<{ id: string; }>): Observable<api.user.UserRes> {
+        return this.userService.updateUser(data, meta.payload.id).pipe(
             map(() => {
                 return {
                     status: USER_ACTION_SUCCESS,
-                    message: `User update successfully: ID: ${meta.user.id}`,
+                    message: `User update successfully: ID: ${meta.payload.id}`,
                 };
             }),
         );
     }
 
+    @UseGuards(JwtGuard)
     @GrpcMethod('UserService', 'DeleteUser')
     @UseFilters(new GrpcExceptionFilter('UserController::deleteUser'))
     public deleteUser(data: Identity<api.user.UserReq>): Observable<api.user.UserRes> {
