@@ -5,16 +5,16 @@ import { Metadata } from 'grpc-web';
 import { grpcUnary } from '@grpc/helpers/grpc-unary';
 import { grpcStream } from '@grpc/helpers/grpc-stream';
 import { grpcJwtMetadata } from '@grpc/helpers/grpc-metadata';
-import { TodoServicePromiseClient } from '@grpc/proto/todo/todo_grpc_web_pb';
-import { AddTaskReq, TaskStatusRes, TaskReq, TaskListRes } from '@grpc/proto/todo/todo_pb';
-import { Task, TodoStub } from '@grpc/proto/todo/todo.types_pb';
+import { TaskServicePromiseClient } from '@grpc/proto/todo/task_grpc_web_pb';
+import { AddTaskReq, TaskReq, TaskListRes } from '@grpc/proto/todo/task_pb';
+import { Task, TodoStub, TaskStatusRes } from '@grpc/proto/todo/todo.types_pb';
 
 @Injectable({
     providedIn: 'root',
 })
-export class TodoGrpcService {
+export class TaskGrpcService {
 
-    constructor(private client: TodoServicePromiseClient) {
+    constructor(private client: TaskServicePromiseClient) {
     }
 
     public addTask(data: AddTaskReq.AsObject): Observable<TaskStatusRes.AsObject> {
@@ -22,7 +22,7 @@ export class TodoGrpcService {
         const meta: Metadata = grpcJwtMetadata();
 
         req.setTitle(data.title);
-        req.setText(data.text);
+        req.setDescription(data.description);
 
         return grpcUnary<TaskStatusRes.AsObject>(this.client.addTask(req, meta));
     }
@@ -42,8 +42,9 @@ export class TodoGrpcService {
 
         req.setId(data.id);
         req.setUserid(data.userid);
+        req.setIndex(data.index);
         req.setTitle(data.title);
-        req.setText(data.text);
+        req.setDescription(data.description);
         req.setStatus(data.status);
 
         return grpcUnary<TaskStatusRes.AsObject>(this.client.updateTask(req, meta));

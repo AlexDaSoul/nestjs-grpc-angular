@@ -5,24 +5,26 @@ import { environment } from '@environments/environment';
 
 import { UserServicePromiseClient } from '@grpc/proto/user/user_grpc_web_pb';
 import { AuthServicePromiseClient } from '@grpc/proto/user/auth_grpc_web_pb';
-import { TodoServicePromiseClient } from '@grpc/proto/todo/todo_grpc_web_pb';
+import { TaskServicePromiseClient } from '@grpc/proto/todo/task_grpc_web_pb';
+import { StatusServicePromiseClient } from '@grpc/proto/todo/status_grpc_web_pb';
 
 const GRPC_CLIENTS = [
     UserServicePromiseClient,
     AuthServicePromiseClient,
-    TodoServicePromiseClient
+    TaskServicePromiseClient,
+    StatusServicePromiseClient,
 ];
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
     ],
     providers: GRPC_CLIENTS.map(service => {
         return {
             provide: service,
-            useFactory: () => new service(environment.url, null, null)
+            useFactory: () => new service(environment.url, null, null),
         };
-    })
+    }),
 })
 export class GrpcModule {
 }

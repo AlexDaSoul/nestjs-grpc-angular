@@ -1,0 +1,23 @@
+<div class="statuses"
+     *ngIf="statuses$ | async as statuses"
+     cdkDropList
+     cdkDropListOrientation="horizontal"
+     (cdkDropListDropped)="drop($event, statuses)">
+
+    <mat-card class="status" *ngFor="let status of statuses" cdkDrag>
+        <h2 class="status-title">{{ status.name }}</h2>
+        <mat-card-content>
+            <mat-divider></mat-divider>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button>LIKE</button>
+            <button mat-button>SHARE</button>
+        </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="status add-status" (click)="addStatus()" title="Add status">
+        <mat-card-content>
+            <mat-icon inline="true">add_circle_outline</mat-icon>
+        </mat-card-content>
+    </mat-card>
+</div>

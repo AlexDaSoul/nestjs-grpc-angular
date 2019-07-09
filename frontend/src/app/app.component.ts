@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { NGXLogger } from 'ngx-logger';
 
 import { jwtAuthError$ } from '@grpc/helpers/grpc-jwt';
@@ -14,7 +14,6 @@ import { User } from '@grpc/proto/user/user.types_pb';
 })
 export class AppComponent implements OnInit {
 
-    public isLoggedIn$ = this.authService.isLoggedIn();
     public user$: Observable<User.AsObject> = this.userStoreService.getUser();
 
     constructor(
@@ -41,7 +40,7 @@ export class AppComponent implements OnInit {
 
         jwtAuthError$.asObservable()
             .subscribe(() => {
-                this.authService.logout();
+                this.logout();
                 this.logger.warn('JWT is not valid');
             });
     }

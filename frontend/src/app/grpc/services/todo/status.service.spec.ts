@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TodoService } from './todo.service';
+import { StatusGrpcService } from './status.service';
 
-describe('TodoService', () => {
+describe('StatusGrpcService', () => {
     beforeEach(() => TestBed.configureTestingModule({}));
 
     it('should be created', () => {
-        const service: TodoService = TestBed.get(TodoService);
+        const service: StatusGrpcService = TestBed.get(StatusGrpcService);
         expect(service).toBeTruthy();
     });
 });

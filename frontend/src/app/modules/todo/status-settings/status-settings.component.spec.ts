@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddTaskComponent } from './add-task.component';
+import { StatusSettingsComponent } from './status-settings.component';
 
-describe('AddTaskComponent', () => {
-    let component: AddTaskComponent;
-    let fixture: ComponentFixture<AddTaskComponent>;
+describe('StatusSettingsComponent', () => {
+    let component: StatusSettingsComponent;
+    let fixture: ComponentFixture<StatusSettingsComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [AddTaskComponent],
+            declarations: [StatusSettingsComponent],
         })
             .compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(AddTaskComponent);
+        fixture = TestBed.createComponent(StatusSettingsComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

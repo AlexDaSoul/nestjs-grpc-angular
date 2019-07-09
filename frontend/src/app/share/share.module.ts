@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import {
     MatSidenavModule,
     MatIconModule,
@@ -16,7 +16,9 @@ import {
     MatSnackBarModule,
     MatToolbarModule,
     MatMenuModule,
+    MatDividerModule,
 } from '@angular/material';
+
 
 import { LoggerModule } from 'ngx-logger';
 
@@ -38,6 +40,8 @@ import { GrpcModule } from '@grpc/grpc.module';
         MatSnackBarModule,
         MatToolbarModule,
         MatMenuModule,
+        MatDividerModule,
+        DragDropModule,
         LoggerModule.forRoot(environment.logger),
         GrpcModule,
     ],
@@ -53,6 +57,8 @@ import { GrpcModule } from '@grpc/grpc.module';
         MatSnackBarModule,
         MatToolbarModule,
         MatMenuModule,
+        MatDividerModule,
+        DragDropModule,
     ],
 })
 export class ShareModule {

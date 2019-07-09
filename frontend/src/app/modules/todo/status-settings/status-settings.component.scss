@@ -1,0 +1,47 @@
+.statuses {
+    margin: 16px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 8px;
+
+    .status {
+        background: #cfd8dc;
+
+        .status-title {
+            margin: 0 8px 13px;
+            font-weight: 500;
+            font-size: 20px;
+        }
+
+        &.add-status {
+            cursor: pointer;
+            display: grid;
+            align-items: center;
+            justify-items: center;
+            background: #80cbc4;
+
+            .mat-icon {
+                font-size: 64px;
+                color: #696969;
+            }
+        }
+    }
+}
+
+.cdk-drag-preview {
+    border-radius: 4px;
+    box-sizing: border-box;
+    background: #d7ccc8;
+}
+
+.cdk-drag-placeholder {
+     opacity: 0.5;
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.tasks.cdk-drop-list-dragging .task:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

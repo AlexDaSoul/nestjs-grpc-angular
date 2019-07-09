@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators';
 
 import { JwtGuard } from '../lib/jwt/jwt.guard';
-import { IJwtMeta } from '../../user/lib/jwt/jwt.interface';
-import { api } from '../grpc-proto/todo/todo';
+import { IJwtMeta } from '../lib/jwt/jwt.interface';
+import { api } from '../grpc-proto/todo/task';
 
 import { TaskService } from '../common/services/task.service';
 import { GrpcExceptionFilter } from '../lib/exceptions/exception.filter';
@@ -20,22 +20,22 @@ export class TaskController {
     }
 
     @UseGuards(JwtGuard)
-    @GrpcMethod('TodoService', 'AddTask')
-    @UseFilters(new GrpcExceptionFilter('TodoService::addTask'))
+    @GrpcMethod('TaskService', 'AddTask')
+    @UseFilters(new GrpcExceptionFilter('TaskService::addTask'))
     public addTask(data: Identity<api.todo.AddTaskReq>, meta: IJwtMeta<{ id: string; }>): Observable<api.todo.TaskStatusRes> {
         return this.taskService.addTask(data, meta.payload.id).pipe(
             map(res => {
                 return {
                     status: TODO_ACTION_SUCCESS,
-                    message: `User created successfully: ID: ${res.id}`,
+                    message: `Task created successfully: ID: ${res.id}`,
                 };
             }),
         );
     }
 
     @UseGuards(JwtGuard)
-    @GrpcMethod('TodoService', 'UpdateTask')
-    @UseFilters(new GrpcExceptionFilter('TodoService::updateTask'))
+    @GrpcMethod('TaskService', 'UpdateTask')
+    @UseFilters(new GrpcExceptionFilter('TaskService::updateTask'))
     public updateTask(data: Identity<api.todo.Task>): Observable<api.todo.TaskStatusRes> {
         return this.taskService.updateTask(data).pipe(
             map(() => {
@@ -48,8 +48,8 @@ export class TaskController {
     }
 
     @UseGuards(JwtGuard)
-    @GrpcMethod('TodoService', 'DeleteTask')
-    @UseFilters(new GrpcExceptionFilter('TodoService::deleteTask'))
+    @GrpcMethod('TaskService', 'DeleteTask')
+    @UseFilters(new GrpcExceptionFilter('TaskService::deleteTask'))
     public deleteTask(data: Identity<api.todo.TaskReq>): Observable<api.todo.TaskStatusRes> {
         return this.taskService.deleteTask(data.id).pipe(
             map(() => {
@@ -62,15 +62,15 @@ export class TaskController {
     }
 
     @UseGuards(JwtGuard)
-    @GrpcMethod('TodoService', 'GetTask')
-    @UseFilters(new GrpcExceptionFilter('TodoService::deleteTask'))
+    @GrpcMethod('TaskService', 'GetTask')
+    @UseFilters(new GrpcExceptionFilter('TaskService::deleteTask'))
     public getTask(data: Identity<api.todo.TaskReq>): Observable<api.todo.Task> {
         return this.taskService.getTask(data.id);
     }
 
     @UseGuards(JwtGuard)
-    @GrpcMethod('TodoService', 'GetTasksByUserId')
-    @UseFilters(new GrpcExceptionFilter('TodoService::getTasksByUserId'))
+    @GrpcMethod('TaskService', 'GetTasksByUserId')
+    @UseFilters(new GrpcExceptionFilter('TaskService::getTasksByUserId'))
     public getTasksByUserId(data: Identity<api.todo.TodoStub>, meta: IJwtMeta<{ id: string; }>): Observable<api.todo.TaskListRes> {
         return this.taskService.getTasksByUserId(meta.payload.id).pipe(
             map(tasks => ({ tasks })),
@@ -78,8 +78,8 @@ export class TaskController {
     }
 
     @UseGuards(JwtGuard)
-    @GrpcMethod('TodoService', 'GetTasksStream')
-    @UseFilters(new GrpcExceptionFilter('TodoService::getTasksStream'))
+    @GrpcMethod('TaskService', 'GetTasksStream')
+    @UseFilters(new GrpcExceptionFilter('TaskService::getTasksStream'))
     public getTasksStream(data: Identity<api.todo.TodoStub>, meta: IJwtMeta<{ id: string; }>): Observable<api.todo.Task> {
         return this.taskService.getTasksStream(meta.payload.id);
     }

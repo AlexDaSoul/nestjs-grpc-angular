@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { TodoComponent } from './todo.component';
 import { TasksComponent } from './tasks/tasks.component';
+import { StatusSettingsComponent } from './status-settings/status-settings.component';
 import { AuthGuard } from '@share/guards/auth.guard';
 import { AuthChildGuard } from '@share/guards/auth-child.guard';
 
@@ -18,6 +19,11 @@ const routes: Routes = [
                 component: TasksComponent,
             },
         ],
+    },
+    {
+        path: 'status-settings',
+        component: StatusSettingsComponent,
+        canActivate: [AuthGuard],
     },
 ];
 

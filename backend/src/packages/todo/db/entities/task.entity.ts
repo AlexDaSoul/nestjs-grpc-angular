@@ -8,10 +8,13 @@ import {
     AfterUpdate,
     AfterInsert,
     AfterRemove,
+    ManyToOne,
+    JoinColumn,
 } from 'typeorm';
 import { Observable, Subject } from 'rxjs';
 
-import { api } from '../../grpc-proto/todo/todo';
+import { api } from '../../grpc-proto/todo/task';
+import { TaskStatus } from './status.entity';
 
 @Entity('task')
 export class Task implements api.todo.Task {
@@ -23,7 +26,6 @@ export class Task implements api.todo.Task {
 
     @Index()
     @Column({
-        type: 'text',
         nullable: false,
     })
     userId: string;
@@ -36,14 +38,18 @@ export class Task implements api.todo.Task {
 
     @Column({
         nullable: false,
-        length: 5000,
+        length: 10000,
     })
-    text: string;
+    description: string;
 
     @Column({
-        default: 1,
+        default: 0,
     })
-    status: number;
+    index: number;
+
+    @ManyToOne(type => TaskStatus, status => status.tasks)
+    @JoinColumn()
+    status: string;
 
     @CreateDateColumn()
     createdAt: number;

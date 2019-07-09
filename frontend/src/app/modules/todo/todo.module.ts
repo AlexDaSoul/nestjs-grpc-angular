@@ -9,9 +9,10 @@ import { TodoComponent } from './todo.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { UpdateTaskComponent } from './update-task/update-task.component';
+import { StatusSettingsComponent } from './status-settings/status-settings.component';
 
 @NgModule({
-    declarations: [TodoComponent, TasksComponent, AddTaskComponent, UpdateTaskComponent],
+    declarations: [TodoComponent, TasksComponent, AddTaskComponent, UpdateTaskComponent, StatusSettingsComponent],
     imports: [
         CommonModule,
         ShareModule,

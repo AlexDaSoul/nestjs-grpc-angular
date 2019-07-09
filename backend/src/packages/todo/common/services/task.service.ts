@@ -4,8 +4,12 @@ import { Repository } from 'typeorm';
 import { from, Observable } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 
-import { api } from '../../grpc-proto/todo/todo';
+import { api } from '../../grpc-proto/todo/task';
+import { api as apiStatus } from '../../grpc-proto/todo/status';
+import { TaskStatus } from '../../db/entities/status.entity';
 import { Task } from '../../db/entities/task.entity';
+
+const INITIAL_STATUS_INDEX = 0;
 
 @Injectable()
 export class TaskService {
@@ -13,13 +17,20 @@ export class TaskService {
     constructor(
         @InjectRepository(Task)
         private readonly taskRepository: Repository<Task>,
+        @InjectRepository(TaskStatus)
+        private readonly taskStatusRepository: Repository<TaskStatus>,
     ) {
     }
 
-    public addTask(data: api.todo.AddTaskReq, userId: string): Observable<api.todo.Task> {
-        const createTask = this.taskRepository.create({ ...data, userId, status: 0 });
+    private getIndexTask(index: number): Observable<apiStatus.todo.TaskStatus> {
+        return from(this.taskStatusRepository.findOne({ index }));
+    }
 
-        return from(this.taskRepository.save(createTask));
+    public addTask(data: api.todo.AddTaskReq, userId: string): Observable<api.todo.Task> {
+        return this.getIndexTask(INITIAL_STATUS_INDEX).pipe(
+            map(status => this.taskRepository.create({ ...data, userId, status })),
+            switchMap(task => from(this.taskRepository.save(task))),
+        );
     }
 
     public updateTask(data: api.todo.Task): Observable<void> {
@@ -51,7 +62,7 @@ export class TaskService {
 
     public getTasksStream(userId: string): Observable<api.todo.Task> {
         return Task.subscribe().pipe(
-            filter(task => task.userId === userId),
+            filter(task => task.userId.includes(userId)),
         );
     }
 

@@ -1,3 +1,17 @@
-<p>
-    tasks works!
-</p>
+<div class="todo-list">
+    <div class="status" *ngFor="let status of statuses">
+        <h2>{{ status.name }}</h2>
+        
+        <div class="tasks"
+             cdkDropList
+             [id]="status.id"
+             [cdkDropListData]="status.tasks"
+             [cdkDropListConnectedTo]="statusIds"
+             (cdkDropListDropped)="drop($event)">
+
+            <div class="task" *ngFor="let task of status.tasks" cdkDrag>
+                {{ task.title }}
+            </div>
+        </div>
+    </div>
+</div>
