@@ -4,18 +4,22 @@
      cdkDropListOrientation="horizontal"
      (cdkDropListDropped)="drop($event, statuses)">
 
-    <mat-card class="status" *ngFor="let status of statuses" cdkDrag>
+    <mat-card class="status" *ngFor="let status of statuses index as i" cdkDrag>
         <h2 class="status-title">{{ status.name }}</h2>
         <mat-card-content>
             <mat-divider></mat-divider>
         </mat-card-content>
-        <mat-card-actions>
-            <button mat-button>LIKE</button>
-            <button mat-button>SHARE</button>
+        <mat-card-actions class="status-actions">
+            <button mat-icon-button title="Edit status" color="primary" (click)="editStatus(statuses, i)">
+                <mat-icon inline="true">create</mat-icon>
+            </button>
+            <button mat-icon-button title="Delete status" color="warn" (click)="deleteStatus(i)">
+                <mat-icon inline="true">delete_forever</mat-icon>
+            </button>
         </mat-card-actions>
     </mat-card>
 
-    <mat-card class="status add-status" (click)="addStatus()" title="Add status">
+    <mat-card class="status add-status" title="Add status" (click)="addStatus()">
         <mat-card-content>
             <mat-icon inline="true">add_circle_outline</mat-icon>
         </mat-card-content>

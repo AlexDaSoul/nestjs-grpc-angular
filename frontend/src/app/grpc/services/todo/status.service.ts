@@ -27,13 +27,6 @@ export class StatusGrpcService {
         return grpcUnary<TaskStatusRes.AsObject>(this.client.addStatus(req, meta));
     }
 
-    public deleteStatus(data: StatusReq.AsObject): Observable<TaskStatusRes.AsObject> {
-        const req = new StatusReq();
-        const meta: Metadata = grpcJwtMetadata();
-
-        return grpcUnary<TaskStatusRes.AsObject>(this.client.deleteStatus(req, meta));
-    }
-
     public updateStatus(data: TaskStatus.AsObject[]): Observable<TaskStatusRes.AsObject> {
         const req = new StatusList();
         const meta: Metadata = grpcJwtMetadata();
@@ -50,6 +43,13 @@ export class StatusGrpcService {
         });
 
         return grpcUnary<TaskStatusRes.AsObject>(this.client.updateStatus(req, meta));
+    }
+
+    public deleteStatus(data: StatusReq.AsObject): Observable<TaskStatusRes.AsObject> {
+        const req = new StatusReq();
+        const meta: Metadata = grpcJwtMetadata();
+
+        return grpcUnary<TaskStatusRes.AsObject>(this.client.deleteStatus(req, meta));
     }
 
     public getStatus(data: StatusReq.AsObject): Observable<TaskStatus.AsObject> {

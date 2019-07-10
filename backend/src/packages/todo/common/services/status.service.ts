@@ -31,8 +31,12 @@ export class StatusService {
 
         return from(findTasks).pipe(
             switchMap(statuses =>
-                 statuses.map((status, index) =>
-                     this.taskStatusRepository.merge(status, data.statuses[index])),
+                 statuses.map((status, index) => {
+                     const statusData = data.statuses[index];
+                     statusData.root = statusData.root ? statusData.root : false;
+
+                     return this.taskStatusRepository.merge(status, statusData);
+                 }),
             ),
             switchMap(status => from(this.taskStatusRepository.save(status))),
             map(() => null),

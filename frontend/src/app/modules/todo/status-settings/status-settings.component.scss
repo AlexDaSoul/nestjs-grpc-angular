@@ -13,6 +13,18 @@
             font-size: 20px;
         }
 
+        .status-actions {
+            text-align: right;
+
+            .mat-icon-button {
+                font-size: 20px;
+                width: 28px;
+                height: 28px;
+                line-height: 20px;
+                margin: 0 0 4px;
+            }
+        }
+
         &.add-status {
             cursor: pointer;
             display: grid;
