@@ -3,12 +3,12 @@ import { GrpcMethod } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators';
 
-import { JwtGuard } from '../lib/jwt/jwt.guard';
-import { IJwtMeta } from '../lib/jwt/jwt.interface';
-import { api } from '../grpc-proto/todo/status';
+import { JwtGuard } from '@lib/jwt/jwt.guard';
+import { IJwtMeta } from '@lib/jwt/jwt.interface';
+import { GrpcExceptionFilter } from '@lib/exceptions/exception.filter';
+import { api } from '@grpc/todo/status';
 
 import { StatusService } from '../common/services/status.service';
-import { GrpcExceptionFilter } from '../lib/exceptions/exception.filter';
 
 type Identity<T> = T;
 const TODO_ACTION_SUCCESS = 1;
@@ -71,7 +71,7 @@ export class StatusController {
     @UseGuards(JwtGuard)
     @GrpcMethod('StatusService', 'GetStatuses')
     @UseFilters(new GrpcExceptionFilter('StatusService::getStatuses'))
-    public getStatuses(data: Identity<api.todo.TodoStub>, meta: IJwtMeta<{ id: string; }>): Observable<api.todo.StatusListRes> {
+    public getStatuses(data: Identity<api.todo.TodoStub>, meta: IJwtMeta<{ id: string; }>): Observable<api.todo.StatusList> {
         return this.statusService.getStatuses(meta.payload.id).pipe(
             map(statuses => ({ statuses })),
         );
@@ -80,7 +80,7 @@ export class StatusController {
     @UseGuards(JwtGuard)
     @GrpcMethod('StatusService', 'GetStatusesWithTasks')
     @UseFilters(new GrpcExceptionFilter('StatusService::getStatusesWithTasks'))
-    public getStatusesWithTasks(data: Identity<api.todo.TodoStub>, meta: IJwtMeta<{ id: string; }>): Observable<api.todo.StatusListRes> {
+    public getStatusesWithTasks(data: Identity<api.todo.TodoStub>, meta: IJwtMeta<{ id: string; }>): Observable<api.todo.StatusList> {
         return this.statusService.getStatusesWithTasks(meta.payload.id).pipe(
             map(statuses => ({ statuses })),
         );

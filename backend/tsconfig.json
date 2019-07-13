@@ -1,5 +1,7 @@
 {
     "compilerOptions": {
+        "baseUrl": "./src",
+        "outDir": "./dist",
         "module": "commonjs",
         "declaration": true,
         "noImplicitAny": false,
@@ -11,11 +13,24 @@
         "preserveSymlinks": true,
         "target": "esnext",
         "sourceMap": true,
-        "baseUrl": "./src",
-        "paths": {
-        },
         "noUnusedLocals": true,
         "noUnusedParameters": false,
-        "newLine": "LF"
-    }
+        "newLine": "LF",
+        "paths": {
+            "@grpc/*": [
+                "grpc-proto/*"
+            ],
+            "@lib/*": [
+                "lib/*"
+            ]
+        },
+        "types": [
+            "node",
+            "webpack-env"
+        ]
+    },
+    "exclude": [
+        "node_modules",
+        "test"
+    ]
 }

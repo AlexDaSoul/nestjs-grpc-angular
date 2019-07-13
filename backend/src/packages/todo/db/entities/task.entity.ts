@@ -13,7 +13,7 @@ import {
 } from 'typeorm';
 import { Observable, Subject } from 'rxjs';
 
-import { api } from '../../grpc-proto/todo/task';
+import { api } from '@grpc/todo/task';
 import { TaskStatus } from './status.entity';
 
 @Entity('task')

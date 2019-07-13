@@ -7,7 +7,7 @@ import {
     OneToMany, Index,
 } from 'typeorm';
 
-import { api } from '../../grpc-proto/todo/status';
+import { api } from '@grpc/todo/status';
 import { Task } from './task.entity';
 
 @Entity('status')
