@@ -1,7 +1,12 @@
+import { join } from 'path';
 import { Transport, GrpcOptions } from '@nestjs/microservices';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-import { JWT_KEY_PRIV, JWT_KEY_PUB } from './lib/jwt/keys';
+import { JWT_KEY_PRIV, JWT_KEY_PUB } from '@lib/jwt/keys';
+
+import entities from './db/entities';
+import migrations from './db/migrations';
+import subscribers from './db/subscribers';
 
 const env = process.env;
 
@@ -14,9 +19,10 @@ export const USER_EXPIRE = env.USER_EXPIRE;
 export const grpc = {
     transport: Transport.GRPC,
     options: {
-        url: env.GRPC_USER_SERVICE,
+        url: '127.0.0.1:8001',
+        // url: env.GRPC_USER_SERVICE,
         package: 'api.user',
-        protoPath: './grpc-proto/user/index.proto',
+        protoPath: join(process.cwd(), 'src/grpc-proto/user/index.proto'),
     },
 } as GrpcOptions;
 
@@ -27,9 +33,9 @@ export const typeorm = {
     username: env.TYPEORM_USERNAME,
     password: env.TYPEORM_PASSWORD,
     database: env.TYPEORM_DATABASE,
-    entities: [env.TYPEORM_ENTITIES],
-    migrations: [env.TYPEORM_MIGRATIONS],
-    subscribers: [env.TYPEORM_SUBSCRIBERS],
+    entities,
+    migrations,
+    subscribers,
     synchronize: JSON.parse(env.TYPEORM_SYNCHRONIZE),
     logging: JSON.parse(env.TYPEORM_LOGGING),
 } as TypeOrmModuleOptions;

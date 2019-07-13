@@ -1,14 +1,14 @@
 import { Controller, UseGuards, UseFilters } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/internal/operators';
 
-import { JwtGuard } from '../lib/jwt/jwt.guard';
-import { IJwtMeta } from '../lib/jwt/jwt.interface';
-import { GrpcExceptionFilter } from '../lib/exceptions/exception.filter';
-import { api } from '../grpc-proto/user/user';
+import { JwtGuard } from '@lib/jwt/jwt.guard';
+import { IJwtMeta } from '@lib/jwt/jwt.interface';
+import { GrpcExceptionFilter } from '@lib/exceptions/exception.filter';
+import { api } from '@grpc/user/user';
 
 import { UserService } from '../common/services/user.service';
-import { map } from 'rxjs/internal/operators';
 
 type Identity<T> = T;
 const USER_ACTION_SUCCESS = 1;

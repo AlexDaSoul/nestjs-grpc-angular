@@ -3,26 +3,12 @@ version: "3.7"
 services:
 
 ##### user
-  user:
-    image: node:dubnium
-    container_name: user
-    working_dir: /opt/api/user
-    command: npm run docker:debug && npm run db:restore
-    depends_on:
-      - user-postgres
-    ports:
-      - 8001:9000 # node inspect user
-    env_file:
-      - ./docker/env/common.env
-      - ./docker/env/user.env
-    volumes:
-      - ./src/packages/user:/opt/api/user
 
   user-postgres:
     image: postgres:latest
     container_name: user-postgres
     restart: always
-    ports: # for debug puproses, remove in the production
+    ports: # for debug, remove in the production
       - 5532:5432
     environment:
       - POSTGRES_USER=postgres
@@ -33,26 +19,12 @@ services:
       - ./src/packages/user/db:/opt/api/user/db
 
 ##### todo
-  todo:
-    image: node:dubnium
-    container_name: todo
-    working_dir: /opt/api/todo
-    command: npm run docker:debug
-    depends_on:
-      - todo-postgres
-    ports:
-      - 8002:9000 # for debug puproses, remove in the production
-    env_file:
-      - ./docker/env/common.env
-      - ./docker/env/todo.env
-    volumes:
-      - ./src/packages/todo:/opt/api/todo
 
   todo-postgres:
     image: postgres:latest
     container_name: todo-postgres
     restart: always
-    ports: # for debug puproses, remove in the production
+    ports: # for debug, remove in the production
       - 5533:5432
     environment:
       - POSTGRES_USER=postgres
@@ -63,6 +35,7 @@ services:
       - ./src/packages/todo/db:/opt/api/todo/db
 
 #### envoy-api
+
   envoy-api:
     image: envoy:latest
     container_name: envoy-api
@@ -70,4 +43,4 @@ services:
       context: ./docker/envoy
       dockerfile: Dockerfile
     ports:
-      - 443:443
+      - 8080:8080
