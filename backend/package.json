@@ -5,8 +5,8 @@
     "author": "",
     "license": "MIT",
     "scripts": {
-        "start": "node dist/server",
-        "webpack": "webpack --config ./webpack.config.js",
+        "start:dev": "node dist/server",
+        "webpack:dev": "webpack --config webpack.dev.config.js",
         "format": "prettier --write \"src/**/*.ts\"",
         "lint": "tslint -p tsconfig.json -c tslint.json",
         "test": "jest",
@@ -14,8 +14,8 @@
         "test:cov": "jest --coverage",
         "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
         "test:e2e": "jest --config ./test/jest-e2e.json",
-        "docker:dev:up": "docker-compose -p api up -d",
-        "docker:dev:down": "docker-compose -p api down",
+        "docker:dev:up": "docker-compose -f ./docker-compose.dev.yml up -d",
+        "docker:dev:down": "docker-compose -f ./docker-compose.dev.yml down",
         "docker:dev:restart": "npm run docker:dev:down && npm run docker:dev:up"
     },
     "dependencies": {
