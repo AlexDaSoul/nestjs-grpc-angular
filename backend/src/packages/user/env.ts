@@ -19,8 +19,7 @@ export const USER_EXPIRE = env.USER_EXPIRE;
 export const grpc = {
     transport: Transport.GRPC,
     options: {
-        url: '127.0.0.1:8001',
-        // url: env.GRPC_USER_SERVICE,
+        url: env.GRPC_USER_SERVICE,
         package: 'api.user',
         protoPath: join(process.cwd(), 'src/grpc-proto/user/index.proto'),
     },

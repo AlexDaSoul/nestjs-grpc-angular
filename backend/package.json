@@ -6,7 +6,7 @@
     "license": "MIT",
     "scripts": {
         "start:dev": "node dist/server",
-        "webpack:dev": "webpack --config webpack.dev.config.js",
+        "webpack:dev": "webpack --config builder/dev/webpack.config.js",
         "format": "prettier --write \"src/**/*.ts\"",
         "lint": "tslint -p tsconfig.json -c tslint.json",
         "test": "jest",
@@ -14,8 +14,8 @@
         "test:cov": "jest --coverage",
         "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
         "test:e2e": "jest --config ./test/jest-e2e.json",
-        "docker:dev:up": "docker-compose -f ./docker-compose.dev.yml up -d",
-        "docker:dev:down": "docker-compose -f ./docker-compose.dev.yml down",
+        "docker:dev:up": "docker-compose -f builder/dev/docker-compose.yml up -d",
+        "docker:dev:down": "docker-compose -f builder/dev/docker-compose.yml down",
         "docker:dev:restart": "npm run docker:dev:down && npm run docker:dev:up"
     },
     "dependencies": {
@@ -45,6 +45,7 @@
         "@types/supertest": "^2.0.7",
         "@types/webpack": "^4.4.35",
         "@types/webpack-env": "^1.14.0",
+        "clean-webpack-plugin": "^3.0.0",
         "concurrently": "^4.1.0",
         "dotenv-webpack": "^1.7.0",
         "fs-extra": "^8.0.1",
