@@ -11,8 +11,7 @@ const env = process.env;
 export const grpc = {
     transport: Transport.GRPC,
     options: {
-        url: '127.0.0.1:8002',
-        // url: env.GRPC_TODO_SERVICE,
+        url: env.GRPC_TODO_SERVICE,
         package: 'api.todo',
         protoPath: join(process.cwd(), 'src/grpc-proto/todo/index.proto'),
     },
@@ -21,8 +20,7 @@ export const grpc = {
 export const grpcUser = {
     transport: Transport.GRPC,
     options: {
-        url: '127.0.0.1:8001',
-        // url: env.GRPC_USER_SERVICE,
+        url: env.GRPC_USER_SERVICE,
         package: 'api.user',
         protoPath: join(process.cwd(), 'src/grpc-proto/user/index.proto'),
     },

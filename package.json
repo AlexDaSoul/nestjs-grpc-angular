@@ -9,9 +9,9 @@
         "grpc-lib-gen:backend": "node devtools/build-typings-and-lib-backend.js",
         "grpc-lib-gen:frontend": "node devtools/build-typings-and-lib-frontend.js",
         "db:restore": "npm run db:user:restore && npm run db:status:restore && npm run db:task:restore",
-        "db:user:restore": "docker exec user-postgres psql -U postgres -d postgres -f /opt/api/user/db/dump/user.sql",
-        "db:status:restore": "docker exec todo-postgres psql -U postgres -d postgres -f /opt/api/todo/db/dump/status.sql",
-        "db:task:restore": "docker exec todo-postgres psql -U postgres -d postgres -f /opt/api/todo/db/dump/task.sql"
+        "db:user:restore": "docker exec user-postgres-dev psql -U postgres -d postgres -f /opt/api/user/db/dump/user.sql",
+        "db:status:restore": "docker exec todo-postgres-dev psql -U postgres -d postgres -f /opt/api/todo/db/dump/status.sql",
+        "db:task:restore": "docker exec todo-postgres-dev psql -U postgres -d postgres -f /opt/api/todo/db/dump/task.sql"
     },
     "dependencies": {
         "app-root-path": "^2.2.1",
