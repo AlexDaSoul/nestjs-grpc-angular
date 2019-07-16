@@ -6,7 +6,7 @@
     "license": "MIT",
     "scripts": {
         "start:dev": "node dist/server",
-        "webpack:dev": "webpack --config builder/dev/webpack.config.js",
+        "webpack:dev": "rimraf dist && webpack --config builder/dev/webpack.config.js",
         "format": "prettier --write \"src/**/*.ts\"",
         "lint": "tslint -p tsconfig.json -c tslint.json",
         "test": "jest",
