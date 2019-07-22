@@ -4,8 +4,8 @@ import { Repository } from 'typeorm';
 import { from, Observable } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 
-import { api } from '../../grpc-proto/todo/task';
-import { api as apiStatus } from '../../grpc-proto/todo/status';
+import { api } from '@grpc/todo/task';
+import { api as apiStatus } from '@grpc/todo/status';
 import { TaskStatus } from '../../db/entities/status.entity';
 import { Task } from '../../db/entities/task.entity';
 
@@ -28,7 +28,7 @@ export class TaskService {
 
     public addTask(data: api.todo.AddTaskReq, userId: string): Observable<api.todo.Task> {
         return this.getIndexTask(INITIAL_STATUS_INDEX).pipe(
-            map(status => this.taskRepository.create({ ...data, userId, status })),
+            map(status => this.taskRepository.create({ ...data, userId, status: status.id })),
             switchMap(task => from(this.taskRepository.save(task))),
         );
     }

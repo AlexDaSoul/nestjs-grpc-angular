@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { from, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
-import { api } from '../../grpc-proto/todo/status';
+import { api } from '@grpc/todo/status';
 import { TaskStatus } from '../../db/entities/status.entity';
 
 @Injectable()

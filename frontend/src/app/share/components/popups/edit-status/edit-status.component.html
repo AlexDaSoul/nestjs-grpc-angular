@@ -1,0 +1,21 @@
+<form [formGroup]="form">
+    <h1 mat-dialog-title>
+        Edit Status
+    </h1>
+    <div mat-dialog-content class="dialog-content">
+        <mat-form-field class="form-field">
+            <input matInput placeholder="Name" formControlName="name" required>
+            <mat-error *ngIf="form.get('name').invalid">Enter status name</mat-error>
+        </mat-form-field>
+
+
+        <mat-checkbox formControlName="root">
+            Only admin can assign this status to a task
+        </mat-checkbox>
+    </div>
+    <div mat-dialog-actions class="dialog-actions">
+        <button mat-flat-button color="warn" type="button" mat-dialog-close>CANCEL</button>
+        <button mat-flat-button color="primary" type="button"
+                [mat-dialog-close]="form.value" cdkFocusInitial [disabled]="form.invalid">SEND</button>
+    </div>
+</form>

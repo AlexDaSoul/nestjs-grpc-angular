@@ -1,0 +1,47 @@
+version: "3.7"
+
+services:
+
+##### user
+
+  user-postgres-dev:
+    image: postgres:latest
+    container_name: user-postgres-dev
+    restart: always
+    ports: # for debug, remove in the production
+      - 5532:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - PGPORT=5432
+    volumes:
+      - ../../src/packages/user/db:/opt/api/user/db
+
+##### todo
+
+  todo-postgres-dev:
+    image: postgres:latest
+    container_name: todo-postgres-dev
+    restart: always
+    ports: # for debug, remove in the production
+      - 5533:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - PGPORT=5432
+    volumes:
+      - ../../src/packages/todo/db:/opt/api/todo/db
+
+#### envoy-api-dev
+
+  envoy-api-dev:
+    image: envoyproxy/envoy:latest
+    container_name: envoy-api-dev
+    working_dir: /etc/envoy
+    command: /usr/local/bin/envoy -c /etc/envoy/envoy.yaml
+    ports:
+      - 443:443
+    volumes:
+      - ./:/etc/envoy
