@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package api.todo;
+
+enum ETodoStatus {
+    TODO_ACTION_UNKNOWN = 0;
+    TODO_ACTION_SUCCESS = 1;
+    TODO_ACTION_ERROR = 2;
+}
+
+message Task {
+    string id = 1;
+    string userId = 2;
+    int32 index = 3;
+    string title = 4;
+    string description = 5;
+    string status = 6;
+}
+
+message TaskStatusRes {
+    ETodoStatus status = 1;
+}
+
+message TodoStub {
+
+}
+
+message TaskStatus {
+    string id = 1;
+    string userId = 2;
+    int32 index = 3;
+    string name = 4;
+    bool root = 5;
+    repeated Task tasks = 6;
+}

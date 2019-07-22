@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package api.todo;
+
+import "todo.types.proto";
+
+service TaskService {
+    rpc AddTask (AddTaskReq) returns (TaskStatusRes) {
+    }
+
+    rpc DeleteTask (TaskReq) returns (TaskStatusRes) {
+    }
+
+    rpc UpdateTask (Task) returns (TaskStatusRes) {
+    }
+
+    rpc GetTask (TaskReq) returns (Task) {
+    }
+
+    rpc GetTasksByUserId (TodoStub) returns (TaskListRes) {
+    }
+
+    rpc GetTasksStream (TodoStub) returns (stream Task) {
+    }
+}
+
+message AddTaskReq {
+    string title = 1;
+    string description = 2;
+}
+
+message TaskReq {
+    string id = 1;
+}
+
+message TaskListRes {
+    repeated Task tasks = 1;
+}

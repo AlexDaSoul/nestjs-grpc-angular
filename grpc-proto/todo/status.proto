@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package api.todo;
+
+import "todo.types.proto";
+
+service StatusService {
+    rpc AddStatus (AddStatusReq) returns (TaskStatusRes) {
+    }
+
+    rpc UpdateStatus (StatusList) returns (TaskStatusRes) {
+    }
+
+    rpc DeleteStatus (StatusReq) returns (TaskStatusRes) {
+    }
+
+    rpc GetStatus (StatusReq) returns (TaskStatus) {
+    }
+
+    rpc GetStatuses (TodoStub) returns (StatusList) {
+    }
+
+    rpc GetStatusesWithTasks (TodoStub) returns (StatusList) {
+    }
+}
+
+message AddStatusReq {
+    string name = 1;
+    int32 index = 2;
+    bool root = 3;
+}
+
+message StatusReq {
+    string id = 1;
+}
+
+message StatusList {
+    repeated TaskStatus statuses = 1;
+}
