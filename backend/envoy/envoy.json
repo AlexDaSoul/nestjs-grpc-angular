@@ -4,7 +4,7 @@
         "address": {
             "socket_address": {
                 "address": "0.0.0.0",
-                "port_value": 9901
+                "port_value": 9903
             }
         }
     },
@@ -66,19 +66,19 @@
                                                     "expose_headers": "grpc-status, grpc-message"
                                                 }
                                             }
-                                        ],
-                                        "http_filters": [
-                                            {
-                                                "name": "envoy.cors"
-                                            },
-                                            {
-                                                "name": "envoy.grpc_web"
-                                            },
-                                            {
-                                                "name": "envoy.router"
-                                            }
                                         ]
-                                    }
+                                    },
+                                    "http_filters": [
+                                        {
+                                            "name": "envoy.cors"
+                                        },
+                                        {
+                                            "name": "envoy.grpc_web"
+                                        },
+                                        {
+                                            "name": "envoy.router"
+                                        }
+                                    ]
                                 }
                             }
                         ]
@@ -86,6 +86,7 @@
                 ]
             }
         ],
+        
         "clusters": [
             {
                 "name": "user",

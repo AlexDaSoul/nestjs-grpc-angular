@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import entities from './entities';
+import { User } from './entities/user.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([...entities])],
+    imports: [TypeOrmModule.forFeature([User])],
+    exports: [TypeOrmModule],
 })
 export class DbModule {}
