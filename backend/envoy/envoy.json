@@ -102,8 +102,8 @@
                                     "endpoint": {
                                         "address": {
                                             "socket_address": {
-                                                "address": "user",
-                                                "port_value": 443
+                                                "address": "127.0.0.1",
+                                                "port_value": 8001
                                             }
                                         }
                                     }
@@ -128,8 +128,8 @@
                                     "endpoint": {
                                         "address": {
                                             "socket_address": {
-                                                "address": "todo",
-                                                "port_value": 443
+                                                "address": "127.0.0.1",
+                                                "port_value": 8002
                                             }
                                         }
                                     }

@@ -13,6 +13,7 @@ async function bootstrap() {
     const app = await NestFactory.createMicroservice(AppModule, grpc);
 
     app.useGlobalPipes(new ValidationPipe());
+
     await app.listenAsync();
 }
 

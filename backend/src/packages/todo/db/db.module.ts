@@ -6,5 +6,6 @@ import { Task } from './entities/task.entity';
 
 @Module({
     imports: [TypeOrmModule.forFeature([TaskStatus, Task])],
+    exports: [TypeOrmModule],
 })
 export class DbModule {}

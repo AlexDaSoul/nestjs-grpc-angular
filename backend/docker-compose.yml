@@ -6,17 +6,19 @@ services:
   user:
     image: node:dubnium
     container_name: user
-    working_dir: /opt/api/user
+    working_dir: /home/api/user
     command: npm run docker:debug
     depends_on:
       - user-postgres
     ports:
-      - 8001:9000 # node inspect user
+      - 8001:9229 # node inspect user
     env_file:
       - ./environments/common.env
       - ./environments/user.env
+    environment:
+      - GRPC_VERBOSITY=DEBUG
     volumes:
-      - ./src/packages/user:/opt/api/user
+      - ./src/packages/user:/home/api/user
 
   user-postgres:
     image: postgres:latest
@@ -30,23 +32,23 @@ services:
       - POSTGRES_DB=postgres
       - PGPORT=5432
     volumes:
-      - ./src/packages/user/db:/opt/api/user/db
+      - ./src/packages/user/db:/home/api/user/db
 
 ##### todo
   todo:
     image: node:dubnium
     container_name: todo
-    working_dir: /opt/api/todo
+    working_dir: /home/api/todo
     command: npm run docker:debug
     depends_on:
       - todo-postgres
     ports:
-      - 8002:9000 # for debug puproses, remove in the production
+      - 8002:9229 # for debug puproses, remove in the production
     env_file:
       - ./environments/common.env
       - ./environments/todo.env
     volumes:
-      - ./src/packages/todo:/opt/api/todo
+      - ./src/packages/todo:/home/api/todo
 
   todo-postgres:
     image: postgres:latest
@@ -60,15 +62,15 @@ services:
       - POSTGRES_DB=postgres
       - PGPORT=5432
     volumes:
-      - ./src/packages/todo/db:/opt/api/todo/db
+      - ./src/packages/todo/db:/home/api/todo/db
 
 #### envoy-api
-    ####  envoy-api-dev:
-    ####    image: envoyproxy/envoy:latest
-    ####   container_name: envoy-api-dev
-    ####  working_dir: /etc/envoy
-    #### command: /usr/local/bin/envoy -c /etc/envoy/envoy.yaml
-    #### ports:
-    ####   - 443:443
-      #### volumes:
-      #### - ./:/etc/envoy
+  envoy-api-dev:
+    image: envoyproxy/envoy:latest
+    container_name: envoy-api-dev
+    working_dir: /home/envoy
+    command: /usr/local/bin/envoy -c /home/envoy/envoy.json
+    ports:
+      - 443:443
+    volumes:
+      - ./envoy:/home/envoy
