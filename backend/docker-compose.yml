@@ -63,12 +63,12 @@ services:
       - ./src/packages/todo/db:/opt/api/todo/db
 
 #### envoy-api
-  envoy-api-dev:
-    image: envoyproxy/envoy:latest
-    container_name: envoy-api-dev
-    working_dir: /etc/envoy
-    command: /usr/local/bin/envoy -c /etc/envoy/envoy.yaml
-    ports:
-      - 443:443
-    volumes:
-      - ./:/etc/envoy
+    ####  envoy-api-dev:
+    ####    image: envoyproxy/envoy:latest
+    ####   container_name: envoy-api-dev
+    ####  working_dir: /etc/envoy
+    #### command: /usr/local/bin/envoy -c /etc/envoy/envoy.yaml
+    #### ports:
+    ####   - 443:443
+      #### volumes:
+      #### - ./:/etc/envoy

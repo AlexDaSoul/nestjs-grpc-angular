@@ -9,52 +9,54 @@ html, body {
     padding: 0;
 }
 
-.mat-icon-button {
-    width: 50px;
-    height: 50px;
-    font-size: 42px;
-    line-height: 42px;
-    border-radius: 4px;
-    overflow: hidden;
-    margin: 8px 0;
+.todo {
+    .mat-icon-button {
+        width: 50px;
+        height: 50px;
+        font-size: 42px;
+        line-height: 42px;
+        border-radius: 4px;
+        overflow: hidden;
+        margin: 8px 0;
 
-    &.active {
-        color: #0090ea;
+        &.active {
+            color: #0090ea;
+        }
     }
-}
 
-.form {
-    width: 400px;
-}
-
-.form-field {
-    width: 100%;
-    margin-bottom: 8px;
-}
-
-.form-actions {
-    text-align: right;
-}
-
-.error-message {
-    background: #a20c27;
-    font-weight: bold;
-    color: #fefefe;
-
-    .mat-simple-snackbar-action {
-        color: #ca7793;
+    .form {
+        width: 400px;
     }
-}
 
-.mat-dialog-content.dialog-content {
-    overflow: visible;
-}
+    .form-field {
+        width: 100%;
+        margin-bottom: 8px;
+    }
 
-.mat-dialog-actions.dialog-actions {
-    justify-content: flex-end;
-    margin-top: 8px;
+    .form-actions {
+        text-align: right;
+    }
 
-    button {
-        margin-left: 8px;
+    .error-message {
+        background: #a20c27;
+        font-weight: bold;
+        color: #fefefe;
+
+        .mat-simple-snackbar-action {
+            color: #ca7793;
+        }
+    }
+
+    .mat-dialog-content.dialog-content {
+        overflow: visible;
+    }
+
+    .mat-dialog-actions.dialog-actions {
+        justify-content: flex-end;
+        margin-top: 8px;
+
+        button {
+            margin-left: 8px;
+        }
     }
 }

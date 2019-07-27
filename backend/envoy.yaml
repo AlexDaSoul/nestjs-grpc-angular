@@ -1,17 +1,13 @@
 admin:
   access_log_path: /tmp/admin_access.log
   address:
-    socket_address:
-      address: 0.0.0.0
-      port_value: 9901
+    socket_address: { address: 0.0.0.0, port_value: 9901 }
 
 static_resources:
   listeners:
     - name: listener_0
       address:
-        socket_address:
-          address: 0.0.0.0
-          port_value: 443
+        socket_address: { address: 0.0.0.0, port_value: 443 }
 
       filter_chains:
         - filters:
@@ -19,66 +15,67 @@ static_resources:
               config:
                 codec_type: auto
                 stat_prefix: ingress_http
+                use_remote_address: true
+                xff_num_trusted_hops: 0
                 route_config:
                   name: local_route
                   virtual_hosts:
                     - name: local_service
                       domains: ["*"]
+
                       routes:
 
-                        - match:
-                            prefix: "/api.user"
+                        - match: { prefix: "/api.user" }
                           route:
-                            cluster: user_service
+                            cluster: user
                             max_grpc_timeout: 0s
 
-                        - match:
-                            prefix: "/api.todo"
+                        - match: { prefix: "/api.todo" }
                           route:
-                            cluster: todo_service
+                            cluster: todo
                             max_grpc_timeout: 0s
 
                       cors:
                         allow_origin:
                           - "*"
                         allow_methods: GET, PUT, DELETE, POST, OPTIONS
-                        allow_headers: keep-alive,user-agent,cache-control,content-type,content-transfer-encoding,custom-header-1,x-accept-content-transfer-encoding,x-accept-response-streaming,x-user-agent,x-grpc-web,grpc-timeout
+                        allow_headers: keep-alive, user-agent, cache-control, content-type, content-transfer-encoding, Authorization, x-ip, x-accept-content-transfer-encoding, x-accept-response-streaming, x-user-agent, x-grpc-web, grpc-timeout
                         max_age: "1728000"
-                        expose_headers: custom-header-1,grpc-status,grpc-message
+                        expose_headers: grpc-status,grpc-message
 
-                http_filters:
-                  - name: envoy.cors
-                  - name: envoy.grpc_web
-                  - name: envoy.router
+                  http_filters:
+                    - name: envoy.cors
+                    - name: envoy.grpc_web
+                    - name: envoy.router
 
   clusters:
 
-    - name: user_service
+    - name: user
       connect_timeout: 0.25s
       type: LOGICAL_DNS
       lb_policy: ROUND_ROBIN
       http2_protocol_options: {}
       load_assignment:
-        cluster_name: user_service
+        cluster_name: user
         endpoints:
           - lb_endpoints:
               - endpoint:
-                  address:
-                    socket_address:
-                      address: 127.0.0.1
-                      port_value: 8001
+                address:
+                  socket_address:
+                    address: 127.0.0.1
+                    port_value: 8001
 
-    - name: todo_service
+    - name: todo
       connect_timeout: 0.25s
       type: LOGICAL_DNS
       lb_policy: ROUND_ROBIN
       http2_protocol_options: {}
       load_assignment:
-        cluster_name: user_service
+        cluster_name: todo
         endpoints:
           - lb_endpoints:
               - endpoint:
-                  address:
-                    socket_address:
-                      address: 127.0.0.1
-                      port_value: 8002
+                address:
+                  socket_address:
+                    address: 127.0.0.1
+                    port_value: 8002
