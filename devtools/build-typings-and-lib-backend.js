@@ -62,4 +62,20 @@ helpers.getPackages(IGNORE_PACKAGES, grpcDir).forEach(pkg => {
     });
 });
 
+console.log(`-----------------------------------------`);
+
+getServices().forEach(pkg => {
+    const grpcProtoDir = `${pkg}/grpc-proto`;
+    const libMsDir = `${pkg}/lib`;
+
+    rimraf.sync(grpcProtoDir);
+    fs.copySync(grpcDir, grpcProtoDir);
+
+    rimraf.sync(libMsDir);
+    fs.copySync(libDir, libMsDir);
+
+    console.log(`Copy lib to ${libMsDir}`);
+});
+
+rimraf.sync(grpcDir);
 process.exit(0);

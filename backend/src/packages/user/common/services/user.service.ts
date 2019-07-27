@@ -4,8 +4,8 @@ import { Repository } from 'typeorm';
 import { from, Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 
-import { api } from '@grpc/user/user';
-import { api as authApi } from '@grpc/user/auth';
+import { api } from '../../grpc-proto/user/user';
+import { api as authApi } from '../../grpc-proto/user/auth';
 import { User } from '../../db/entities/user.entity';
 
 @Injectable()

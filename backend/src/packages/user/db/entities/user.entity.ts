@@ -3,7 +3,7 @@ import { createHmac } from 'crypto';
 import { Exclude } from 'class-transformer';
 
 import { SALT } from '../../env';
-import { api } from '@grpc/user/user';
+import { api } from '../../grpc-proto/user/user';
 
 @Entity('user')
 export class User implements api.user.User {

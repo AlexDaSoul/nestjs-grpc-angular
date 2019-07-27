@@ -3,12 +3,12 @@ import { GrpcMethod } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators';
 
-import { JwtGuard } from '@lib/jwt/jwt.guard';
-import { IJwtMeta } from '@lib/jwt/jwt.interface';
-import { GrpcExceptionFilter } from '@lib/exceptions/exception.filter';
-import { api } from '@grpc/todo/task';
+import { JwtGuard } from '../lib/jwt/jwt.guard';
+import { IJwtMeta } from '../lib/jwt/jwt.interface';
+import { api } from '../grpc-proto/todo/task';
 
 import { TaskService } from '../common/services/task.service';
+import { GrpcExceptionFilter } from '../lib/exceptions/exception.filter';
 
 type Identity<T> = T;
 const TODO_ACTION_SUCCESS = 1;

@@ -2,11 +2,11 @@ import { Controller, UseGuards, UseFilters } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { from, Observable } from 'rxjs';
 
-import { JwtGuard } from '@lib/jwt/jwt.guard';
-import { IJwtMeta } from '@lib/jwt/jwt.interface';
-import { GrpcExceptionFilter } from '@lib/exceptions/exception.filter';
-import { api } from '@grpc/user/auth';
+import { JwtGuard } from '../lib/jwt/jwt.guard';
+import { IJwtMeta } from '../lib/jwt/jwt.interface';
+import { api } from '../grpc-proto/user/auth';
 
+import { GrpcExceptionFilter } from '../lib/exceptions/exception.filter';
 import { UserService } from '../common/services/user.service';
 import { JwtCertsService } from './jwt-certs.service';
 import { JWT_EXPIRE } from '../env';
