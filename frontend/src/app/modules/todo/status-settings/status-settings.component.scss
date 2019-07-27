@@ -16,6 +16,16 @@
         .status-actions {
             text-align: right;
 
+            .status-root {
+                float: left;
+                font-size: 12px;
+                color: #f44336c4;
+                text-align: left;
+                line-height: 28px;
+                position: absolute;
+                left: 24px;
+            }
+
             .mat-icon-button {
                 font-size: 20px;
                 width: 28px;

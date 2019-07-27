@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package api.todo;
+
+import "todo.types.proto";
+
+service MembersService {
+    rpc AddMembers (AddMembersReq) returns (TaskStatusRes) {
+    }
+
+    rpc UpdateMembers (Members) returns (TaskStatusRes) {
+    }
+
+    rpc DeleteMembers (MembersReq) returns (TaskStatusRes) {
+    }
+    
+    rpc GetMembers (MembersReq) returns (Members) {
+    }
+}
+
+message AddMembersReq {
+    repeated string members = 1;
+}
+
+message MembersReq {
+    string id = 1;
+}
+
+message MembersListRes {
+    repeated Members tasks = 1;
+}

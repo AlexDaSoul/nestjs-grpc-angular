@@ -28,7 +28,7 @@ export class TaskService {
 
     public addTask(data: api.todo.AddTaskReq, userId: string): Observable<api.todo.Task> {
         return this.getIndexTask(INITIAL_STATUS_INDEX).pipe(
-            map(status => this.taskRepository.create({ ...data, userId, status })),
+            map(status => this.taskRepository.create({ ...data, userId, ...status })),
             switchMap(task => from(this.taskRepository.save(task))),
         );
     }
@@ -62,7 +62,11 @@ export class TaskService {
 
     public getTasksStream(userId: string): Observable<api.todo.Task> {
         return Task.subscribe().pipe(
-            filter(task => task.userId.includes(userId)),
+            map(task => (task ? task : new Task())),
+            filter(task => {
+                console.log(task)
+                return task.userId.includes(userId);
+            }),
         );
     }
 

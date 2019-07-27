@@ -5,15 +5,15 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TaskStatus } from '@grpc/proto/todo/todo.types_pb';
 
 @Component({
-    selector: 'app-edit-status',
-    templateUrl: './edit-status.component.html',
-    styleUrls: ['./edit-status.component.scss'],
+    selector: 'app-add-status',
+    templateUrl: './add-status.component.html',
+    styleUrls: ['./add-status.component.scss'],
 })
-export class EditStatusComponent {
-
+export class AddStatusComponent {
     public form = this.fb.group({
         name: [this.data.name, Validators.required],
         root: [this.data.root],
+        index: [this.data.index],
     });
 
     constructor(

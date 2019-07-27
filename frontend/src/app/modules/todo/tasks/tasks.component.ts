@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { NGXLogger } from 'ngx-logger';
+import { Observable, Subscription } from 'rxjs';
+import { map, switchMap, filter, tap } from 'rxjs/operators';
+
+import { StatusGrpcService } from '@grpc/services/todo/status.service';
+import { TaskStatus } from '@grpc/proto/todo/todo.types_pb';
+import { TaskGrpcService } from '@grpc/services/todo/task.service';
 
 interface ITodoTask {
     id: string;
     title: string;
     description: string;
     statusId: string;
-}
-
-interface ITodoStatus {
-    id: string;
-    name: string;
-    tasks: ITodoTask[];
 }
 
 @Component({
@@ -21,58 +22,34 @@ interface ITodoStatus {
 })
 export class TasksComponent implements OnInit {
 
-    public statuses: ITodoStatus[] = [
-        {
-            id: 'todo',
-            name: 'To Do',
-            tasks: [
-                {
-                    id: 'sdfdfdf1',
-                    title: 'Task 1',
-                    description: '',
-                    statusId: 'todo',
-                },
-                {
-                    id: 'sdfdfdf2',
-                    title: 'Task 2',
-                    description: '',
-                    statusId: 'todo',
-                },
-                {
-                    id: 'sdfdfdf3',
-                    title: 'Task 3',
-                    description: '',
-                    statusId: 'todo',
-                },
-            ],
-        },
-        {
-            id: 'open',
-            name: 'Open',
-            tasks: [],
-        },
-        {
-            id: 'progress',
-            name: 'In Progress',
-            tasks: [],
-        },
-        {
-            id: 'resolved',
-            name: 'Resolved',
-            tasks: [],
-        },
-        {
-            id: 'close',
-            name: 'Close',
-            tasks: [],
-        },
-    ];
-    public statusIds: string[] = this.statuses.map(s => s.id);
+    public statusIds: string[];
+    public statuses$: Observable<TaskStatus.AsObject[]> = this.statusGrpcService.getStatuses({}).pipe(
+        map(statuses => statuses.statusesList.sort((a, b) => a.index - b.index)),
+        tap(statuses => this.getStatusIds(statuses)),
+    );
 
-    constructor() {
+    constructor(
+        private statusGrpcService: StatusGrpcService,
+        private taskGrpcService: TaskGrpcService,
+        private logger: NGXLogger,
+    ) {
     }
 
     ngOnInit() {
+        this.taskGrpcService.getTasksStream().subscribe(
+            (data) => {
+                console.log(data);
+            },
+            err => {
+                console.log(err);
+            },
+        );
+    }
+
+    private getStatusIds(statuses: TaskStatus.AsObject[]): void {
+        this.statusIds = statuses.reduce((ids: string[], status: TaskStatus.AsObject) => {
+            return [...ids, status.id];
+        }, []);
     }
 
     public drop(event: CdkDragDrop<ITodoTask[]>): void {

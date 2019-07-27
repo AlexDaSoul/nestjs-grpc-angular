@@ -10,16 +10,19 @@
             <mat-divider></mat-divider>
         </mat-card-content>
         <mat-card-actions class="status-actions">
+            <span *ngIf="status.root" class="status-root">
+                owner only
+            </span>
             <button mat-icon-button title="Edit status" color="primary" (click)="editStatus(statuses, i)">
                 <mat-icon inline="true">create</mat-icon>
             </button>
-            <button mat-icon-button title="Delete status" color="warn" (click)="deleteStatus(i)">
+            <button mat-icon-button title="Delete status" color="warn" (click)="deleteStatus(statuses, i)">
                 <mat-icon inline="true">delete_forever</mat-icon>
             </button>
         </mat-card-actions>
     </mat-card>
 
-    <mat-card class="status add-status" title="Add status" (click)="addStatus()">
+    <mat-card class="status add-status" title="Add status" (click)="addStatus(statuses)">
         <mat-card-content>
             <mat-icon inline="true">add_circle_outline</mat-icon>
         </mat-card-content>

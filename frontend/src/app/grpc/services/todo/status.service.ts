@@ -49,6 +49,8 @@ export class StatusGrpcService {
         const req = new StatusReq();
         const meta: Metadata = grpcJwtMetadata();
 
+        req.setId(data.id);
+
         return grpcUnary<TaskStatusRes.AsObject>(this.client.deleteStatus(req, meta));
     }
 

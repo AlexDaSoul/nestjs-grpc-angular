@@ -6,8 +6,13 @@
     min-height: calc(100vh - 135px);
 
     .status {
+        margin-top: 42px;
+        position: relative;
+
         h2 {
-            margin: 0 0 8px;
+            top: -32px;
+            position: absolute;
+            margin: 0;
         }
 
         .tasks {

@@ -1,4 +1,4 @@
-<div class="todo-list">
+<div class="todo-list" *ngIf="statuses$ | async as statuses">
     <div class="status" *ngFor="let status of statuses">
         <h2>{{ status.name }}</h2>
         

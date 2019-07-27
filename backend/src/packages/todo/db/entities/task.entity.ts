@@ -9,17 +9,19 @@ import {
     AfterInsert,
     AfterRemove,
     ManyToOne,
+    OneToMany,
     JoinColumn,
 } from 'typeorm';
-import { Observable, Subject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
-import { api } from '../../grpc-proto/todo/task';
+import { api } from '../../grpc-proto/todo/todo.types';
 import { TaskStatus } from './status.entity';
+import { Members } from './members.entity';
 
 @Entity('task')
 export class Task implements api.todo.Task {
 
-    private static updates$ = new Subject<Task>();
+    private static updates$ = new BehaviorSubject<Task>(null);
 
     @PrimaryGeneratedColumn('uuid')
     id: string;
@@ -50,6 +52,9 @@ export class Task implements api.todo.Task {
     @ManyToOne(type => TaskStatus, status => status.tasks)
     @JoinColumn()
     status: string;
+
+    @OneToMany(type => Members, task => task.task)
+    members: Members[];
 
     @CreateDateColumn()
     createdAt: number;

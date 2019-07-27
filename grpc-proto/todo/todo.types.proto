@@ -33,3 +33,9 @@ message TaskStatus {
     bool root = 5;
     repeated Task tasks = 6;
 }
+
+message Members {
+    string id = 1;
+    string userId = 2;
+    repeated string members = 3;
+}

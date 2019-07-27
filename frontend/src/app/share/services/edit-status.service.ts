@@ -7,7 +7,7 @@ import { EditStatusComponent } from '@share/components/popups/edit-status/edit-s
 @Injectable({
     providedIn: 'root',
 })
-export class PopupService {
+export class EditStatusService {
 
     constructor(private dialog: MatDialog) {
     }
@@ -15,6 +15,7 @@ export class PopupService {
     public openEditStatus(data?: TaskStatus.AsObject): MatDialogRef<EditStatusComponent> {
         return this.dialog.open(EditStatusComponent, {
             width: '490px',
+            panelClass: 'todo',
             data: data || {},
         });
     }

@@ -27,6 +27,8 @@ import { LoggerModule } from 'ngx-logger';
 import { environment } from '@environments/environment';
 import { GrpcModule } from '@grpc/grpc.module';
 import { EditStatusComponent } from './components/popups/edit-status/edit-status.component';
+import { AddStatusComponent } from './components/popups/add-status/add-status.component';
+import { ConfirmComponent } from './components/popups/confirm/confirm.component';
 
 @NgModule({
     imports: [
@@ -69,9 +71,13 @@ import { EditStatusComponent } from './components/popups/edit-status/edit-status
     ],
     declarations: [
         EditStatusComponent,
+        AddStatusComponent,
+        ConfirmComponent,
     ],
     entryComponents: [
         EditStatusComponent,
+        AddStatusComponent,
+        ConfirmComponent
     ],
 })
 export class ShareModule {
