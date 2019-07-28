@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { NGXLogger } from 'ngx-logger';
-import { Observable } from 'rxjs';
 import { map, switchMap, filter, tap } from 'rxjs/operators';
 
 import { StatusGrpcService } from '@grpc/services/todo/status.service';
@@ -17,9 +16,7 @@ import { ConfirmPopupService } from '@share/services/confirm-popup.service';
 })
 export class StatusSettingsComponent {
 
-    public statuses$: Observable<TaskStatus.AsObject[]> = this.statusGrpcService.getStatuses({}).pipe(
-        map(statuses => statuses.statusesList.sort((a, b) => a.index - b.index)),
-    );
+    @Input() public statuses: TaskStatus.AsObject[];
 
     constructor(
         private statusGrpcService: StatusGrpcService,
@@ -30,16 +27,16 @@ export class StatusSettingsComponent {
     ) {
     }
 
-    public drop(event: CdkDragDrop<TaskStatus.AsObject[]>, statuses: TaskStatus.AsObject[]): void {
-        moveItemInArray(statuses, event.previousIndex, event.currentIndex);
+    public drop(event: CdkDragDrop<TaskStatus.AsObject[]>): void {
+        moveItemInArray(this.statuses, event.previousIndex, event.currentIndex);
 
-        statuses[event.previousIndex].index = event.previousIndex;
-        statuses[event.currentIndex].index = event.currentIndex;
+        this.statuses[event.previousIndex].index = event.previousIndex;
+        this.statuses[event.currentIndex].index = event.currentIndex;
 
         this.statusGrpcService.updateStatus(
             [
-                statuses[event.previousIndex],
-                statuses[event.currentIndex],
+                this.statuses[event.previousIndex],
+                this.statuses[event.currentIndex],
             ],
         ).subscribe(
             data => this.logger.debug(data),
@@ -47,13 +44,13 @@ export class StatusSettingsComponent {
         );
     }
 
-    public addStatus(statuses: TaskStatus.AsObject[]): void {
-        const dialogRef = this.addStatusService.openAddStatus(statuses.length);
+    public addStatus(): void {
+        const dialogRef = this.addStatusService.openAddStatus(this.statuses.length);
 
         dialogRef.afterClosed()
             .pipe(
                 filter(data => !!data),
-                map(data => (statuses[statuses.length] = data)),
+                map(data => (this.statuses[this.statuses.length] = data)),
                 switchMap(data => this.statusGrpcService.addStatus(data)),
             )
             .subscribe(
@@ -62,14 +59,14 @@ export class StatusSettingsComponent {
             );
     }
 
-    public editStatus(statuses: TaskStatus.AsObject[], index: number): void {
-        const status = statuses[index];
+    public editStatus(index: number): void {
+        const status = this.statuses[index];
         const dialogRef = this.editStatusService.openEditStatus(status);
 
         dialogRef.afterClosed()
             .pipe(
                 filter(data => !!data),
-                map(data => (statuses[index] = { ...status, ...data })),
+                map(data => (this.statuses[index] = { ...status, ...data })),
                 switchMap(data => this.statusGrpcService.updateStatus([data])),
             )
             .subscribe(
@@ -78,7 +75,7 @@ export class StatusSettingsComponent {
             );
     }
 
-    public deleteStatus(statuses: TaskStatus.AsObject[], index: number): void {
+    public deleteStatus(index: number): void {
         const dialogRef = this.confirmPopupService.openConfirmPopup({
             question: 'Are you sure you want to delete this status?',
         });
@@ -86,8 +83,8 @@ export class StatusSettingsComponent {
         dialogRef.afterClosed()
             .pipe(
                 filter(data => !!data),
-                switchMap(data => this.statusGrpcService.deleteStatus(statuses[index])),
-                tap(() => statuses.splice(index, 1)),
+                switchMap(data => this.statusGrpcService.deleteStatus(this.statuses[index])),
+                tap(() => this.statuses.splice(index, 1)),
             )
             .subscribe(
                 data => this.logger.debug(data),

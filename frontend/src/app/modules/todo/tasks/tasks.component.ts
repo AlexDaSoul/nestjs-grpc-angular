@@ -23,7 +23,7 @@ interface ITodoTask {
 export class TasksComponent implements OnInit {
 
     public statusIds: string[];
-    public statuses$: Observable<TaskStatus.AsObject[]> = this.statusGrpcService.getStatuses({}).pipe(
+    public statuses$: Observable<TaskStatus.AsObject[]> = this.statusGrpcService.getStatuses({ board: 'dfdfdf' }).pipe(
         map(statuses => statuses.statusesList.sort((a, b) => a.index - b.index)),
         tap(statuses => this.getStatusIds(statuses)),
     );

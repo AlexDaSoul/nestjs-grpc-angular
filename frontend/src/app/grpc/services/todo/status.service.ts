@@ -5,8 +5,8 @@ import { Metadata } from 'grpc-web';
 import { grpcUnary } from '@grpc/helpers/grpc-unary';
 import { grpcJwtMetadata } from '@grpc/helpers/grpc-metadata';
 import { StatusServicePromiseClient } from '@grpc/proto/todo/status_grpc_web_pb';
-import { AddStatusReq, StatusReq, StatusList } from '@grpc/proto/todo/status_pb';
-import { TaskStatus, TaskStatusRes, TodoStub } from '@grpc/proto/todo/todo.types_pb';
+import { AddStatusReq, StatusReq, StatusList, StatusesReq } from '@grpc/proto/todo/status_pb';
+import { TaskStatus, TaskStatusRes } from '@grpc/proto/todo/todo.types_pb';
 
 @Injectable({
     providedIn: 'root',
@@ -20,6 +20,7 @@ export class StatusGrpcService {
         const req = new AddStatusReq();
         const meta: Metadata = grpcJwtMetadata();
 
+        req.setBoard(data.board);
         req.setName(data.name);
         req.setIndex(data.index);
         req.setRoot(data.root);
@@ -63,16 +64,20 @@ export class StatusGrpcService {
         return grpcUnary<TaskStatus.AsObject>(this.client.getStatus(req, meta));
     }
 
-    public getStatuses(data: TodoStub.AsObject): Observable<StatusList.AsObject> {
-        const req = new TodoStub();
+    public getStatuses(data: StatusesReq.AsObject): Observable<StatusList.AsObject> {
+        const req = new StatusesReq();
         const meta: Metadata = grpcJwtMetadata();
+
+        req.setBoard(data.board);
 
         return grpcUnary<StatusList.AsObject>(this.client.getStatuses(req, meta));
     }
 
-    public getStatusesWithTasks(data: TodoStub.AsObject): Observable<StatusList.AsObject> {
-        const req = new TodoStub();
+    public getStatusesWithTasks(data: StatusesReq.AsObject): Observable<StatusList.AsObject> {
+        const req = new StatusesReq();
         const meta: Metadata = grpcJwtMetadata();
+
+        req.setBoard(data.board);
 
         return grpcUnary<StatusList.AsObject>(this.client.getStatusesWithTasks(req, meta));
     }

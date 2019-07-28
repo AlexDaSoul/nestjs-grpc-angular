@@ -19,6 +19,7 @@ import {
     MatMenuModule,
     MatDividerModule,
     MatDialogModule,
+    MatTabsModule,
 } from '@angular/material';
 
 
@@ -49,6 +50,7 @@ import { ConfirmComponent } from './components/popups/confirm/confirm.component'
         MatDividerModule,
         MatDialogModule,
         DragDropModule,
+        MatTabsModule,
         LoggerModule.forRoot(environment.logger),
         GrpcModule,
     ],
@@ -67,6 +69,7 @@ import { ConfirmComponent } from './components/popups/confirm/confirm.component'
         MatDividerModule,
         MatDialogModule,
         DragDropModule,
+        MatTabsModule,
         EditStatusComponent,
     ],
     declarations: [

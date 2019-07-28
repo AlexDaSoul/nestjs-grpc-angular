@@ -71,8 +71,8 @@ export class StatusController {
     @UseGuards(JwtGuard)
     @GrpcMethod('StatusService', 'GetStatuses')
     @UseFilters(new GrpcExceptionFilter('StatusService::getStatuses'))
-    public getStatuses(data: Identity<api.todo.TodoStub>, meta: IJwtMeta<{ id: string; }>): Observable<api.todo.StatusListRes> {
-        return this.statusService.getStatuses(meta.payload.id).pipe(
+    public getStatuses(data: Identity<api.todo.StatusesReq>): Observable<api.todo.StatusList> {
+        return this.statusService.getStatuses(data.board).pipe(
             map(statuses => ({ statuses })),
         );
     }
@@ -80,8 +80,8 @@ export class StatusController {
     @UseGuards(JwtGuard)
     @GrpcMethod('StatusService', 'GetStatusesWithTasks')
     @UseFilters(new GrpcExceptionFilter('StatusService::getStatusesWithTasks'))
-    public getStatusesWithTasks(data: Identity<api.todo.TodoStub>, meta: IJwtMeta<{ id: string; }>): Observable<api.todo.StatusListRes> {
-        return this.statusService.getStatusesWithTasks(meta.payload.id).pipe(
+    public getStatusesWithTasks(data: Identity<api.todo.StatusesReq>): Observable<api.todo.StatusList> {
+        return this.statusService.getStatusesWithTasks(data.board).pipe(
             map(statuses => ({ statuses })),
         );
     }

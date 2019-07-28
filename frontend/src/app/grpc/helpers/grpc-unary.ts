@@ -7,9 +7,7 @@ import { jwtAuthError$ } from '@grpc/helpers/grpc-jwt';
 
 export function grpcUnary<T>(promise): Observable<T> {
     return from(promise).pipe(
-        map((response: jspb.Message) => {
-            return response.toObject();
-        }),
+        map((response: jspb.Message) => response.toObject()),
         catchError((error: Status) => {
             if (error.code === StatusCode.UNAUTHENTICATED) {
                 jwtAuthError$.next();

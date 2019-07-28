@@ -28,14 +28,17 @@ message TodoStub {
 message TaskStatus {
     string id = 1;
     string userId = 2;
-    int32 index = 3;
-    string name = 4;
-    bool root = 5;
-    repeated Task tasks = 6;
+    string board = 3;
+    int32 index = 4;
+    string name = 5;
+    bool root = 6;
+    repeated Task tasks = 7;
 }
 
-message Members {
+message Board {
     string id = 1;
-    string userId = 2;
-    repeated string members = 3;
+    string title = 2;
+    string userId = 3;
+    repeated string members = 4;
+    repeated TaskStatus statuses = 5;
 }

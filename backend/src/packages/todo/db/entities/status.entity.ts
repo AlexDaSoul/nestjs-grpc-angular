@@ -4,12 +4,12 @@ import {
     PrimaryGeneratedColumn,
     CreateDateColumn,
     UpdateDateColumn,
-    OneToMany, Index,
+    OneToMany, ManyToOne, Index,
 } from 'typeorm';
 
 import { api } from '../../grpc-proto/todo/todo.types';
 import { Task } from './task.entity';
-import { Members } from './members.entity';
+import { Board } from './board.entity';
 
 @Entity('status')
 export class TaskStatus implements api.todo.TaskStatus {
@@ -42,8 +42,8 @@ export class TaskStatus implements api.todo.TaskStatus {
     @OneToMany(type => Task, task => task.status)
     tasks: Task[];
 
-    @OneToMany(type => Members, task => task.status)
-    members: Members[];
+    @ManyToOne(type => Board, board => board.statuses)
+    board: string;
 
     @CreateDateColumn()
     createdAt: number;

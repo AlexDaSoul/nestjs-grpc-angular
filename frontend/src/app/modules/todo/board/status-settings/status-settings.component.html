@@ -1,8 +1,8 @@
 <div class="statuses"
-     *ngIf="statuses$ | async as statuses"
+     *ngIf="statuses"
      cdkDropList
      cdkDropListOrientation="horizontal"
-     (cdkDropListDropped)="drop($event, statuses)">
+     (cdkDropListDropped)="drop($event)">
 
     <mat-card class="status" *ngFor="let status of statuses index as i" cdkDrag>
         <h2 class="status-title">{{ status.name }}</h2>
@@ -13,16 +13,16 @@
             <span *ngIf="status.root" class="status-root">
                 owner only
             </span>
-            <button mat-icon-button title="Edit status" color="primary" (click)="editStatus(statuses, i)">
+            <button mat-icon-button title="Edit status" color="primary" (click)="editStatus(i)">
                 <mat-icon inline="true">create</mat-icon>
             </button>
-            <button mat-icon-button title="Delete status" color="warn" (click)="deleteStatus(statuses, i)">
+            <button mat-icon-button title="Delete status" color="warn" (click)="deleteStatus(i)">
                 <mat-icon inline="true">delete_forever</mat-icon>
             </button>
         </mat-card-actions>
     </mat-card>
 
-    <mat-card class="status add-status" title="Add status" (click)="addStatus(statuses)">
+    <mat-card class="status add-status" title="Add status" (click)="addStatus()">
         <mat-card-content>
             <mat-icon inline="true">add_circle_outline</mat-icon>
         </mat-card-content>

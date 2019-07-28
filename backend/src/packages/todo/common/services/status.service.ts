@@ -33,6 +33,7 @@ export class StatusService {
             map(statuses =>
                  statuses.map((status, index) => {
                      const statusData = data.statuses[index];
+                     statusData.index = statusData.index ? statusData.index : 0;
                      statusData.root = statusData.root ? statusData.root : false;
 
                      return this.taskStatusRepository.merge(status, statusData);
@@ -56,19 +57,19 @@ export class StatusService {
         return from(this.taskStatusRepository.findOne(id));
     }
 
-    public getStatuses(userId: string): Observable<api.todo.TaskStatus[]> {
-        return from(this.taskStatusRepository.find({ userId }));
+    public getStatuses(board: string): Observable<api.todo.TaskStatus[]> {
+        return from(this.taskStatusRepository.find({ board }));
     }
 
-    public getStatusesWithTasks(userId: string): Observable<api.todo.TaskStatus[]> {
+    public getStatusesWithTasks(board: string): Observable<api.todo.TaskStatus[]> {
         const query = this.taskStatusRepository
             .createQueryBuilder('status')
             .leftJoinAndSelect('status.tasks', 'tasks')
             .orderBy('status.index', 'ASC')
-            .where({ userId })
+            .where({ board })
             .getMany();
 
-        return from(query);
+        return from(query)
     }
 
 }

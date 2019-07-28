@@ -5,16 +5,14 @@ import {
     PrimaryGeneratedColumn,
     CreateDateColumn,
     UpdateDateColumn,
-    ManyToOne,
-    JoinColumn,
+    OneToMany,
 } from 'typeorm';
 
 import { api } from '../../grpc-proto/todo/todo.types';
 import { TaskStatus } from './status.entity';
-import { Task } from './task.entity';
 
-@Entity('members')
-export class Members implements api.todo.Members {
+@Entity('board')
+export class Board implements api.todo.Board {
 
     @PrimaryGeneratedColumn('uuid')
     id: string;
@@ -25,16 +23,21 @@ export class Members implements api.todo.Members {
     })
     userId: string;
 
-    @Column({type: 'text', array: true, nullable: true })
+    @Index()
+    @Column({
+        nullable: false,
+    })
+    title: string;
+
+    @Column({
+        type: 'text',
+        array: true,
+        nullable: true,
+    })
     members: string[];
 
-    @ManyToOne(type => TaskStatus, status => status.members)
-    @JoinColumn()
-    status: string;
-
-    @ManyToOne(type => Task, status => status.members)
-    @JoinColumn()
-    task: string;
+    @OneToMany(type => TaskStatus, status => status.board)
+    statuses: TaskStatus[];
 
     @CreateDateColumn()
     createdAt: number;
