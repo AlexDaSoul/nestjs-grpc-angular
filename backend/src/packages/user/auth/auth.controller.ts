@@ -40,7 +40,7 @@ export class AuthController {
     @UseGuards(JwtGuard)
     @UseFilters(new GrpcExceptionFilter('AuthController::updateAuth'))
     @GrpcMethod('AuthService', 'UpdateAuth')
-    public updateAuth(data: Identity<api.user.Empty>, meta: IJwtMeta<{ id: string; }>): Observable<api.user.AuthRes> {
+    public updateAuth(data: Identity<api.user.UserStub>, meta: IJwtMeta<{ id: string; }>): Observable<api.user.AuthRes> {
         return from(this.userService.getUser(meta.payload.id)).pipe(
             map(user => this.getResult(user)),
         );

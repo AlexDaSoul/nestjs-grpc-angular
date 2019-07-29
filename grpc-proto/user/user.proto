@@ -16,6 +16,9 @@ service UserService {
 
     rpc GetUser (UserReq) returns (User) {
     }
+
+    rpc GetUsersAll (UserStub) returns (UsersRes) {
+    }
 }
 
 message CreateUserReq {
@@ -36,4 +39,8 @@ message UserReq {
 message UserRes {
     EUserStatus status = 1;
     string message = 2;
+}
+
+message UsersRes {
+    repeated User users = 1;
 }

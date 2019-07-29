@@ -2,6 +2,6 @@
     <mat-tab *ngFor="let board of boards" [label]="board.title">
         <app-status-settings [statuses]="board.statusesList"></app-status-settings>
         <mat-divider></mat-divider>
-        <app-members-settings [members]="board.membersList"></app-members-settings>
+        <app-members-settings [board]="board"></app-members-settings>
     </mat-tab>
 </mat-tab-group>

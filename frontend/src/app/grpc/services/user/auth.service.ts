@@ -6,7 +6,7 @@ import { grpcUnary } from '@grpc/helpers/grpc-unary';
 import { grpcJwtMetadata } from '@grpc/helpers/grpc-metadata';
 import { AuthServicePromiseClient } from '@grpc/proto/user/auth_grpc_web_pb';
 import { AuthReq, AuthRes } from '@grpc/proto/user/auth_pb';
-import { Empty } from '@grpc/proto/user/user.types_pb';
+import { UserStub } from '@grpc/proto/user/user.types_pb';
 
 @Injectable({
     providedIn: 'root',
@@ -26,7 +26,7 @@ export class AuthGrpcService {
     }
 
     public updateAuth(): Observable<AuthRes.AsObject> {
-        const req = new Empty();
+        const req = new UserStub();
         const meta: Metadata = grpcJwtMetadata();
 
         return grpcUnary<AuthRes.AsObject>(this.client.updateAuth(req, meta));

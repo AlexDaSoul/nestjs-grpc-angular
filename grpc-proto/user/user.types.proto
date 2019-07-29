@@ -21,6 +21,6 @@ message User {
     EUserRoles role = 4;
 }
 
-message Empty {
+message UserStub {
 
 }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { ShareModule } from '@share/share.module';
 import { GrpcModule } from '@grpc/grpc.module';
@@ -14,12 +15,21 @@ import { BoardComponent } from './board/board.component';
 import { MembersSettingsComponent } from './board/members-settings/members-settings.component';
 
 @NgModule({
-    declarations: [TodoComponent, TasksComponent, AddTaskComponent, UpdateTaskComponent, StatusSettingsComponent, BoardComponent, MembersSettingsComponent],
+    declarations: [
+        TodoComponent,
+        TasksComponent,
+        AddTaskComponent,
+        UpdateTaskComponent,
+        StatusSettingsComponent,
+        BoardComponent,
+        MembersSettingsComponent,
+    ],
     imports: [
         CommonModule,
+        ReactiveFormsModule,
+        RoutingModule,
         ShareModule,
         GrpcModule,
-        RoutingModule,
     ],
     exports: [
         AddTaskComponent,

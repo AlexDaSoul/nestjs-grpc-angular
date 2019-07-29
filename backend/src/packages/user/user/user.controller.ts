@@ -65,4 +65,11 @@ export class UserController {
     public getUser(data: Identity<api.user.UserReq>): Observable<api.user.User> {
         return this.userService.getUser(data.id);
     }
+
+    @UseGuards(JwtGuard)
+    @GrpcMethod('UserService', 'GetUsersAll')
+    @UseFilters(new GrpcExceptionFilter('UserController::getUsersAll'))
+    public getUsersAll(data: Identity<api.user.UserStub>): Observable<api.user.UsersRes> {
+        return this.userService.getUsersAll();
+    }
 }

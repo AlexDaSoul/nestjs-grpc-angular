@@ -46,6 +46,12 @@ export class UserService {
         return from(this.userRepository.findOne(id));
     }
 
+    public getUsersAll(): Observable<api.user.UsersRes> {
+        return from(this.userRepository.find()).pipe(
+            map(users => ({ users })),
+        );
+    }
+
     public verifyUser(data: authApi.user.AuthReq): Observable<api.user.User> {
         return from(this.userRepository.findOne({ ...data }));
     }

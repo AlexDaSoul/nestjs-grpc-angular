@@ -5,8 +5,8 @@ import { Metadata } from 'grpc-web';
 import { grpcUnary } from '@grpc/helpers/grpc-unary';
 import { grpcJwtMetadata } from '@grpc/helpers/grpc-metadata';
 import { UserServicePromiseClient } from '@grpc/proto/user/user_grpc_web_pb';
-import { CreateUserReq, UserRes, UserReq } from '@grpc/proto/user/user_pb';
-import { User } from '@grpc/proto/user/user.types_pb';
+import { CreateUserReq, UserRes, UserReq, UsersRes } from '@grpc/proto/user/user_pb';
+import { User, UserStub } from '@grpc/proto/user/user.types_pb';
 
 @Injectable({
     providedIn: 'root',
@@ -50,5 +50,12 @@ export class UserGrpcService {
         req.setId(data.id);
 
         return grpcUnary<User.AsObject>(this.client.getUser(req));
+    }
+
+    public getUsersById(): Observable<UsersRes.AsObject> {
+        const req = new UserStub();
+        const meta: Metadata = grpcJwtMetadata();
+
+        return grpcUnary<UsersRes.AsObject>(this.client.getUsersAll(req, meta));
     }
 }

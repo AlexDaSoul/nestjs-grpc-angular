@@ -8,7 +8,7 @@ service AuthService {
     rpc Auth (AuthReq) returns (AuthRes) {
     }
 
-    rpc UpdateAuth (Empty) returns (AuthRes) {
+    rpc UpdateAuth (UserStub) returns (AuthRes) {
     }
 }
 
