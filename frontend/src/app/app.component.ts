@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
 import { NGXLogger } from 'ngx-logger';
+import { Observable } from 'rxjs';
+import { filter, switchMap } from 'rxjs/operators';
 
 import { jwtAuthError$ } from '@grpc/helpers/grpc-jwt';
+import { User } from '@grpc/proto/user/user.types_pb';
+import { TaskGrpcService } from '@grpc/services/todo/task.service';
 import { AuthService } from '@share/services/auth.service';
 import { UserStoreService } from '@share/services/user-store.service';
-import { User } from '@grpc/proto/user/user.types_pb';
+import { AddTaskService } from '@share/services/add-task.service';
 
 @Component({
     selector: 'app-root',
@@ -20,6 +23,8 @@ export class AppComponent implements OnInit {
         private logger: NGXLogger,
         private authService: AuthService,
         private userStoreService: UserStoreService,
+        private addTaskService: AddTaskService,
+        private taskGrpcService: TaskGrpcService,
     ) {
     }
 
@@ -51,5 +56,16 @@ export class AppComponent implements OnInit {
     }
 
     public addTask(): void {
+        const dialogRef = this.addTaskService.openAddTask();
+
+        dialogRef.afterClosed()
+            .pipe(
+                filter(data => !!data),
+                switchMap(data => this.taskGrpcService.addTask(data)),
+            )
+            .subscribe(
+                data => this.logger.debug(data),
+                err => this.logger.error(err),
+            );
     }
 }

@@ -5,13 +5,15 @@
         <div class="tasks"
              cdkDropList
              [id]="status.id"
-             [cdkDropListData]="status.tasks"
+             [cdkDropListData]="status.tasksList"
              [cdkDropListConnectedTo]="statusIds"
              (cdkDropListDropped)="drop($event)">
-
-            <div class="task" *ngFor="let task of status.tasks" cdkDrag>
-                {{ task.title }}
-            </div>
+            
+            <app-task
+                class="task"
+                *ngFor="let task of status.tasksList"
+                cdkDrag [task]="task">
+            </app-task>
         </div>
     </div>
 </div>

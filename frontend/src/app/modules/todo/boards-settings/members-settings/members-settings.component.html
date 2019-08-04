@@ -11,12 +11,9 @@
             <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
         
-        <input
+        <input matInput placeholder="Choose members"
             [matAutocomplete]="auto"
-            [matChipInputFor]="chipList"
-            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            [matChipInputAddOnBlur]="addOnBlur"
-            (matChipInputTokenEnd)="addUser($event)">
+            [matChipInputFor]="chipList">
     </mat-chip-list>
     
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedUser($event.option.value, users)">

@@ -37,6 +37,18 @@ html, body {
     .form-field {
         width: 100%;
         margin-bottom: 8px;
+
+        textarea {
+            height: 120px;
+        }
+    }
+
+    .form-field-select {
+        width: calc(50% - 8px);
+
+        &.left {
+            margin-right: 16px;
+        }
     }
 
     .form-actions {
@@ -65,4 +77,8 @@ html, body {
             margin-left: 8px;
         }
     }
+}
+
+.task-card .mat-card-header-text {
+    margin: 0;
 }

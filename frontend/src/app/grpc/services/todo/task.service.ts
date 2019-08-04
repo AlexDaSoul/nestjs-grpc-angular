@@ -6,8 +6,8 @@ import { grpcUnary } from '@grpc/helpers/grpc-unary';
 import { grpcStream } from '@grpc/helpers/grpc-stream';
 import { grpcJwtMetadata } from '@grpc/helpers/grpc-metadata';
 import { TaskServicePromiseClient } from '@grpc/proto/todo/task_grpc_web_pb';
-import { AddTaskReq, TaskReq, TaskListRes } from '@grpc/proto/todo/task_pb';
-import { Task, TodoStub, TaskStatusRes } from '@grpc/proto/todo/todo.types_pb';
+import { AddTaskReq, TaskReq, TaskList } from '@grpc/proto/todo/task_pb';
+import { Task, TodoStub, TaskStatusRes, TaskStatus } from '@grpc/proto/todo/todo.types_pb';
 
 @Injectable({
     providedIn: 'root',
@@ -36,16 +36,22 @@ export class TaskGrpcService {
         return grpcUnary<TaskStatusRes.AsObject>(this.client.deleteTask(req, meta));
     }
 
-    public updateTask(data: Task.AsObject): Observable<TaskStatusRes.AsObject> {
-        const req = new Task();
+    public updateTask(data: Task.AsObject[]): Observable<TaskStatusRes.AsObject> {
+        const req = new TaskList();
         const meta: Metadata = grpcJwtMetadata();
 
-        req.setId(data.id);
-        req.setUserid(data.userid);
-        req.setIndex(data.index);
-        req.setTitle(data.title);
-        req.setDescription(data.description);
-        req.setStatus(data.status);
+        data.forEach((obj, index) => {
+            const task = new Task();
+
+            task.setId(obj.id);
+            task.setUserid(obj.userid);
+            task.setIndex(obj.index);
+            task.setTitle(obj.title);
+            task.setDescription(obj.description);
+            task.setStatus(obj.status);
+
+            req.addTasks(task, index);
+        });
 
         return grpcUnary<TaskStatusRes.AsObject>(this.client.updateTask(req, meta));
     }
@@ -59,11 +65,11 @@ export class TaskGrpcService {
         return grpcUnary<Task.AsObject>(this.client.getTask(req, meta));
     }
 
-    public getTasksByUserId(): Observable<TaskListRes.AsObject> {
+    public getTasksByUserId(): Observable<TaskList.AsObject> {
         const req = new TodoStub();
         const meta: Metadata = grpcJwtMetadata();
 
-        return grpcUnary<TaskListRes.AsObject>(this.client.getTasksByUserId(req, meta));
+        return grpcUnary<TaskList.AsObject>(this.client.getTasksByUserId(req, meta));
     }
 
     public getTasksStream(): Observable<Task.AsObject> {

@@ -7,7 +7,7 @@ import { JwtGuard } from '../lib/jwt/jwt.guard';
 import { IJwtMeta } from '../lib/jwt/jwt.interface';
 import { api } from '../grpc-proto/todo/status';
 
-import { StatusService } from '../common/services/status.service';
+import { StatusService } from './status.service';
 import { GrpcExceptionFilter } from '../lib/exceptions/exception.filter';
 
 type Identity<T> = T;

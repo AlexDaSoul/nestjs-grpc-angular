@@ -7,7 +7,7 @@ import { JwtGuard } from '../lib/jwt/jwt.guard';
 import { IJwtMeta } from '../lib/jwt/jwt.interface';
 import { api } from '../grpc-proto/todo/board';
 
-import { BoardService } from '../common/services/board.service';
+import { BoardService } from './board.service';
 import { GrpcExceptionFilter } from '../lib/exceptions/exception.filter';
 
 type Identity<T> = T;

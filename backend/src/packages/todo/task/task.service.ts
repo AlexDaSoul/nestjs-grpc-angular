@@ -4,10 +4,10 @@ import { Repository } from 'typeorm';
 import { from, Observable } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 
-import { api } from '../../grpc-proto/todo/task';
-import { api as apiStatus } from '../../grpc-proto/todo/status';
-import { TaskStatus } from '../../db/entities/status.entity';
-import { Task } from '../../db/entities/task.entity';
+import { api } from '../grpc-proto/todo/task';
+import { api as apiStatus } from '../grpc-proto/todo/status';
+import { TaskStatus } from '../db/entities/status.entity';
+import { Task } from '../db/entities/task.entity';
 
 const INITIAL_STATUS_INDEX = 0;
 
@@ -33,11 +33,19 @@ export class TaskService {
         );
     }
 
-    public updateTask(data: api.todo.Task): Observable<void> {
-        const findTask = this.taskRepository.findOne({ id: data.id });
+    public updateTask(data: api.todo.TaskList): Observable<void> {
+        const ids = data.tasks.map(s => s.id);
+        const findTasks = this.taskRepository.findByIds(ids);
 
-        return from(findTask).pipe(
-            map(task => this.taskRepository.merge(task, data)),
+        return from(findTasks).pipe(
+            map(tasks =>
+                tasks.map((task, index) => {
+                    const taskData = data.tasks[index];
+                    taskData.index = taskData.index ? taskData.index : 0;
+
+                    return this.taskRepository.merge(task, taskData);
+                }),
+            ),
             switchMap(task => from(this.taskRepository.save(task))),
             map(() => null),
         );
@@ -63,11 +71,7 @@ export class TaskService {
     public getTasksStream(userId: string): Observable<api.todo.Task> {
         return Task.subscribe().pipe(
             map(task => (task ? task : new Task())),
-            filter(task => {
-                console.log(task)
-                return task.userId.includes(userId);
-            }),
+            filter(task => task.userId.includes(userId)),
         );
     }
-
 }

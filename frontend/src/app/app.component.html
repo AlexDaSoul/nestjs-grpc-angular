@@ -12,7 +12,7 @@
                 <mat-icon inline="true">dashboard</mat-icon>
             </button>
 
-            <button mat-icon-button title="Board settings" routerLink="/board-settings" routerLinkActive="active">
+            <button mat-icon-button title="Board settings" routerLink="/boards-settings" routerLinkActive="active">
                 <mat-icon inline="true">settings</mat-icon>
             </button>
 
@@ -37,7 +37,11 @@
         <mat-toolbar class="toolbar" *ngIf="user$ | async as user">
             <mat-toolbar-row>
                 <button mat-stroked-button color="primary" [matMenuTriggerFor]="menu">
-                    <mat-icon>perm_identity</mat-icon>
+                    <div class="toolbar-avatar">
+                        <mat-icon *ngIf="!user.avatar">person</mat-icon>
+                        <img *ngIf="user.avatar" [src]="user.avatar" [alt]="user.name || user.email">
+                    </div>
+                    
                     {{ user.name || user.email }}
                 </button>
 

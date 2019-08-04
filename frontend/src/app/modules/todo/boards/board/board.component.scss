@@ -3,6 +3,7 @@
     display: grid;
     grid-auto-flow: column;
     grid-gap: 8px;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     min-height: calc(100vh - 135px);
 
     .status {
@@ -23,7 +24,9 @@
     }
 
     .task {
-        padding: 8px;
+        margin: 0 0 4px;
+        display: block;
+        background: #fff;
     }
 }
 

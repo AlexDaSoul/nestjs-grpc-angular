@@ -11,13 +11,13 @@ service TaskService {
     rpc DeleteTask (TaskReq) returns (TaskStatusRes) {
     }
 
-    rpc UpdateTask (Task) returns (TaskStatusRes) {
+    rpc UpdateTask (TaskList) returns (TaskStatusRes) {
     }
 
     rpc GetTask (TaskReq) returns (Task) {
     }
 
-    rpc GetTasksByUserId (TodoStub) returns (TaskListRes) {
+    rpc GetTasksByUserId (TodoStub) returns (TaskList) {
     }
 
     rpc GetTasksStream (TodoStub) returns (stream Task) {
@@ -33,6 +33,6 @@ message TaskReq {
     string id = 1;
 }
 
-message TaskListRes {
+message TaskList {
     repeated Task tasks = 1;
 }

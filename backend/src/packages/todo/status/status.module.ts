@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 
-import { CommonModule } from '../common/common.module';
+import { DbModule } from '../db/db.module';
 import { StatusController } from './status.controller';
+import { StatusService } from './status.service';
 
 @Module({
-    imports: [CommonModule],
+    imports: [DbModule],
     controllers: [StatusController],
+    providers: [StatusService],
 })
 export class StatusModule {}

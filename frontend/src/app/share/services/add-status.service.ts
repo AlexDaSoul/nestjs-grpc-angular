@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
-import { TaskStatus } from '@grpc/proto/todo/todo.types_pb';
 import { AddStatusComponent } from '@share/components/popups/add-status/add-status.component';
 
 @Injectable({

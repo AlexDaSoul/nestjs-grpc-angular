@@ -10,6 +10,7 @@ import { TaskStatus } from '@grpc/proto/todo/todo.types_pb';
     styleUrls: ['./add-status.component.scss'],
 })
 export class AddStatusComponent {
+
     public form = this.fb.group({
         name: [this.data.name, Validators.required],
         root: [this.data.root],

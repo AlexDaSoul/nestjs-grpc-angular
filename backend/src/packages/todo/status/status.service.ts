@@ -4,8 +4,8 @@ import { Repository } from 'typeorm';
 import { from, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
-import { api } from '../../grpc-proto/todo/status';
-import { TaskStatus } from '../../db/entities/status.entity';
+import { api } from '../grpc-proto/todo/status';
+import { TaskStatus } from '../db/entities/status.entity';
 
 @Injectable()
 export class StatusService {
@@ -27,9 +27,9 @@ export class StatusService {
 
     public updateStatus(data: api.todo.StatusList): Observable<void> {
         const ids = data.statuses.map(s => s.id);
-        const findTasks = this.taskStatusRepository.findByIds(ids);
+        const findStatuses = this.taskStatusRepository.findByIds(ids);
 
-        return from(findTasks).pipe(
+        return from(findStatuses).pipe(
             map(statuses =>
                  statuses.map((status, index) => {
                      const statusData = data.statuses[index];
@@ -64,8 +64,11 @@ export class StatusService {
     public getStatusesWithTasks(board: string): Observable<api.todo.TaskStatus[]> {
         const query = this.taskStatusRepository
             .createQueryBuilder('status')
-            .leftJoinAndSelect('status.tasks', 'tasks')
-            .orderBy('status.index', 'ASC')
+            .leftJoinAndSelect('status.tasks', 'task')
+            .orderBy({
+                'status.index': 'ASC',
+                'task.index': 'ASC',
+            })
             .where({ board })
             .getMany();
 

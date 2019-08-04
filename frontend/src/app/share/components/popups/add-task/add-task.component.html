@@ -1,0 +1,39 @@
+<form [formGroup]="form">
+    <h1 mat-dialog-title>
+        Add Task
+    </h1>
+    <div mat-dialog-content class="dialog-content">
+        <mat-form-field class="form-field-select left">
+            <mat-label>Board</mat-label>
+            <mat-select formControlName="board" required>
+                <mat-option *ngFor="let board of boards$ | async as boards" [value]="board.id">
+                    {{ board.title }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    
+        <mat-form-field class="form-field-select">
+            <mat-label>Assigned to</mat-label>
+            <mat-select formControlName="assign" required>
+                <mat-option *ngFor="let user of users$ | async as users" [value]="user.id">
+                    {{ user.name || user.email }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field class="form-field">
+            <input matInput placeholder="Title" formControlName="title" required>
+            <mat-error *ngIf="form.get('title').invalid">Enter title</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field class="form-field">
+            <textarea matInput placeholder="Description" formControlName="description" required></textarea>
+            <mat-error *ngIf="form.get('description').invalid">Enter description</mat-error>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions class="dialog-actions">
+        <button mat-flat-button color="warn" type="button" mat-dialog-close>CANCEL</button>
+        <button mat-flat-button color="primary" type="button"
+                [mat-dialog-close]="form.value" cdkFocusInitial [disabled]="form.invalid">SEND</button>
+    </div>
+</form>

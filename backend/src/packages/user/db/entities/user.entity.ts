@@ -22,6 +22,11 @@ export class User implements api.user.User {
     name: string;
 
     @Column({
+        length: 500,
+    })
+    avatar: string;
+
+    @Column({
         default: 1,
     })
     role: number;

@@ -22,8 +22,8 @@ import {
     MatTabsModule,
     MatChipsModule,
     MatAutocompleteModule,
+    MatSelectModule,
 } from '@angular/material';
-
 
 import { LoggerModule } from 'ngx-logger';
 
@@ -32,6 +32,7 @@ import { GrpcModule } from '@grpc/grpc.module';
 import { EditStatusComponent } from './components/popups/edit-status/edit-status.component';
 import { AddStatusComponent } from './components/popups/add-status/add-status.component';
 import { ConfirmComponent } from './components/popups/confirm/confirm.component';
+import { AddTaskComponent } from '@share/components/popups/add-task/add-task.component';
 
 @NgModule({
     imports: [
@@ -55,6 +56,7 @@ import { ConfirmComponent } from './components/popups/confirm/confirm.component'
         MatTabsModule,
         MatChipsModule,
         MatAutocompleteModule,
+        MatSelectModule,
         LoggerModule.forRoot(environment.logger),
         GrpcModule,
     ],
@@ -76,17 +78,20 @@ import { ConfirmComponent } from './components/popups/confirm/confirm.component'
         MatTabsModule,
         MatChipsModule,
         MatAutocompleteModule,
+        MatSelectModule,
         EditStatusComponent,
     ],
     declarations: [
         EditStatusComponent,
         AddStatusComponent,
         ConfirmComponent,
+        AddTaskComponent,
     ],
     entryComponents: [
         EditStatusComponent,
         AddStatusComponent,
-        ConfirmComponent
+        ConfirmComponent,
+        AddTaskComponent,
     ],
 })
 export class ShareModule {

@@ -14,7 +14,8 @@ message Task {
     int32 index = 3;
     string title = 4;
     string description = 5;
-    string status = 6;
+    string assign = 6;
+    string status = 7;
 }
 
 message TaskStatusRes {

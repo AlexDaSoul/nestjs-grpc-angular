@@ -3,6 +3,7 @@
     display: grid;
     grid-auto-flow: column;
     grid-gap: 8px;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 
     .status {
         background: #cfd8dc;

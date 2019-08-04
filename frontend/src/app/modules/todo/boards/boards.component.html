@@ -1,0 +1,12 @@
+<nav mat-tab-nav-bar *ngIf="boards$ | async as boards">
+    <a mat-tab-link
+       #rla="routerLinkActive"
+       *ngFor="let board of boards"
+       [routerLink]="['/dashboard', board.id]"
+       routerLinkActive
+       [active]="rla.isActive">
+        {{ board.title }}
+    </a>
+</nav>
+
+<router-outlet></router-outlet>

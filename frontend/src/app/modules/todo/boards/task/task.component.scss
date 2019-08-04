@@ -1,0 +1,31 @@
+.task-card {
+    display: block;
+    background: #cfd8dc;
+
+    .task-title {
+        cursor: move;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .task-description {
+        height: 45px;
+        font-size: 13px;
+        padding: 16px 0 0;
+        color: #666;
+        overflow: hidden;
+        position: relative;
+
+        &:after {
+            content: "\02026";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 26px;
+            text-align: right;
+            background-size: 100% 100%;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0), #cfd8dc 50%, #cfd8dc);
+        }
+    }
+}

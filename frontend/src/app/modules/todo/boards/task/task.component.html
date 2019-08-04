@@ -1,0 +1,16 @@
+<mat-card class="task-card" *ngIf="task">
+    <mat-card-header class="task-title">
+        <mat-card-title>
+            {{ task.title }}
+        </mat-card-title>
+        <mat-card-subtitle>
+            {{ task.assign }}
+        </mat-card-subtitle>
+    </mat-card-header>
+    
+    <mat-divider></mat-divider>
+    
+    <mat-card-content class="task-description">
+        {{ task.description }}
+    </mat-card-content>
+</mat-card>

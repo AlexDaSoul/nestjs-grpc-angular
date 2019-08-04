@@ -1,8 +1,6 @@
-import { Component, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatAutocomplete } from '@angular/material/autocomplete';
-import { MatChipInputEvent } from '@angular/material/chips';
 import { NGXLogger } from 'ngx-logger';
 import { Observable, EMPTY } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
@@ -22,11 +20,8 @@ import { getUserIdFromJWT } from '@grpc/helpers/grpc-get-id';
 export class MembersSettingsComponent {
 
     @ViewChild('auto', { static: false }) private matAutocomplete: MatAutocomplete;
-
     @Input() private board: Board.AsObject;
 
-    public addOnBlur: boolean = true;
-    public separatorKeysCodes: number[] = [ENTER, COMMA];
     public userList: User.AsObject[];
 
     public users$: Observable<User.AsObject[]> = this.userGrpcService.getUsersById().pipe(
@@ -66,18 +61,6 @@ export class MembersSettingsComponent {
         );
     }
 
-    public addUser(event: MatChipInputEvent): void {
-        if (!this.matAutocomplete.isOpen) {
-            const input = event.input;
-            const value = event.value;
-
-/*            // Add our fruit
-            if ((value || '').trim()) {
-                this.fruits.push(value.trim());
-            }*/
-        }
-    }
-
     public removeUser(user: User.AsObject, users: User.AsObject[]): void {
         const index = users.findIndex(u => u.id === user.id);
         const newUserList = users.filter(u => u.id !== user.id);
@@ -86,7 +69,7 @@ export class MembersSettingsComponent {
             this.updateMemberList(newUserList)
                 .subscribe(res => {
                     this.userList.push(user);
-                    users = newUserList;
+                    users.splice(index, 1);
                     this.logger.debug(res);
                 });
         }
@@ -94,9 +77,10 @@ export class MembersSettingsComponent {
 
     public selectedUser(user: User.AsObject, users: User.AsObject[]): void {
         const index = this.userList.findIndex(u => u.id === user.id);
+        const newUserList = [...users, user];
 
         if (index > -1) {
-            this.updateMemberList(users)
+            this.updateMemberList(newUserList)
                 .subscribe(res => {
                     users.push(user);
                     this.userList.splice(index, 1);
@@ -104,5 +88,4 @@ export class MembersSettingsComponent {
                 });
         }
     }
-
 }

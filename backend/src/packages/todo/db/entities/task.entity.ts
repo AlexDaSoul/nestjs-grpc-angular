@@ -43,6 +43,12 @@ export class Task implements api.todo.Task {
     description: string;
 
     @Column({
+        nullable: false,
+        default: 'Unassigned',
+    })
+    assign: string;
+
+    @Column({
         default: 0,
     })
     index: number;

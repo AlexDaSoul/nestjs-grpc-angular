@@ -4,8 +4,8 @@ import { Repository } from 'typeorm';
 import { from, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
-import { api } from '../../grpc-proto/todo/board';
-import { Board } from '../../db/entities/board.entity';
+import { api } from '../grpc-proto/todo/board';
+import { Board } from '../db/entities/board.entity';
 
 @Injectable()
 export class BoardService {
@@ -23,7 +23,7 @@ export class BoardService {
     }
 
     public updateBoard(data: api.todo.Board): Observable<void> {
-        const findBoard = this.boardRepository.findOne(data);
+        const findBoard = this.boardRepository.findOne(data.id);
 
         return from(findBoard).pipe(
             map(board => this.boardRepository.merge(board, data)),
