@@ -12,10 +12,6 @@
                 <mat-icon inline="true">dashboard</mat-icon>
             </button>
 
-            <button mat-icon-button title="Board settings" routerLink="/boards-settings" routerLinkActive="active">
-                <mat-icon inline="true">settings</mat-icon>
-            </button>
-
             <button mat-icon-button title="Add task" (click)="addTask()">
                 <mat-icon inline="true">add_circle_outline</mat-icon>
             </button>
@@ -37,11 +33,6 @@
         <mat-toolbar class="toolbar" *ngIf="user$ | async as user">
             <mat-toolbar-row>
                 <button mat-stroked-button color="primary" [matMenuTriggerFor]="menu">
-                    <div class="toolbar-avatar">
-                        <mat-icon *ngIf="!user.avatar">person</mat-icon>
-                        <img *ngIf="user.avatar" [src]="user.avatar" [alt]="user.name || user.email">
-                    </div>
-                    
                     {{ user.name || user.email }}
                 </button>
 

@@ -12,8 +12,7 @@ import { TaskStatus } from '@grpc/proto/todo/todo.types_pb';
 export class EditStatusComponent {
 
     public form = this.fb.group({
-        name: [this.data.name, Validators.required],
-        root: [this.data.root],
+        name: [this.data.name, Validators.required]
     });
 
     constructor(

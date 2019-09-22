@@ -22,7 +22,6 @@ export class SettingsComponent implements OnInit {
     public form: FormGroup = this.fb.group({
         name: [null, [Validators.required]],
         email: [null, [Validators.required, Validators.email]],
-        avatar: [null],
     });
 
     constructor(
@@ -42,7 +41,6 @@ export class SettingsComponent implements OnInit {
                 this.user = user;
                 this.form.get('name').setValue(user.name);
                 this.form.get('email').setValue(user.email);
-                this.form.get('avatar').setValue(user.avatar);
             });
     }
 

@@ -8,18 +8,10 @@ enum EUserStatus {
     USER_ACTION_ERROR = 2;
 }
 
-enum EUserRoles {
-    USER_ADMIN_UNKNOWN = 0;
-    USER_ADMIN_ROLE = 1;
-    USER_CUSTOMER_ROLE = 2;
-}
-
 message User {
     string id = 1;
     string name = 2;
     string email = 3;
-    string avatar = 4;
-    EUserRoles role = 5;
 }
 
 message UserStub {

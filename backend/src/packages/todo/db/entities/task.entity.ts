@@ -13,13 +13,13 @@ import {
 } from 'typeorm';
 import { Observable, BehaviorSubject } from 'rxjs';
 
-import { api } from '../../grpc-proto/todo/todo.types';
-import { TaskStatus } from './status.entity';
+import { Task } from '../../grpc-proto/todo/todo.types_pb';
+import { TaskStatusEntity } from './status.entity';
 
 @Entity('task')
-export class Task implements api.todo.Task {
+export class TaskEntity implements Task.AsObject {
 
-    private static updates$ = new BehaviorSubject<Task>(null);
+    private static updates$ = new BehaviorSubject<TaskEntity>(null);
 
     @PrimaryGeneratedColumn('uuid')
     id: string;
@@ -28,7 +28,7 @@ export class Task implements api.todo.Task {
     @Column({
         nullable: false,
     })
-    userId: string;
+    userid: string;
 
     @Column({
         nullable: false,
@@ -53,7 +53,7 @@ export class Task implements api.todo.Task {
     })
     index: number;
 
-    @ManyToOne(type => TaskStatus, status => status.tasks)
+    @ManyToOne(type => TaskStatusEntity, status => status.tasksList)
     @JoinColumn()
     status: string;
 
@@ -67,10 +67,10 @@ export class Task implements api.todo.Task {
     @AfterUpdate()
     @AfterRemove()
     updateTask() {
-        Task.updates$.next(this);
+        TaskEntity.updates$.next(this);
     }
 
-    public static subscribe(): Observable<Task> {
-        return Task.updates$.asObservable();
+    public static subscribe(): Observable<TaskEntity> {
+        return TaskEntity.updates$.asObservable();
     }
 }

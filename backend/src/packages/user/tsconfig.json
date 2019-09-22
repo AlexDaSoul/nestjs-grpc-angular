@@ -15,10 +15,6 @@
         "experimentalDecorators": true,
         "allowJs": true,
         "declaration": false,
-        "rootDir": ".",
-        "baseUrl": ".",
-        "paths": {
-            "*": ["node_modules/*"]
-        }
+        "baseUrl": "."
     }
 }

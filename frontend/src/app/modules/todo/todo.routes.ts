@@ -5,7 +5,6 @@ import { TodoComponent } from './todo.component';
 import { BoardsComponent } from './boards/boards.component';
 import { AuthGuard } from '@share/guards/auth.guard';
 import { AuthChildGuard } from '@share/guards/auth-child.guard';
-import { BoardsSettingsComponent } from './boards-settings/boards-settings.component';
 import { BoardComponent } from './boards/board/board.component';
 
 const routes: Routes = [
@@ -28,11 +27,6 @@ const routes: Routes = [
                 }],
             },
         ],
-    },
-    {
-        path: 'boards-settings',
-        component: BoardsSettingsComponent,
-        canActivate: [AuthGuard],
     },
 ];
 

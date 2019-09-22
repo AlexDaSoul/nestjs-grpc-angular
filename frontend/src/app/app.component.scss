@@ -22,30 +22,4 @@
     .mat-toolbar-row {
         flex-direction: row-reverse;
     }
-
-    button {
-        position: relative;
-        padding-left: 46px;
-    }
-
-    .toolbar-avatar {
-        position: absolute;
-        left: 8px;
-        top: 1px;
-        background: #a5a5a5;
-        height: 32px;
-        width: 32px;
-        border-radius: 50%;
-        overflow: hidden;
-
-        .mat-icon {
-            color: #fff;
-            font-size: 25px;
-            line-height: 30px;
-        }
-
-        img {
-            max-width: 100%;
-        }
-    }
 }

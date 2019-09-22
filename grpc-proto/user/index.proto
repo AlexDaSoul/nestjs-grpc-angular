@@ -2,5 +2,6 @@ syntax = "proto3";
 
 package api.user;
 
+import public "user.types.proto";
 import public "user.proto";
 import public "auth.proto";

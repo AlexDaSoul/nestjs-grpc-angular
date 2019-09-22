@@ -3,10 +3,10 @@ import { createHmac } from 'crypto';
 import { Exclude } from 'class-transformer';
 
 import { SALT } from '../../env';
-import { api } from '../../grpc-proto/user/user';
+import { User } from '../../grpc-proto/user/user.types_pb';
 
 @Entity('user')
-export class User implements api.user.User {
+export class UserEntity implements User.AsObject {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -20,16 +20,6 @@ export class User implements api.user.User {
         length: 50,
     })
     name: string;
-
-    @Column({
-        length: 500,
-    })
-    avatar: string;
-
-    @Column({
-        default: 1,
-    })
-    role: number;
 
     @Exclude()
     @Column({

@@ -17,11 +17,7 @@ import { TaskGrpcService } from '@grpc/services/todo/task.service';
 export class BoardComponent implements OnInit {
 
     public statusIds: string[];
-    public statuses$: Observable<TaskStatus.AsObject[]> = this.statusGrpcService.getStatusesWithTasks(
-        {
-            board: this.route.snapshot.params.id,
-        },
-    ).pipe(
+    public statuses$: Observable<TaskStatus.AsObject[]> = this.statusGrpcService.getStatusesWithTasks().pipe(
         map((data) => data.statusesList),
         filter(statuses => statuses.length > 0),
        // tap(statuses => statuses.map(status => status.tasksList.sort((a, b) => a.index > b.index))),

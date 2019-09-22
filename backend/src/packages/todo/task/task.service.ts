@@ -4,10 +4,11 @@ import { Repository } from 'typeorm';
 import { from, Observable } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 
-import { api } from '../grpc-proto/todo/task';
-import { api as apiStatus } from '../grpc-proto/todo/status';
-import { TaskStatus } from '../db/entities/status.entity';
-import { Task } from '../db/entities/task.entity';
+import { Task, TaskStatus } from '../grpc-proto/todo/todo.types_pb';
+import { AddTaskReq, TaskList } from '../grpc-proto/todo/task_pb';
+
+import { TaskStatusEntity } from '../db/entities/status.entity';
+import { TaskEntity } from '../db/entities/task.entity';
 
 const INITIAL_STATUS_INDEX = 0;
 
@@ -15,32 +16,32 @@ const INITIAL_STATUS_INDEX = 0;
 export class TaskService {
 
     constructor(
-        @InjectRepository(Task)
-        private readonly taskRepository: Repository<Task>,
-        @InjectRepository(TaskStatus)
-        private readonly taskStatusRepository: Repository<TaskStatus>,
+        @InjectRepository(TaskEntity)
+        private readonly taskRepository: Repository<TaskEntity>,
+        @InjectRepository(TaskStatusEntity)
+        private readonly taskStatusRepository: Repository<TaskStatusEntity>,
     ) {
     }
 
-    private getIndexTask(index: number): Observable<apiStatus.todo.TaskStatus> {
+    private getIndexTask(index: number): Observable<TaskStatus.AsObject> {
         return from(this.taskStatusRepository.findOne({ index }));
     }
 
-    public addTask(data: api.todo.AddTaskReq, userId: string): Observable<api.todo.Task> {
+    public addTask(data: AddTaskReq.AsObject, userid: string): Observable<Task.AsObject> {
         return this.getIndexTask(INITIAL_STATUS_INDEX).pipe(
-            map(status => this.taskRepository.create({ ...data, userId, ...status })),
+            map(status => this.taskRepository.create({ ...data, userid, ...status })),
             switchMap(task => from(this.taskRepository.save(task))),
         );
     }
 
-    public updateTask(data: api.todo.TaskList): Observable<void> {
-        const ids = data.tasks.map(s => s.id);
+    public updateTask(data: TaskList.AsObject): Observable<void> {
+        const ids = data.tasksList.map(s => s.id);
         const findTasks = this.taskRepository.findByIds(ids);
 
         return from(findTasks).pipe(
             map(tasks =>
                 tasks.map((task, index) => {
-                    const taskData = data.tasks[index];
+                    const taskData = data.tasksList[index];
                     taskData.index = taskData.index ? taskData.index : 0;
 
                     return this.taskRepository.merge(task, taskData);
@@ -60,18 +61,18 @@ export class TaskService {
         );
     }
 
-    public getTask(id: string): Observable<api.todo.Task> {
+    public getTask(id: string): Observable<Task.AsObject> {
         return from(this.taskRepository.findOne(id));
     }
 
-    public getTasksByUserId(userId: string): Observable<api.todo.Task[]> {
-        return from(this.taskRepository.find({ userId }));
+    public getTasksByUserId(userid: string): Observable<Task.AsObject[]> {
+        return from(this.taskRepository.find({ userid }));
     }
 
-    public getTasksStream(userId: string): Observable<api.todo.Task> {
-        return Task.subscribe().pipe(
-            map(task => (task ? task : new Task())),
-            filter(task => task.userId.includes(userId)),
+    public getTasksStream(userid: string): Observable<Task.AsObject> {
+        return TaskEntity.subscribe().pipe(
+            map(task => (task ? task : new TaskEntity())),
+            filter(task => task.userid === userid),
         );
     }
 }

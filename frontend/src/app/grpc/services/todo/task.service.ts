@@ -7,7 +7,7 @@ import { grpcStream } from '@grpc/helpers/grpc-stream';
 import { grpcJwtMetadata } from '@grpc/helpers/grpc-metadata';
 import { TaskServicePromiseClient } from '@grpc/proto/todo/task_grpc_web_pb';
 import { AddTaskReq, TaskReq, TaskList } from '@grpc/proto/todo/task_pb';
-import { Task, TodoStub, TaskStatusRes, TaskStatus } from '@grpc/proto/todo/todo.types_pb';
+import { Task, TodoStub, TaskStatusRes } from '@grpc/proto/todo/todo.types_pb';
 
 @Injectable({
     providedIn: 'root',

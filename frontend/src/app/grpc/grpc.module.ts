@@ -7,14 +7,12 @@ import { UserServicePromiseClient } from '@grpc/proto/user/user_grpc_web_pb';
 import { AuthServicePromiseClient } from '@grpc/proto/user/auth_grpc_web_pb';
 import { TaskServicePromiseClient } from '@grpc/proto/todo/task_grpc_web_pb';
 import { StatusServicePromiseClient } from '@grpc/proto/todo/status_grpc_web_pb';
-import { BoardServicePromiseClient } from '@grpc/proto/todo/board_grpc_web_pb';
 
 const GRPC_CLIENTS = [
     UserServicePromiseClient,
     AuthServicePromiseClient,
     TaskServicePromiseClient,
     StatusServicePromiseClient,
-    BoardServicePromiseClient,
 ];
 
 @NgModule({

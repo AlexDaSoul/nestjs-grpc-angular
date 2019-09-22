@@ -4,37 +4,37 @@ import { Repository } from 'typeorm';
 import { from, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
-import { api } from '../grpc-proto/todo/status';
-import { TaskStatus } from '../db/entities/status.entity';
+import { TaskStatus } from '../grpc-proto/todo/todo.types_pb';
+import { AddStatusReq, StatusList } from '../grpc-proto/todo/status_pb';
+
+import { TaskStatusEntity } from '../db/entities/status.entity';
 
 @Injectable()
 export class StatusService {
 
     constructor(
-        @InjectRepository(TaskStatus)
-        private readonly taskStatusRepository: Repository<TaskStatus>,
+        @InjectRepository(TaskStatusEntity)
+        private readonly taskStatusRepository: Repository<TaskStatusEntity>,
     ) {
     }
 
-    public addStatus(data: api.todo.AddStatusReq, userId: string): Observable<api.todo.TaskStatus> {
+    public addStatus(data: AddStatusReq.AsObject, userid: string): Observable<TaskStatus.AsObject> {
         data.index = data.index ? data.index : 0;
-        data.root = data.root ? data.root : false;
 
-        const status = this.taskStatusRepository.create({ ...data, userId });
+        const status = this.taskStatusRepository.create({ ...data, userid });
 
         return from(this.taskStatusRepository.save(status));
     }
 
-    public updateStatus(data: api.todo.StatusList): Observable<void> {
-        const ids = data.statuses.map(s => s.id);
+    public updateStatus(data: StatusList.AsObject): Observable<void> {
+        const ids = data.statusesList.map(s => s.id);
         const findStatuses = this.taskStatusRepository.findByIds(ids);
 
         return from(findStatuses).pipe(
             map(statuses =>
                  statuses.map((status, index) => {
-                     const statusData = data.statuses[index];
+                     const statusData = data.statusesList[index];
                      statusData.index = statusData.index ? statusData.index : 0;
-                     statusData.root = statusData.root ? statusData.root : false;
 
                      return this.taskStatusRepository.merge(status, statusData);
                  }),
@@ -53,15 +53,15 @@ export class StatusService {
         );
     }
 
-    public getStatus(id: string): Observable<api.todo.TaskStatus> {
+    public getStatus(id: string): Observable<TaskStatus.AsObject> {
         return from(this.taskStatusRepository.findOne(id));
     }
 
-    public getStatuses(board: string): Observable<api.todo.TaskStatus[]> {
-        return from(this.taskStatusRepository.find({ board }));
+    public getStatuses(userid: string): Observable<TaskStatus.AsObject[]> {
+        return from(this.taskStatusRepository.find({ userid }));
     }
 
-    public getStatusesWithTasks(board: string): Observable<api.todo.TaskStatus[]> {
+    public getStatusesWithTasks(userid: string): Observable<TaskStatus.AsObject[]> {
         const query = this.taskStatusRepository
             .createQueryBuilder('status')
             .leftJoinAndSelect('status.tasks', 'task')
@@ -69,10 +69,10 @@ export class StatusService {
                 'status.index': 'ASC',
                 'task.index': 'ASC',
             })
-            .where({ board })
+            .where({ userid })
             .getMany();
 
-        return from(query)
+        return from(query);
     }
 
 }

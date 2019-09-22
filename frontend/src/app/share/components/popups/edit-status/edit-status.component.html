@@ -7,11 +7,6 @@
             <input matInput placeholder="Name" formControlName="name" required>
             <mat-error *ngIf="form.get('name').invalid">Enter status name</mat-error>
         </mat-form-field>
-
-
-        <mat-checkbox formControlName="root">
-            Only admin can assign this status to a task
-        </mat-checkbox>
     </div>
     <div mat-dialog-actions class="dialog-actions">
         <button mat-flat-button color="warn" type="button" mat-dialog-close>CANCEL</button>

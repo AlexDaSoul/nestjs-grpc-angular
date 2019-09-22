@@ -13,7 +13,6 @@ export class AddStatusComponent {
 
     public form = this.fb.group({
         name: [this.data.name, Validators.required],
-        root: [this.data.root],
         index: [this.data.index],
     });
 

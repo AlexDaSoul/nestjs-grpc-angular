@@ -1,11 +1,9 @@
-import { TaskStatus } from './status.entity';
-import { Task } from './task.entity';
-import { Board } from './board.entity';
+import { TaskStatusEntity } from './status.entity';
+import { TaskEntity } from './task.entity';
 
 const entities = [
-    TaskStatus,
-    Task,
-    Board,
+    TaskStatusEntity,
+    TaskEntity,
 ];
 
 export default entities;

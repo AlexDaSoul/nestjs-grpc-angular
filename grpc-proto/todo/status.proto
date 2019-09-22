@@ -17,26 +17,20 @@ service StatusService {
     rpc GetStatus (StatusReq) returns (TaskStatus) {
     }
 
-    rpc GetStatuses (StatusesReq) returns (StatusList) {
+    rpc GetStatuses (TodoStub) returns (StatusList) {
     }
 
-    rpc GetStatusesWithTasks (StatusesReq) returns (StatusList) {
+    rpc GetStatusesWithTasks (TodoStub) returns (StatusList) {
     }
 }
 
 message AddStatusReq {
-    string board = 1;
-    string name = 2;
-    int32 index = 3;
-    bool root = 4;
+    string name = 1;
+    int32 index = 2;
 }
 
 message StatusReq {
     string id = 1;
-}
-
-message StatusesReq {
-    string board = 1;
 }
 
 message StatusList {

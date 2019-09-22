@@ -4,29 +4,63 @@ import { Repository } from 'typeorm';
 import { from, Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 
-import { api } from '../../grpc-proto/user/user';
-import { api as authApi } from '../../grpc-proto/user/auth';
-import { User } from '../../db/entities/user.entity';
+import { User } from '../../grpc-proto/user/user.types_pb';
+import { AuthReq } from '../../grpc-proto/user/auth_pb';
+import { CreateUserReq, UpdateUserReq } from '../../grpc-proto/user/user_pb';
+
+import {
+    AlreadyExistsException,
+    NotFoundException,
+    UnauthenticatedException,
+    EMAIL_ALREADY_EXISTS,
+    USER_NOT_FOUND,
+    AUTH_CREDENTIALS_INVALID,
+} from '../../lib/exceptions';
+
+import { UserEntity } from '../../db/entities/user.entity';
 
 @Injectable()
 export class UserService {
 
     constructor(
-        @InjectRepository(User)
-        private readonly userRepository: Repository<User>,
+        @InjectRepository(UserEntity)
+        private readonly userRepository: Repository<UserEntity>,
     ) {
     }
 
-    public createUser(data: api.user.CreateUserReq): Observable<api.user.User> {
-        const createUser = this.userRepository.create({ ...data });
+    private checkEmailExistence(email: string): Observable<void> {
+        return from(this.userRepository.findOne({ email })).pipe(
+            map(user => {
+                if (user) {
+                    throw new AlreadyExistsException(EMAIL_ALREADY_EXISTS);
+                }
 
-        return from(this.userRepository.save(createUser));
+                return null;
+            }),
+        );
     }
 
-    public updateUser(data: api.user.UpdateUserReq, id: string): Observable<void> {
-        const findUser = this.userRepository.findOne({ id });
+    private getUserById(id: string): Observable<UserEntity> {
+        return from(this.userRepository.findOne({ id })).pipe(
+            map(user => {
+                if (!user) {
+                    throw new NotFoundException(USER_NOT_FOUND);
+                }
 
-        return from(findUser).pipe(
+                return user;
+            }),
+        );
+    }
+
+    public createUser(data: CreateUserReq.AsObject): Observable<User.AsObject> {
+        return this.checkEmailExistence(data.email).pipe(
+            map(() => this.userRepository.create({ ...data })),
+            switchMap(user => from(this.userRepository.save(user))),
+        );
+    }
+
+    public updateUser(data: UpdateUserReq.AsObject, id: string): Observable<void> {
+        return this.getUserById(id).pipe(
             map(user => this.userRepository.merge(user, data)),
             switchMap(user => from(this.userRepository.save(user))),
             map(() => null),
@@ -34,25 +68,31 @@ export class UserService {
     }
 
     public deleteUser(id: string): Observable<void> {
-        const findUser = this.userRepository.findOne(id);
-
-        return from(findUser).pipe(
+        return this.getUserById(id).pipe(
             switchMap(user => from(this.userRepository.remove([user]))),
             map(() => null),
         );
     }
 
-    public getUser(id: string): Observable<api.user.User> {
-        return from(this.userRepository.findOne(id));
+    public getUser(id: string): Observable<User.AsObject> {
+        return this.getUserById(id);
     }
 
-    public getUsersAll(): Observable<api.user.UsersRes> {
+    public getUsersAll(): Observable<{ users: User.AsObject[] }> {
         return from(this.userRepository.find()).pipe(
             map(users => ({ users })),
         );
     }
 
-    public verifyUser(data: authApi.user.AuthReq): Observable<api.user.User> {
-        return from(this.userRepository.findOne({ ...data }));
+    public verifyUser(data: AuthReq.AsObject): Observable<User.AsObject> {
+        return from(this.userRepository.findOne({ ...data })).pipe(
+            map(user => {
+                if (!user) {
+                    throw new UnauthenticatedException(AUTH_CREDENTIALS_INVALID);
+                }
+
+                return user;
+            }),
+        );
     }
 }

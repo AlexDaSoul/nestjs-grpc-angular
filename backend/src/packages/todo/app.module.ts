@@ -6,7 +6,6 @@ import { typeorm } from './env';
 import { DbModule } from './db/db.module';
 import { StatusModule } from './status/status.module';
 import { TaskModule } from './task/task.module';
-import { BoardModule } from './board/board.module';
 
 @Module({
     imports: [
@@ -14,7 +13,6 @@ import { BoardModule } from './board/board.module';
         DbModule,
         StatusModule,
         TaskModule,
-        BoardModule,
     ],
 })
 export class AppModule {}

@@ -14,8 +14,7 @@ message Task {
     int32 index = 3;
     string title = 4;
     string description = 5;
-    string assign = 6;
-    string status = 7;
+    string status = 6;
 }
 
 message TaskStatusRes {
@@ -29,17 +28,7 @@ message TodoStub {
 message TaskStatus {
     string id = 1;
     string userId = 2;
-    string board = 3;
-    int32 index = 4;
-    string name = 5;
-    bool root = 6;
-    repeated Task tasks = 7;
-}
-
-message Board {
-    string id = 1;
-    string title = 2;
-    string userId = 3;
-    repeated string members = 4;
-    repeated TaskStatus statuses = 5;
+    int32 index = 3;
+    string name = 4;
+    repeated Task tasks = 5;
 }

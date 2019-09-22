@@ -5,6 +5,6 @@ import { UserController } from './user.controller';
 
 @Module({
     imports: [CommonModule],
-    controllers: [UserController]
+    controllers: [UserController],
 })
 export class UserModule {}

@@ -1,7 +1,7 @@
-import { User } from './user.entity';
+import { UserEntity } from './user.entity';
 
 const entities = [
-    User,
+    UserEntity,
 ];
 
 export default entities;

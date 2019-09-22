@@ -1,18 +1,19 @@
 import { Controller, UseGuards, UseFilters } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { from, Observable } from 'rxjs';
+import { map } from 'rxjs/internal/operators';
+
+import { JWT_EXPIRE } from '../env';
 
 import { JwtGuard } from '../lib/jwt/jwt.guard';
 import { IJwtMeta } from '../lib/jwt/jwt.interface';
-import { api } from '../grpc-proto/user/auth';
+import { RpcExceptionFilter } from '../lib/exceptions';
 
-import { GrpcExceptionFilter } from '../lib/exceptions/exception.filter';
+import { User, UserStub } from '../grpc-proto/user/user.types_pb';
+import { AuthRes, AuthReq } from '../grpc-proto/user/auth_pb';
+
 import { UserService } from '../common/services/user.service';
 import { JwtCertsService } from './jwt-certs.service';
-import { JWT_EXPIRE } from '../env';
-import { map } from 'rxjs/internal/operators';
-
-type Identity<T> = T;
 
 @Controller()
 export class AuthController {
@@ -23,24 +24,24 @@ export class AuthController {
         ) {
     }
 
-    private getResult(user: api.user.User): api.user.AuthRes {
+    private getResult(user: User.AsObject): AuthRes.AsObject {
         const token = this.jwtCertsService.addToken({ id: user.id }, +JWT_EXPIRE);
 
         return { token, user };
     }
 
     @GrpcMethod('AuthService', 'Auth')
-    @UseFilters(new GrpcExceptionFilter('AuthController::auth'))
-    public auth(data: Identity<api.user.AuthReq>): Observable<api.user.AuthRes> {
+    @UseFilters(RpcExceptionFilter.for('AuthController::auth'))
+    public auth(data: AuthReq.AsObject): Observable<AuthRes.AsObject> {
         return from(this.userService.verifyUser(data)).pipe(
             map(user => this.getResult(user)),
         );
     }
 
     @UseGuards(JwtGuard)
-    @UseFilters(new GrpcExceptionFilter('AuthController::updateAuth'))
     @GrpcMethod('AuthService', 'UpdateAuth')
-    public updateAuth(data: Identity<api.user.UserStub>, meta: IJwtMeta<{ id: string; }>): Observable<api.user.AuthRes> {
+    @UseFilters(RpcExceptionFilter.for('AuthController::updateAuth'))
+    public updateAuth(data: UserStub.AsObject, meta: IJwtMeta<{ id: string; }>): Observable<AuthRes.AsObject> {
         return from(this.userService.getUser(meta.payload.id)).pipe(
             map(user => this.getResult(user)),
         );
