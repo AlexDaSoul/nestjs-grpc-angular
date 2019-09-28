@@ -7,9 +7,9 @@ interface IErrorCode {
 
 export type ErrorCodeType = IErrorCode | null;
 
-export type MetadataType = {
+export interface MetadataType {
     [key: string]: string;
-};
+}
 
 export class BaseException extends RpcException {
     constructor(errorCode: IErrorCode, metadata: MetadataType) {
@@ -21,8 +21,8 @@ export class BaseException extends RpcException {
             // so we will sew this data into the message body
             message: JSON.stringify({
                 message: errorCode.message,
-                metadata
-            })
+                metadata,
+            }),
         });
     }
 }

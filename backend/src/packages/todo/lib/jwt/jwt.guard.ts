@@ -8,7 +8,7 @@ import { JWT_KEY_PUB } from './keys';
 
 const TOKEN_HEADER_NAME = 'authorization';
 const DECODING_OPTIONS = {
-    algorithms: ['RS256']
+    algorithms: ['RS256'],
 };
 
 export class JwtGuard implements CanActivate {

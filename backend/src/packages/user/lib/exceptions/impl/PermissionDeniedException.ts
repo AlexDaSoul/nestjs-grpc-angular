@@ -4,7 +4,7 @@ import { IError, ECodes } from './code.types';
 
 export const PERMISSION_DENIED: IError = {
     code: ECodes.PERMISSION_DENIED,
-    message: 'Permission denied'
+    message: 'Permission denied',
 };
 
 export class PermissionDeniedException extends BaseException {

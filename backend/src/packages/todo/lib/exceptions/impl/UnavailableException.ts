@@ -4,7 +4,7 @@ import { IError, ECodes } from './code.types';
 
 export const UNAVAILABLE: IError = {
     code: ECodes.UNAVAILABLE,
-    message: 'Resource unavailable'
+    message: 'Resource unavailable',
 };
 
 export class UnavailableException extends BaseException {
