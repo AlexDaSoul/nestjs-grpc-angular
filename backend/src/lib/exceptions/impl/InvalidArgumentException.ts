@@ -4,12 +4,12 @@ import { IError, ECodes } from './code.types';
 
 export const INVALID_ARGUMENT: IError = {
     code: ECodes.INVALID_ARGUMENT,
-    message: 'Invalid argument'
+    message: 'Invalid argument',
 };
 
 export const USER_ID_REQUIRED: IError = {
     code: ECodes.USER_ID_REQUIRED,
-    message: 'User id is required'
+    message: 'User id is required',
 };
 
 export class InvalidArgumentException extends BaseException {

@@ -7,7 +7,7 @@ import { BootstrapLogger } from './lib/logger';
 
 import { grpc } from './env';
 
-import { AppModule } from './app.module';
+import { AppModule } from './AppModule';
 
 const logger = new BootstrapLogger();
 // override logger with our implementation for transforming logs like

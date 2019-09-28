@@ -6,7 +6,7 @@ const DELIMITERS = {
     date: '-',
     time: ':',
     logMessage: ' ',
-    fullMessage: ' :: '
+    fullMessage: ' :: ',
 };
 
 export class MessageBuilder {
@@ -22,7 +22,12 @@ export class MessageBuilder {
             return [timestamp, level, this.label, logMessage].join(DELIMITERS.fullMessage);
         }
 
-        return [colorizeTimestamp(timestamp), colorizeLevel(level), colorizeLabel(this.label), colorizeMessage(level, logMessage)].join(DELIMITERS.fullMessage);
+        return [
+            colorizeTimestamp(timestamp),
+            colorizeLevel(level),
+            colorizeLabel(this.label),
+            colorizeMessage(level, logMessage),
+        ].join(DELIMITERS.fullMessage);
     }
 
     private getTimestamp(): string {

@@ -4,29 +4,6 @@ import { Logger } from './Logger';
 
 const DEFAULT_LOGGER_NAME = 'bootstrap';
 
-// Nest applications require a logger
-// that implements LoggerService interface,
-// which is not needed in other cases.
-//
-// Therefore we will create a separate class
-// that will be used only in the "main.ts" file
-//
-// Example for "main.ts":
-// import { Logger as NestLogger } from '@nestjs/common';
-//
-// const logger = new BootstrapLogger();
-// NestLogger.overrideLogger(logger);
-//
-// async function bootstrap() {
-//   const app = await NestFactory.createMicroservice();
-//   app.useLogger(logger);
-//   ...
-// }
-//
-// bootstrap().catch(err => {
-//   logger.error(err);
-//   ...
-// });
 export class BootstrapLogger implements LoggerService {
     private logger: Logger;
 

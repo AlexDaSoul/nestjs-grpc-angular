@@ -4,22 +4,22 @@ import { IError, ECodes } from './code.types';
 
 export const UNAUTHENTICATED: IError = {
     code: ECodes.UNAUTHENTICATED,
-    message: 'Unauthenticated'
+    message: 'Unauthenticated',
 };
 
 export const TOKEN_INVALID: IError = {
     code: ECodes.TOKEN_INVALID,
-    message: 'Token invalid'
+    message: 'Token invalid',
 };
 
 export const TOKEN_EXPIRED: IError = {
     code: ECodes.TOKEN_EXPIRED,
-    message: 'Token expired'
+    message: 'Token expired',
 };
 
 export const AUTH_CREDENTIALS_INVALID: IError = {
     code: ECodes.AUTH_CREDENTIALS_INVALID,
-    message: 'Auth credentials invalid'
+    message: 'Auth credentials invalid',
 };
 
 export class UnauthenticatedException extends BaseException {

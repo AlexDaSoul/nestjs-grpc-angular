@@ -36,11 +36,10 @@ const PG_INVALID_ARGUMENT_ERROR_CODES = [
     '22P01', // floating_point_exception
     '22P02', // invalid_text_representation
     '22P05', // untranslatable_character
-
     // Class 23 — Integrity Constraint Violation
     '23502', // not_null_violation
     '23503', // foreign_key_violation
-    '23514' // check_violation
+    '23514', // check_violation
 ];
 
 // Class 23 — Integrity Constraint Violation, "unique_violation"
@@ -67,6 +66,6 @@ export class TypeOrmExceptionHandler implements IExceptionHandler {
 
     public warnAboutError(): void {
         const { message, name, query, parameters, stack }: any = this.exception;
-        this.logger.error(`${this.label} :: TypeOrm error "${message || name}",\nStack: ${stack},\nQuery: ${query},\nParams: ${parameters}`);
+        this.logger.error(`${this.label}:: TypeOrm error "${message || name}",\nStack: ${stack},\nQuery: ${query},\nParams: ${parameters}`);
     }
 }

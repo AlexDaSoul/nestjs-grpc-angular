@@ -6,22 +6,22 @@ const env = process.env;
 export const grpc = {
     transport: Transport.GRPC,
     options: {
-        url: env.GRPC_TODO_SERVICE,
+        url: env.GRPC_TODO_SERVICE || '127.0.0.1:8002',
         package: 'api.todo',
         protoPath: './grpc-proto/todo/index.proto',
     },
 } as GrpcOptions;
 
 export const typeorm = {
-    type: env.TYPEORM_CONNECTION,
-    host: env.TYPEORM_HOST,
-    port: env.TYPEORM_PORT,
-    username: env.TYPEORM_USERNAME,
-    password: env.TYPEORM_PASSWORD,
-    database: env.TYPEORM_DATABASE,
-    entities: [env.TYPEORM_ENTITIES],
-    migrations: [env.TYPEORM_MIGRATIONS],
-    subscribers: [env.TYPEORM_SUBSCRIBERS],
-    synchronize: JSON.parse(env.TYPEORM_SYNCHRONIZE),
-    logging: JSON.parse(env.TYPEORM_LOGGING),
+    type: env.TYPEORM_CONNECTION || 'postgres',
+    host: env.TYPEORM_HOST || '0.0.0.0',
+    port: env.TYPEORM_PORT || '5533',
+    username: env.TYPEORM_USERNAME || 'postgres',
+    password: env.TYPEORM_PASSWORD || 'postgres',
+    database: env.TYPEORM_DATABASE || 'postgres',
+    entities: [env.TYPEORM_ENTITIES] || './**/entities/*.{ts,js}',
+    migrations: [env.TYPEORM_MIGRATIONS] || './**/migrations/*.{ts,js}',
+    subscribers: [env.TYPEORM_SUBSCRIBERS] || './**/subscribers/*.{ts,js}',
+    synchronize: JSON.parse(env.TYPEORM_SYNCHRONIZE) || true,
+    logging: JSON.parse(env.TYPEORM_LOGGING) || false,
 } as TypeOrmModuleOptions;
