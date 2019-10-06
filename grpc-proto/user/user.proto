@@ -14,10 +14,13 @@ service UserService {
     rpc DeleteUser (UserReq) returns (UserRes) {
     }
 
+    rpc VerifyUser (VerifyUserReq) returns (User) {
+    }
+
     rpc GetUser (UserReq) returns (User) {
     }
 
-    rpc GetUsersAll (UserStub) returns (UsersRes) {
+    rpc GetUsersAll (Stub) returns (UsersRes) {
     }
 }
 
@@ -30,6 +33,11 @@ message CreateUserReq {
 message UpdateUserReq {
     string name = 1;
     string email = 2;
+}
+
+message VerifyUserReq {
+    string email = 1;
+    string password = 2;
 }
 
 message UserReq {

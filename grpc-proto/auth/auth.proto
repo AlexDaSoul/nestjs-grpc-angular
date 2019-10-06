@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package api.auth;
+
+import "auth.types.proto";
+
+service AuthService {
+    rpc Auth (AuthReq) returns (AuthRes) {
+    }
+
+    rpc UpdateAuth (Stub) returns (AuthRes) {
+    }
+
+    rpc VerifyAuthToken (VerifyAuthTokenReq) returns (VerifyAuthTokenRes) {
+    }
+}
+
+message AuthReq {
+    string email = 1;
+    string password = 2;
+}
+
+message AuthRes {
+    string token = 1;
+}
+
+message VerifyAuthTokenReq {
+    string token = 1;
+}
+
+message VerifyAuthTokenRes {
+    string id = 1;
+    string email = 2;
+}

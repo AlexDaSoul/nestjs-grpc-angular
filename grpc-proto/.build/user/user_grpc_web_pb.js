@@ -257,6 +257,61 @@ proto.api.user.UserServicePromiseClient.prototype.deleteUser =
 /**
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.api.user.VerifyUserReq,
+ *   !proto.api.user.User>}
+ */
+const methodInfo_UserService_VerifyUser = new grpc.web.AbstractClientBase.MethodInfo(
+  user_types_pb.User,
+  /** @param {!proto.api.user.VerifyUserReq} request */
+  function(request) {
+    return request.serializeBinary();
+  },
+  user_types_pb.User.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.api.user.VerifyUserReq} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.api.user.User)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.api.user.User>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.api.user.UserServiceClient.prototype.verifyUser =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/api.user.UserService/VerifyUser',
+      request,
+      metadata || {},
+      methodInfo_UserService_VerifyUser,
+      callback);
+};
+
+
+/**
+ * @param {!proto.api.user.VerifyUserReq} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.api.user.User>}
+ *     A native promise that resolves to the response
+ */
+proto.api.user.UserServicePromiseClient.prototype.verifyUser =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/api.user.UserService/VerifyUser',
+      request,
+      metadata || {},
+      methodInfo_UserService_VerifyUser);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
  *   !proto.api.user.UserReq,
  *   !proto.api.user.User>}
  */
@@ -312,12 +367,12 @@ proto.api.user.UserServicePromiseClient.prototype.getUser =
 /**
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.api.user.UserStub,
+ *   !proto.api.user.Stub,
  *   !proto.api.user.UsersRes>}
  */
 const methodInfo_UserService_GetUsersAll = new grpc.web.AbstractClientBase.MethodInfo(
   proto.api.user.UsersRes,
-  /** @param {!proto.api.user.UserStub} request */
+  /** @param {!proto.api.user.Stub} request */
   function(request) {
     return request.serializeBinary();
   },
@@ -326,7 +381,7 @@ const methodInfo_UserService_GetUsersAll = new grpc.web.AbstractClientBase.Metho
 
 
 /**
- * @param {!proto.api.user.UserStub} request The
+ * @param {!proto.api.user.Stub} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
@@ -347,7 +402,7 @@ proto.api.user.UserServiceClient.prototype.getUsersAll =
 
 
 /**
- * @param {!proto.api.user.UserStub} request The
+ * @param {!proto.api.user.Stub} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata

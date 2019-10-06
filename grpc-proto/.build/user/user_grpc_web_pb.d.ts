@@ -7,7 +7,8 @@ import {
   UpdateUserReq,
   UserReq,
   UserRes,
-  UsersRes} from './user_pb';
+  UsersRes,
+  VerifyUserReq} from './user_pb';
 
 export class UserServiceClient {
   constructor (hostname: string,
@@ -35,6 +36,13 @@ export class UserServiceClient {
                response: UserRes) => void
   ): grpcWeb.ClientReadableStream<UserRes>;
 
+  verifyUser(
+    request: VerifyUserReq,
+    metadata: grpcWeb.Metadata | undefined,
+    callback: (err: grpcWeb.Error,
+               response: user_types_pb.User) => void
+  ): grpcWeb.ClientReadableStream<user_types_pb.User>;
+
   getUser(
     request: UserReq,
     metadata: grpcWeb.Metadata | undefined,
@@ -43,7 +51,7 @@ export class UserServiceClient {
   ): grpcWeb.ClientReadableStream<user_types_pb.User>;
 
   getUsersAll(
-    request: user_types_pb.UserStub,
+    request: user_types_pb.Stub,
     metadata: grpcWeb.Metadata | undefined,
     callback: (err: grpcWeb.Error,
                response: UsersRes) => void
@@ -71,13 +79,18 @@ export class UserServicePromiseClient {
     metadata?: grpcWeb.Metadata
   ): Promise<UserRes>;
 
+  verifyUser(
+    request: VerifyUserReq,
+    metadata?: grpcWeb.Metadata
+  ): Promise<user_types_pb.User>;
+
   getUser(
     request: UserReq,
     metadata?: grpcWeb.Metadata
   ): Promise<user_types_pb.User>;
 
   getUsersAll(
-    request: user_types_pb.UserStub,
+    request: user_types_pb.Stub,
     metadata?: grpcWeb.Metadata
   ): Promise<UsersRes>;
 

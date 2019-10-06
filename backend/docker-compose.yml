@@ -21,7 +21,7 @@ services:
       - ./src/packages/user:/home/api/user
 
   user-postgres:
-    image: postgres:latest
+    image: postgres:11
     container_name: user-postgres
     restart: always
     ports: # for debug puproses, remove in the production
@@ -32,7 +32,23 @@ services:
       - POSTGRES_DB=postgres
       - PGPORT=5432
     volumes:
-      - ./src/packages/user/db:/home/api/user/db
+      - ./src/packages/user/services/dal/db:/home/api/user/db
+
+##### auth
+  auth:
+    image: node:dubnium
+    container_name: auth
+    working_dir: /home/api/auth
+    command: npm run docker:debug
+    ports:
+      - 8002:9229 # node inspect user
+    env_file:
+      - ./environments/common.env
+      - ./environments/auth.env
+    environment:
+      - GRPC_VERBOSITY=DEBUG
+    volumes:
+      - ./src/packages/auth:/home/api/auth
 
 ##### todo
   todo:
@@ -43,7 +59,7 @@ services:
     depends_on:
       - todo-postgres
     ports:
-      - 8002:9229 # for debug puproses, remove in the production
+      - 8003:9229 # for debug puproses, remove in the production
     env_file:
       - ./environments/common.env
       - ./environments/todo.env
@@ -51,7 +67,7 @@ services:
       - ./src/packages/todo:/home/api/todo
 
   todo-postgres:
-    image: postgres:latest
+    image: postgres:11
     container_name: todo-postgres
     restart: always
     ports: # for debug puproses, remove in the production
@@ -62,7 +78,7 @@ services:
       - POSTGRES_DB=postgres
       - PGPORT=5432
     volumes:
-      - ./src/packages/todo/db:/home/api/todo/db
+      - ./src/packages/todo/services/dal/db:/home/api/todo/db
 
 #### envoy-api
   envoy-api-dev:

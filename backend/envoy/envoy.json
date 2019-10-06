@@ -48,6 +48,15 @@
                                                     },
                                                     {
                                                         "match": {
+                                                            "prefix": "/api.auth"
+                                                        },
+                                                        "route": {
+                                                            "cluster": "auth",
+                                                            "max_grpc_timeout": "0s"
+                                                        }
+                                                    },
+                                                    {
+                                                        "match": {
                                                             "prefix": "/api.todo"
                                                         },
                                                         "route": {
@@ -104,6 +113,32 @@
                                         "address": {
                                             "socket_address": {
                                                 "address": "user",
+                                                "port_value": 443
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "auth",
+                "connect_timeout": "0.25s",
+                "type": "LOGICAL_DNS",
+                "lb_policy": "ROUND_ROBIN",
+                "http2_protocol_options": {},
+                "load_assignment": {
+                    "cluster_name": "auth",
+                    "endpoints": [
+                        {
+                            "lb_endpoints": [
+                                {
+                                    "endpoint": {
+                                        "address": {
+                                            "socket_address": {
+                                                "address": "auth",
                                                 "port_value": 443
                                             }
                                         }

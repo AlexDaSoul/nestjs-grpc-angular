@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package api.auth;
+
+enum EStatus {
+    AUTH_ACTION_UNKNOWN = 0;
+    AUTH_ACTION_SUCCESS = 1;
+    AUTH_ACTION_ERROR = 2;
+}
+
+message Stub {
+
+}

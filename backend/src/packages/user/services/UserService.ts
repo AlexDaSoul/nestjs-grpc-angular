@@ -4,8 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { User } from '../grpc-proto/user/user.types_pb';
-import { AuthReq } from '../grpc-proto/user/auth_pb';
-import { CreateUserReq, UpdateUserReq } from '../grpc-proto/user/user_pb';
+import { CreateUserReq, UpdateUserReq, VerifyUserReq } from '../grpc-proto/user/user_pb';
 
 import { UnauthenticatedException, AUTH_CREDENTIALS_INVALID } from '../lib/exceptions';
 
@@ -49,7 +48,7 @@ export class UserService {
         );
     }
 
-    public verifyUser(data: AuthReq.AsObject): Observable<User.AsObject> {
+    public verifyUser(data: VerifyUserReq.AsObject): Observable<User.AsObject> {
         return this.userDataFinder.getUserByConditions({ ...data }).pipe(
             map(user => {
                 if (!user) {

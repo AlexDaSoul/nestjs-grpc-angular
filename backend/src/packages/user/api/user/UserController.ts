@@ -7,12 +7,13 @@ import { JwtGuard } from '../../lib/jwt/jwt.guard';
 import { IJwtMeta } from '../../lib/jwt/jwt.interface';
 import { RpcExceptionFilter } from '../../lib/exceptions';
 
-import { User, EUserStatus, UserStub } from '../../grpc-proto/user/user.types_pb';
+import { User, EUserStatus, Stub } from '../../grpc-proto/user/user.types_pb';
 import { UserRes } from '../../grpc-proto/user/user_pb';
 
 import { UserService } from '../../services/UserService';
 
 import { CreateUserReqDTO } from './dto/CreateUserReqDTO';
+import { VerifyUserReqDTO } from './dto/VerifyUserReqDTO';
 import { UserReqDTO } from './dto/UserReqDTO';
 
 @Controller()
@@ -62,16 +63,22 @@ export class UserController {
         );
     }
 
+    @GrpcMethod('UserService', 'VerifyUser')
+    @UseFilters(RpcExceptionFilter.for('UserController::verifyUser'))
+    public verifyUser(data: VerifyUserReqDTO): Observable<User.AsObject> {
+        return this.userService.verifyUser(data);
+    }
+
+    @UseGuards(JwtGuard)
     @GrpcMethod('UserService', 'GetUser')
     @UseFilters(RpcExceptionFilter.for('UserController::getUser'))
     public getUser(data: UserReqDTO): Observable<User.AsObject> {
         return this.userService.getUser(data.id);
     }
 
-    @UseGuards(JwtGuard)
     @GrpcMethod('UserService', 'GetUsersAll')
     @UseFilters(RpcExceptionFilter.for('UserController::getUsersAll'))
-    public getUsersAll(data: UserStub.AsObject): Observable<{ users: User.AsObject[] }> {
+    public getUsersAll(data: Stub.AsObject): Observable<{ users: User.AsObject[] }> {
         return this.userService.getUsersAll();
     }
 }

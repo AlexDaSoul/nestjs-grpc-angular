@@ -26,16 +26,16 @@ export namespace User {
   }
 }
 
-export class UserStub extends jspb.Message {
+export class Stub extends jspb.Message {
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): UserStub.AsObject;
-  static toObject(includeInstance: boolean, msg: UserStub): UserStub.AsObject;
-  static serializeBinaryToWriter(message: UserStub, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): UserStub;
-  static deserializeBinaryFromReader(message: UserStub, reader: jspb.BinaryReader): UserStub;
+  toObject(includeInstance?: boolean): Stub.AsObject;
+  static toObject(includeInstance: boolean, msg: Stub): Stub.AsObject;
+  static serializeBinaryToWriter(message: Stub, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): Stub;
+  static deserializeBinaryFromReader(message: Stub, reader: jspb.BinaryReader): Stub;
 }
 
-export namespace UserStub {
+export namespace Stub {
   export type AsObject = {
   }
 }

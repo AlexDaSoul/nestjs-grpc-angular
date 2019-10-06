@@ -50,6 +50,28 @@ export namespace UpdateUserReq {
   }
 }
 
+export class VerifyUserReq extends jspb.Message {
+  getEmail(): string;
+  setEmail(value: string): void;
+
+  getPassword(): string;
+  setPassword(value: string): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): VerifyUserReq.AsObject;
+  static toObject(includeInstance: boolean, msg: VerifyUserReq): VerifyUserReq.AsObject;
+  static serializeBinaryToWriter(message: VerifyUserReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): VerifyUserReq;
+  static deserializeBinaryFromReader(message: VerifyUserReq, reader: jspb.BinaryReader): VerifyUserReq;
+}
+
+export namespace VerifyUserReq {
+  export type AsObject = {
+    email: string,
+    password: string,
+  }
+}
+
 export class UserReq extends jspb.Message {
   getId(): string;
   setId(value: string): void;
