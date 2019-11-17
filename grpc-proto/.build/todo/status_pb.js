@@ -1,3 +1,4 @@
+// source: status.proto
 /**
  * @fileoverview
  * @enhanceable

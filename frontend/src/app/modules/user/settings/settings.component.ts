@@ -48,7 +48,7 @@ export class SettingsComponent implements OnInit {
     }
 
     private updateUser(): void {
-        this.userStoreService.setUser({ ...this.user, ...this.form.value });
+        this.userStoreService.setToken({ ...this.user, ...this.form.value });
     }
 
     public onSubmit(): void {

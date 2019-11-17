@@ -4,7 +4,7 @@ const env = process.env;
 
 export const pemKeys = {
     JWT_PRIV: null,
-    JWT_PUB: null
+    JWT_PUB: null,
 };
 
 export const JWT_EXPIRE = env.JWT_EXPIRE || 600;

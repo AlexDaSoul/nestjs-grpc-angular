@@ -14,11 +14,11 @@ export const grpc = {
 
 export const typeorm = {
     type: env.TYPEORM_CONNECTION || 'postgres',
-    host: env.TYPEORM_HOST || '0.0.0.0',
-    port: env.TYPEORM_PORT || '5533',
+    host: env.TYPEORM_HOST || 'localhost',
+    port: env.TYPEORM_PORT || '5432',
+    database: env.TYPEORM_DATABASE_TODO || 'todo',
     username: env.TYPEORM_USERNAME || 'postgres',
     password: env.TYPEORM_PASSWORD || 'postgres',
-    database: env.TYPEORM_DATABASE || 'postgres',
     entities: [env.TYPEORM_ENTITIES || './**/entities/*.{ts,js}'],
     migrations: [env.TYPEORM_MIGRATIONS || './**/migrations/*.{ts,js}'],
     subscribers: [env.TYPEORM_SUBSCRIBERS || './**/subscribers/*.{ts,js}'],

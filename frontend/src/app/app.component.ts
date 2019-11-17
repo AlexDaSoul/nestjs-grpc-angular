@@ -29,20 +29,6 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        const updateAuth = this.authService.updateAuth();
-
-        if (updateAuth instanceof Observable) {
-            updateAuth
-                .subscribe(
-                    res => this.userStoreService.setUser(res.user),
-                    err => {
-                        this.authService.logout();
-                        this.userStoreService.setUser(null);
-                        this.logger.error(err);
-                    },
-                );
-        }
-
         jwtAuthError$.asObservable()
             .subscribe(() => {
                 this.logout();
@@ -52,7 +38,7 @@ export class AppComponent implements OnInit {
 
     public logout(): void {
         this.authService.logout();
-        this.userStoreService.setUser(null);
+        this.userStoreService.setToken(null);
     }
 
     public addTask(): void {

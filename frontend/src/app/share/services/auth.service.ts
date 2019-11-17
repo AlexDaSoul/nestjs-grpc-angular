@@ -6,7 +6,7 @@ import { switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { environment } from '@environments/environment';
 import { AuthGrpcService } from '@grpc/services/user/auth.service';
-import { AuthRes } from '@grpc/proto/user/auth_pb';
+import { AuthRes } from '@grpc/proto/auth/auth_pb';
 
 @Injectable({
     providedIn: 'root',

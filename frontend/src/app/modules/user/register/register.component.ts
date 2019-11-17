@@ -45,7 +45,6 @@ export class RegisterComponent implements OnInit {
                     switchMap(() => this.authGrpcService.auth(this.form.value)))
                 .subscribe(
                     res => {
-                        this.userStoreService.setUser(res.user);
                         this.authService.loggedIn(res.token);
                         this.form.reset();
                         this.router.navigateByUrl('/dashboard');

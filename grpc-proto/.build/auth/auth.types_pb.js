@@ -1,3 +1,4 @@
+// source: auth.types.proto
 /**
  * @fileoverview
  * @enhanceable

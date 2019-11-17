@@ -46,7 +46,6 @@ export class AuthController implements OnModuleInit {
     public auth(data: AuthReqDTO): Observable<AuthRes.AsObject> {
         return from(this.grpcUserService.verifyUser(data)).pipe(
             map(user => {
-                console.log(user);
                 return this.jwtService.addToken({
                     id: user.id,
                     email: user.email,

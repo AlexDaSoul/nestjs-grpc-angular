@@ -6,7 +6,6 @@ import { NGXLogger } from 'ngx-logger';
 
 import { AuthGrpcService } from '@grpc/services/user/auth.service';
 import { AuthService } from '@share/services/auth.service';
-import { UserStoreService } from '@share/services/user-store.service';
 
 @Component({
     selector: 'app-auth',
@@ -17,7 +16,7 @@ export class AuthComponent implements OnInit {
 
     public form: FormGroup = this.fb.group({
         email: ['johndoe@mail.com', [Validators.required, Validators.email]],
-        password: [1234, [Validators.required, Validators.minLength(4)]],
+        password: ['1234', [Validators.required, Validators.minLength(4)]],
     });
 
     constructor(
@@ -27,7 +26,6 @@ export class AuthComponent implements OnInit {
         private logger: NGXLogger,
         private authGrpcService: AuthGrpcService,
         private authService: AuthService,
-        private userStoreService: UserStoreService,
     ) {
     }
 
@@ -39,7 +37,6 @@ export class AuthComponent implements OnInit {
             this.authGrpcService.auth(this.form.value)
                 .subscribe(
                     res => {
-                        this.userStoreService.setUser(res.user);
                         this.authService.loggedIn(res.token);
                         this.form.reset();
                         this.router.navigateByUrl('/dashboard');

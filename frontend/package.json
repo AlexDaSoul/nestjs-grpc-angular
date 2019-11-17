@@ -22,7 +22,7 @@
         "@angular/platform-browser-dynamic": "~8.0.2",
         "@angular/router": "~8.0.2",
         "core-js": "^2.5.4",
-        "grpc-web": "^1.0.4",
+        "grpc-web": "^1.0.7",
         "hammerjs": "^2.0.8",
         "ngx-logger": "^3.4.3",
         "rxjs": "~6.5.2",

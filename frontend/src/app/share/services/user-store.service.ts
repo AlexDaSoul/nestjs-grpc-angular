@@ -10,7 +10,7 @@ export class UserStoreService {
 
     private user$ = new BehaviorSubject<User.AsObject>(null);
 
-    public setUser(user: User.AsObject): void {
+    public setToken(user: User.AsObject): void {
         this.user$.next(user);
     }
 

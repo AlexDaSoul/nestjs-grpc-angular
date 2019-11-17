@@ -1,4 +1,4 @@
-process.title = 'node-chat';
+process.title = 'node-todo';
 
 import { NestFactory } from '@nestjs/core';
 import { Logger as NestLogger, ValidationPipe } from '@nestjs/common';
