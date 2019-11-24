@@ -5,10 +5,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NGXLogger } from 'ngx-logger';
 import { switchMap } from 'rxjs/operators';
 
-import { AuthGrpcService } from '@grpc/services/user/auth.service';
+import { AuthGrpcService } from '@grpc/services/auth/auth.service';
 import { UserGrpcService } from '@grpc/services/user/user.service';
 import { AuthService } from '@share/services/auth.service';
-import { UserStoreService } from '@share/services/user-store.service';
 
 @Component({
     selector: 'app-register',
@@ -20,6 +19,7 @@ export class RegisterComponent implements OnInit {
     public form: FormGroup = this.fb.group({
         name: [null, [Validators.required]],
         email: [null, [Validators.required, Validators.email]],
+        avatar: [null],
         password: [null, [Validators.required, Validators.minLength(4)]],
     });
 
@@ -31,7 +31,6 @@ export class RegisterComponent implements OnInit {
         private userGrpcService: UserGrpcService,
         private authGrpcService: AuthGrpcService,
         private authService: AuthService,
-        private userStoreService: UserStoreService,
     ) {
     }
 
@@ -50,9 +49,7 @@ export class RegisterComponent implements OnInit {
                         this.router.navigateByUrl('/dashboard');
                     },
                     err => {
-                        const message = err.code === 23505 ? 'User already exist' : err.message;
-
-                        this.snackBar.open(message, 'close', {
+                        this.snackBar.open(err.message, 'close', {
                             duration: 5000,
                             horizontalPosition: 'right',
                             verticalPosition: 'top',

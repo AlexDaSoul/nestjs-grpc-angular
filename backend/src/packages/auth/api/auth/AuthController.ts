@@ -1,10 +1,11 @@
-import { Controller, UseFilters, OnModuleInit } from '@nestjs/common';
+import { Controller, UseFilters, OnModuleInit, UseGuards } from '@nestjs/common';
 import { Client, ClientGrpc, GrpcMethod } from '@nestjs/microservices';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators';
 import { Metadata } from 'grpc';
 
 import { RpcExceptionFilter } from '../../lib/exceptions';
+import { JwtGuard } from '../../lib/jwt/jwt.guard';
 
 import { User } from '../../grpc-proto/user/user.types_pb';
 import { UserReq, VerifyUserReq } from '../../grpc-proto/user/user_pb';
@@ -50,6 +51,7 @@ export class AuthController implements OnModuleInit {
         );
     }
 
+    @UseGuards(JwtGuard)
     @GrpcMethod('AuthService', 'UpdateAuth')
     @UseFilters(RpcExceptionFilter.for('AuthController::updateAuth'))
     public updateAuth(data: Stub.AsObject, meta: Metadata): AuthRes.AsObject {

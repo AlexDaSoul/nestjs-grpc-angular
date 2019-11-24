@@ -29,10 +29,7 @@ import { LoggerModule } from 'ngx-logger';
 
 import { environment } from '@environments/environment';
 import { GrpcModule } from '@grpc/grpc.module';
-import { EditStatusComponent } from './components/popups/edit-status/edit-status.component';
-import { AddStatusComponent } from './components/popups/add-status/add-status.component';
 import { ConfirmComponent } from './components/popups/confirm/confirm.component';
-import { AddTaskComponent } from '@share/components/popups/add-task/add-task.component';
 
 @NgModule({
     imports: [
@@ -79,19 +76,12 @@ import { AddTaskComponent } from '@share/components/popups/add-task/add-task.com
         MatChipsModule,
         MatAutocompleteModule,
         MatSelectModule,
-        EditStatusComponent,
     ],
     declarations: [
-        EditStatusComponent,
-        AddStatusComponent,
         ConfirmComponent,
-        AddTaskComponent,
     ],
     entryComponents: [
-        EditStatusComponent,
-        AddStatusComponent,
         ConfirmComponent,
-        AddTaskComponent,
     ],
 })
 export class ShareModule {

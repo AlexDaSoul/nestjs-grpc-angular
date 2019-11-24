@@ -1,55 +1,39 @@
-<mat-sidenav-container class="container todo">
-    <mat-sidenav
-            mode="side"
-            opened
-            fixedInViewport="true"
-            fixedTopGap="0"
-            fixedBottomGap="0"
-            class="sidebar">
-
-        <ng-container *ngIf="user$ | async; else isNotLogin">
-            <button mat-icon-button title="Tasks dashboard" routerLink="/dashboard" routerLinkActive="active">
-                <mat-icon inline="true">dashboard</mat-icon>
-            </button>
-
-            <button mat-icon-button title="Add task" (click)="addTask()">
-                <mat-icon inline="true">add_circle_outline</mat-icon>
-            </button>
-        </ng-container>
-
-        <ng-template #isNotLogin>
-            <button mat-icon-button title="Sign in" routerLink="/auth" routerLinkActive="active">
-                <mat-icon inline="true">vpn_key</mat-icon>
-            </button>
-
-            <button mat-icon-button title="Sign up" routerLink="/register" routerLinkActive="active">
-                <mat-icon inline="true">person_add</mat-icon>
-            </button>
-        </ng-template>
-
-    </mat-sidenav>
-
-    <mat-sidenav-content>
-        <mat-toolbar class="toolbar" *ngIf="user$ | async as user">
-            <mat-toolbar-row>
-                <button mat-stroked-button color="primary" [matMenuTriggerFor]="menu">
-                    {{ user.name || user.email }}
+<div class="chat-glob">
+    <mat-toolbar class="toolbar">
+        <mat-toolbar-row>
+            <ng-container *ngIf="isLoggedIn$ | async; else isNotLogin">
+                <button mat-button color="warn" title="Logout" (click)="logout()">
+                    <mat-icon>exit_to_app</mat-icon>
+                    Logout
                 </button>
 
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item title="Profile settings" routerLink="/settings">
-                        <mat-icon>settings</mat-icon>
-                        Profile settings
-                    </button>
-                    <button mat-menu-item title="Logout" (click)="logout()">
-                        <mat-icon>exit_to_app</mat-icon>
-                        Logout
-                    </button>
-                </mat-menu>
-            </mat-toolbar-row>
-        </mat-toolbar>
+                <button mat-button color="warn" title="Profile settings" routerLink="/settings" routerLinkActive="active">
+                    <mat-icon>settings</mat-icon>
+                    Profile settings
+                </button>
+            </ng-container>
 
+            <ng-template #isNotLogin>
+                <button mat-button color="warn" title="Sign in" routerLink="/auth" routerLinkActive="active">
+                    <mat-icon>vpn_key</mat-icon>
+                    Sign in
+                </button>
+
+                <button mat-button color="warn" title="Sign up" routerLink="/register" routerLinkActive="active">
+                    <mat-icon>person_add</mat-icon>
+                    Sign up
+                </button>
+            </ng-template>
+
+            <div class="chat">
+                <button mat-icon-button color="warn" title="Chat" routerLink="/chat" routerLinkActive="active">
+                    <mat-icon inline="true">chat</mat-icon>
+                </button>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <div class="container">
         <router-outlet></router-outlet>
-    </mat-sidenav-content>
-</mat-sidenav-container>
-
+    </div>
+</div>

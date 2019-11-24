@@ -13,7 +13,6 @@ export class UpdateUserReqDTO implements UpdateUserReq.AsObject {
     @MaxLength(50)
     public name: string;
 
-    @IsDefined()
     @IsString()
     @MaxLength(500)
     public avatar: string;

@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { UserGrpcService } from './user.service';
+import { StatusGrpcService } from './message.service';
 
-describe('UserGrpcService', () => {
+describe('StatusGrpcService', () => {
     beforeEach(() => TestBed.configureTestingModule({}));
 
     it('should be created', () => {
-        const service: UserGrpcService = TestBed.get(UserGrpcService);
+        const service: StatusGrpcService = TestBed.get(StatusGrpcService);
         expect(service).toBeTruthy();
     });
 });

@@ -70,7 +70,6 @@ export class UserController {
         return this.userService.verifyUser(data);
     }
 
-    @UseGuards(JwtGuard)
     @GrpcMethod('UserService', 'GetUser')
     @UseFilters(RpcExceptionFilter.for('UserController::getUser'))
     public getUser(data: UserReqDTO): Observable<User.AsObject> {

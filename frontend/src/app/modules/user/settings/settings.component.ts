@@ -8,7 +8,6 @@ import { getUserIdFromJWT } from '@grpc/helpers/grpc-get-id';
 import { User } from '@grpc/proto/user/user.types_pb';
 import { UserGrpcService } from '@grpc/services/user/user.service';
 import { AuthService } from '@share/services/auth.service';
-import { UserStoreService } from '@share/services/user-store.service';
 
 @Component({
     selector: 'app-settings',
@@ -22,6 +21,7 @@ export class SettingsComponent implements OnInit {
     public form: FormGroup = this.fb.group({
         name: [null, [Validators.required]],
         email: [null, [Validators.required, Validators.email]],
+        avatar: [null],
     });
 
     constructor(
@@ -31,7 +31,6 @@ export class SettingsComponent implements OnInit {
         private logger: NGXLogger,
         private userGrpcService: UserGrpcService,
         private authService: AuthService,
-        private userStoreService: UserStoreService,
     ) {
         const token = this.authService.getToken();
         const id = getUserIdFromJWT(token);
@@ -41,6 +40,7 @@ export class SettingsComponent implements OnInit {
                 this.user = user;
                 this.form.get('name').setValue(user.name);
                 this.form.get('email').setValue(user.email);
+                this.form.get('avatar').setValue(user.avatar);
             });
     }
 
@@ -48,7 +48,7 @@ export class SettingsComponent implements OnInit {
     }
 
     private updateUser(): void {
-        this.userStoreService.setToken({ ...this.user, ...this.form.value });
+
     }
 
     public onSubmit(): void {

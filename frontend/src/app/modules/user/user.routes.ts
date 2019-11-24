@@ -1,12 +1,12 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AuthChildGuard } from '@share/guards/auth-child.guard';
+import { AuthGuard } from '@share/guards/auth.guard';
+
 import { UserComponent } from './user.component';
 import { AuthComponent } from './auth/auth.component';
 import { RegisterComponent } from './register/register.component';
 import { SettingsComponent } from './settings/settings.component';
-import { AuthGuard } from '@share/guards/auth.guard';
 
 const routes: Routes = [
     {

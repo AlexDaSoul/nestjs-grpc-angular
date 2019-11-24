@@ -4,6 +4,7 @@ import { Metadata } from 'grpc-web';
 
 import { grpcUnary } from '@grpc/helpers/grpc-unary';
 import { grpcJwtMetadata } from '@grpc/helpers/grpc-metadata';
+
 import { UserServicePromiseClient } from '@grpc/proto/user/user_grpc_web_pb';
 import { CreateUserReq, UserRes, UserReq, UsersRes, UpdateUserReq } from '@grpc/proto/user/user_pb';
 import { User, Stub } from '@grpc/proto/user/user.types_pb';
@@ -21,6 +22,7 @@ export class UserGrpcService {
 
         req.setName(data.name);
         req.setEmail(data.email);
+        req.setAvatar(data.avatar);
         req.setPassword(data.password);
 
         return grpcUnary<UserRes.AsObject>(this.client.createUser(req));
@@ -32,6 +34,7 @@ export class UserGrpcService {
 
         req.setName(data.name);
         req.setEmail(data.email);
+        req.setAvatar(data.avatar);
 
         return grpcUnary<UserRes.AsObject>(this.client.updateUser(req, meta));
     }

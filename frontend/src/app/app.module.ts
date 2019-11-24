@@ -6,7 +6,7 @@ import { ShareModule } from '@share/share.module';
 import { RoutingModule } from './app.routes';
 import { AppComponent } from './app.component';
 import { UserModule } from './modules/user/user.module';
-import { TodoModule } from './modules/todo/todo.module';
+import { ChatModule } from './modules/chat/chat.module';
 
 @NgModule({
     declarations: [
@@ -18,7 +18,7 @@ import { TodoModule } from './modules/todo/todo.module';
         ShareModule,
         RoutingModule,
         UserModule,
-        TodoModule,
+        ChatModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

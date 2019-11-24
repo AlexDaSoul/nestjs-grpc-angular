@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NGXLogger } from 'ngx-logger';
 
-import { AuthGrpcService } from '@grpc/services/user/auth.service';
+import { AuthGrpcService } from '@grpc/services/auth/auth.service';
 import { AuthService } from '@share/services/auth.service';
 
 @Component({
@@ -39,7 +39,7 @@ export class AuthComponent implements OnInit {
                     res => {
                         this.authService.loggedIn(res.token);
                         this.form.reset();
-                        this.router.navigateByUrl('/dashboard');
+                        this.router.navigateByUrl('/chat');
                     },
                     err => {
                         const message = err.code === 13 ? 'User not found' : err.message;

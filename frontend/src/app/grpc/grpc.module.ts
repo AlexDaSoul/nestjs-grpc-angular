@@ -5,14 +5,14 @@ import { environment } from '@environments/environment';
 
 import { UserServicePromiseClient } from '@grpc/proto/user/user_grpc_web_pb';
 import { AuthServicePromiseClient } from '@grpc/proto/auth/auth_grpc_web_pb';
-import { TaskServicePromiseClient } from '@grpc/proto/chat/task_grpc_web_pb';
-import { StatusServicePromiseClient } from '@grpc/proto/chat/status_grpc_web_pb';
+import { ChatServicePromiseClient } from '@grpc/proto/chat/chat_grpc_web_pb';
+import { MessageServicePromiseClient } from '@grpc/proto/chat/message_grpc_web_pb';
 
 const GRPC_CLIENTS = [
     UserServicePromiseClient,
     AuthServicePromiseClient,
-    TaskServicePromiseClient,
-    StatusServicePromiseClient,
+    ChatServicePromiseClient,
+    MessageServicePromiseClient,
 ];
 
 @NgModule({

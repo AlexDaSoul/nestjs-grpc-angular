@@ -8,7 +8,7 @@ export class PemCertsService {
     public createCertificate(): void {
         createCertificate((err, keys) => {
             if (err) {
-                throw err
+                throw err;
             }
 
             pemKeys.JWT_PUB = keys.certificate;

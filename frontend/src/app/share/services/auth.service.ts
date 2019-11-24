@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
-import { Observable, ReplaySubject, interval, Subject, of } from 'rxjs';
-import { switchMap, takeUntil, tap } from 'rxjs/operators';
+import { Observable, ReplaySubject, interval, Subject } from 'rxjs';
+import { switchMap, takeUntil } from 'rxjs/operators';
 
 import { environment } from '@environments/environment';
-import { AuthGrpcService } from '@grpc/services/user/auth.service';
+import { AuthGrpcService } from '@grpc/services/auth/auth.service';
 import { AuthRes } from '@grpc/proto/auth/auth_pb';
 
 @Injectable({
@@ -41,8 +41,7 @@ export class AuthService {
 
     public updateAuth(): Observable<AuthRes.AsObject> {
         if (this.getToken()) {
-            return this.authGrpcService.updateAuth()
-                .pipe(tap(res => this.loggedIn(res.token)));
+            return this.authGrpcService.updateAuth();
         } else {
             this.logout();
         }
