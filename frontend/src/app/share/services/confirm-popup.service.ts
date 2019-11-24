@@ -14,7 +14,7 @@ export class ConfirmPopupService {
     public openConfirmPopup(data: { question: string; }): MatDialogRef<ConfirmComponent> {
         return this.dialog.open(ConfirmComponent, {
             width: '400px',
-            panelClass: 'todo',
+            panelClass: 'chat',
             data: data || {},
         });
     }

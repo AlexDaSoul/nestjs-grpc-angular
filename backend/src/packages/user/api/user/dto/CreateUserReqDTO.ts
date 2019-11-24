@@ -17,4 +17,9 @@ export class CreateUserReqDTO implements CreateUserReq.AsObject {
     @IsString()
     @MaxLength(128)
     public password: string;
+
+    @IsDefined()
+    @IsString()
+    @MaxLength(500)
+    public avatar: string;
 }

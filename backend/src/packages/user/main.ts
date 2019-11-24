@@ -9,7 +9,7 @@ import { grpc } from './env';
 
 import { AppModule } from './AppModule';
 
-const logger = new BootstrapLogger();
+export const logger = new BootstrapLogger();
 // override logger with our implementation for transforming logs like
 // "[Nest] 406   - 8/12/2019, 11:00:41 AM   [NestFactory] ..."
 NestLogger.overrideLogger(logger);

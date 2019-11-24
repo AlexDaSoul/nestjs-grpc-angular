@@ -1,4 +1,0 @@
-INSERT INTO public.status (id, "userid", index, name, "createdAt", "updatedAt") VALUES ('382fd40e-0cfe-429a-b327-e49cc5a90ca6', 'bb6d88c8-d705-4c10-b1a1-08ea1b94d4cc', 0, 'To Do', '2019-07-09 17:54:46.744171', '2019-07-28 22:47:48.145744');
-INSERT INTO public.status (id, "userid", index, name, "createdAt", "updatedAt") VALUES ('8e812ff3-a567-4076-a26a-09a73d7ad493', 'bb6d88c8-d705-4c10-b1a1-08ea1b94d4cc', 1, 'Open', '2019-07-09 17:55:07.398763', '2019-07-28 22:48:20.714531');
-INSERT INTO public.status (id, "userid", index, name, "createdAt", "updatedAt") VALUES ('bf5a7f5f-289d-4667-a371-db86448674be', 'bb6d88c8-d705-4c10-b1a1-08ea1b94d4cc', 2, 'In Progress', '2019-07-09 17:55:21.776368', '2019-07-28 22:48:23.429637');
-INSERT INTO public.status (id, "userid", index, name, "createdAt", "updatedAt") VALUES ('caf33522-032f-4490-9952-96b4be8c0512', 'bb6d88c8-d705-4c10-b1a1-08ea1b94d4cc', 3, 'Done', '2019-07-09 17:55:39.448301', '2019-07-28 22:48:26.015075');

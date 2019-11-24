@@ -12,6 +12,9 @@ export class CreateUserReq extends jspb.Message {
   getPassword(): string;
   setPassword(value: string): void;
 
+  getAvatar(): string;
+  setAvatar(value: string): void;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CreateUserReq.AsObject;
   static toObject(includeInstance: boolean, msg: CreateUserReq): CreateUserReq.AsObject;
@@ -25,6 +28,7 @@ export namespace CreateUserReq {
     name: string,
     email: string,
     password: string,
+    avatar: string,
   }
 }
 
@@ -34,6 +38,9 @@ export class UpdateUserReq extends jspb.Message {
 
   getEmail(): string;
   setEmail(value: string): void;
+
+  getAvatar(): string;
+  setAvatar(value: string): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): UpdateUserReq.AsObject;
@@ -47,6 +54,7 @@ export namespace UpdateUserReq {
   export type AsObject = {
     name: string,
     email: string,
+    avatar: string,
   }
 }
 
@@ -91,8 +99,8 @@ export namespace UserReq {
 }
 
 export class UserRes extends jspb.Message {
-  getStatus(): user_types_pb.EUserStatus;
-  setStatus(value: user_types_pb.EUserStatus): void;
+  getStatus(): user_types_pb.EStatus;
+  setStatus(value: user_types_pb.EStatus): void;
 
   getMessage(): string;
   setMessage(value: string): void;
@@ -107,7 +115,7 @@ export class UserRes extends jspb.Message {
 
 export namespace UserRes {
   export type AsObject = {
-    status: user_types_pb.EUserStatus,
+    status: user_types_pb.EStatus,
     message: string,
   }
 }

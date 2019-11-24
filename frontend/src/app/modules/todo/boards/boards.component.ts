@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, combineLatest } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
-import { TaskStatus } from '@grpc/proto/todo/todo.types_pb';
+import { TaskStatus } from '@grpc/proto/chat/chat.types_pb';
 
 @Component({
     selector: 'app-boards',

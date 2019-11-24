@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
-import { Task } from '@grpc/proto/todo/todo.types_pb';
+import { Task } from '@grpc/proto/chat/chat.types_pb';
 import { AddTaskComponent } from '@share/components/popups/add-task/add-task.component';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class AddTaskService {
     public openAddTask(data?: { task?: Task.AsObject }): MatDialogRef<AddTaskComponent> {
         return this.dialog.open(AddTaskComponent, {
             width: '560px',
-            panelClass: 'todo',
+            panelClass: 'chat',
             data: data || {},
         });
     }

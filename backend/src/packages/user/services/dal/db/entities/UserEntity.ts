@@ -5,7 +5,7 @@ import { Exclude } from 'class-transformer';
 import { SALT } from '../../../../env';
 import { User } from '../../../../grpc-proto/user/user.types_pb';
 
-@Entity('user')
+@Entity('api_user')
 export class UserEntity implements User.AsObject {
     @PrimaryGeneratedColumn('uuid')
     id: string;
@@ -20,6 +20,11 @@ export class UserEntity implements User.AsObject {
         length: 50,
     })
     name: string;
+
+    @Column({
+        length: 500,
+    })
+    avatar: string;
 
     @Exclude()
     @Column({

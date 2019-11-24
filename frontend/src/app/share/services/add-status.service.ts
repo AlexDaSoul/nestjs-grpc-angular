@@ -14,7 +14,7 @@ export class AddStatusService {
     public openAddStatus(index: number): MatDialogRef<AddStatusComponent> {
         return this.dialog.open(AddStatusComponent, {
             width: '490px',
-            panelClass: 'todo',
+            panelClass: 'chat',
             data: {
                 index: index || 0,
             },

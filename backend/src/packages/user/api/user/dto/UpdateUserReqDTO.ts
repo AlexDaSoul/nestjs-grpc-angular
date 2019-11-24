@@ -2,7 +2,7 @@ import { IsEmail, IsDefined, IsString, MaxLength } from 'class-validator';
 
 import { UpdateUserReq } from '../../../grpc-proto/user/user_pb';
 
-export class CreateUserReqDTO implements UpdateUserReq.AsObject {
+export class UpdateUserReqDTO implements UpdateUserReq.AsObject {
     @IsDefined()
     @IsEmail()
     @MaxLength(50)
@@ -12,4 +12,9 @@ export class CreateUserReqDTO implements UpdateUserReq.AsObject {
     @IsString()
     @MaxLength(50)
     public name: string;
+
+    @IsDefined()
+    @IsString()
+    @MaxLength(500)
+    public avatar: string;
 }

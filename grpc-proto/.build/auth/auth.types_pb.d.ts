@@ -14,8 +14,3 @@ export namespace Stub {
   }
 }
 
-export enum EStatus { 
-  AUTH_ACTION_UNKNOWN = 0,
-  AUTH_ACTION_SUCCESS = 1,
-  AUTH_ACTION_ERROR = 2,
-}

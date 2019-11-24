@@ -10,7 +10,7 @@ export class MessagePrinter {
         this.printPreparedMessage(this.messageBuilder.build(level, args) + '\n');
     }
 
-    // todo: check this implementation in https://sdexnt.atlassian.net/browse/WEBBACK-485
+    // chat: check this implementation in https://sdexnt.atlassian.net/browse/WEBBACK-485
     private printPreparedMessage(message: string): void {
         // see: https://github.com/nodejs/node/blob/master/lib/internal/console/constructor.js#L232
 

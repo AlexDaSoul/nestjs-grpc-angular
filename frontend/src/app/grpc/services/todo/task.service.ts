@@ -5,9 +5,9 @@ import { Metadata } from 'grpc-web';
 import { grpcUnary } from '@grpc/helpers/grpc-unary';
 import { grpcStream } from '@grpc/helpers/grpc-stream';
 import { grpcJwtMetadata } from '@grpc/helpers/grpc-metadata';
-import { TaskServicePromiseClient } from '@grpc/proto/todo/task_grpc_web_pb';
-import { AddTaskReq, TaskReq, TaskList } from '@grpc/proto/todo/task_pb';
-import { Task, TodoStub, TaskStatusRes } from '@grpc/proto/todo/todo.types_pb';
+import { TaskServicePromiseClient } from '@grpc/proto/chat/task_grpc_web_pb';
+import { AddTaskReq, TaskReq, TaskList } from '@grpc/proto/chat/task_pb';
+import { Task, TodoStub, TaskStatusRes } from '@grpc/proto/chat/chat.types_pb';
 
 @Injectable({
     providedIn: 'root',

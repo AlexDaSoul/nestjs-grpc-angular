@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package api.chat;
+
+import "chat.types.proto";
+
+service MessageService {
+    rpc SendMessage (SendMessageReq) returns (ChatRes) {
+    }
+
+    rpc EditMessage (EditMessageReq) returns (ChatRes) {
+    }
+
+    rpc DeleteMessage (DeleteMessageReq) returns (ChatRes) {
+    }
+}
+
+message SendMessageReq {
+    string message = 1;
+}
+
+message EditMessageReq {
+    string id = 1;
+    string message = 2;
+}
+
+message DeleteMessageReq {
+    string id = 1;
+}

@@ -45,12 +45,7 @@ export class AuthController implements OnModuleInit {
     @UseFilters(RpcExceptionFilter.for('AuthController::auth'))
     public auth(data: AuthReqDTO): Observable<AuthRes.AsObject> {
         return from(this.grpcUserService.verifyUser(data)).pipe(
-            map(user => {
-                return this.jwtService.addToken({
-                    id: user.id,
-                    email: user.email,
-                });
-            }),
+            map(user => this.jwtService.addToken(user)),
             map(token => ({ token })),
         );
     }
@@ -59,13 +54,10 @@ export class AuthController implements OnModuleInit {
     @UseFilters(RpcExceptionFilter.for('AuthController::updateAuth'))
     public updateAuth(data: Stub.AsObject, meta: Metadata): AuthRes.AsObject {
         const token = meta.get('authorization')[0].toString();
-        const payload = this.jwtService.verifyToken(token);
+        const payload = this.jwtService.verifyToken(token) as User.AsObject;
 
         return {
-            token: this.jwtService.addToken({
-                id: payload.id,
-                email: payload.email,
-            }),
+            token: this.jwtService.addToken(payload),
         };
     }
 

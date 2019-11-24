@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { Task } from '@grpc/proto/todo/todo.types_pb';
+import { Task } from '@grpc/proto/chat/chat.types_pb';
 
 @Component({
     selector: 'app-task',

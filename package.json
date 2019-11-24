@@ -6,10 +6,9 @@
     "license": "MIT",
     "scripts": {
         "build:grpc:lib": "node devtools/build-grpc.js",
-        "db:restore": "npm run db:user:restore && npm run db:status:restore && npm run db:task:restore",
+        "db:restore": "npm run db:user:restore && npm run db:message:restore",
         "db:user:restore": "docker exec api-postgres psql -U postgres -d user -f /home/api/user/db/dump/user.sql",
-        "db:status:restore": "docker exec api-postgres psql -U postgres -d todo -f /home/api/todo/db/dump/status.sql",
-        "db:task:restore": "docker exec api-postgres psql -U postgres -d todo -f /home/api/todo/db/dump/task.sql"
+        "db:message:restore": "docker exec api-postgres psql -U postgres -d message -f /home/api/message/db/dump/message.sql"
     },
     "dependencies": {
         "app-root-path": "^2.2.1",

@@ -28,11 +28,13 @@ message CreateUserReq {
     string name = 1;
     string email = 2;
     string password = 3;
+    string avatar = 4;
 }
 
 message UpdateUserReq {
     string name = 1;
     string email = 2;
+    string avatar = 3;
 }
 
 message VerifyUserReq {
@@ -45,7 +47,7 @@ message UserReq {
 }
 
 message UserRes {
-    EUserStatus status = 1;
+    EStatus status = 1;
     string message = 2;
 }
 

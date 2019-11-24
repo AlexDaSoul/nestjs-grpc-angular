@@ -1,7 +1,0 @@
-syntax = "proto3";
-
-package api.todo;
-
-import public "todo.types.proto";
-import public "status.proto";
-import public "task.proto";

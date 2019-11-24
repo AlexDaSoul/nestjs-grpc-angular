@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package api.chat;
+
+enum EStatus {
+    UNKNOWN = 0;
+    SUCCESS = 1;
+    ERROR = 2;
+}
+
+message ChatRes {
+    EStatus status = 1;
+    string message = 2;
+}
+
+message Stub {
+
+}
+
+message Autor {
+    string userId = 1;
+    string name = 2;
+    string avatar = 3;
+}
+
+message Message {
+    string id = 1;
+    Autor author = 2;
+    string message = 3;
+    string date = 4;
+}

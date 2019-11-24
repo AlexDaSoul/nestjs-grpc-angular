@@ -6,8 +6,6 @@ import { map } from 'rxjs/operators';
 import { User } from '../grpc-proto/user/user.types_pb';
 import { CreateUserReq, UpdateUserReq, VerifyUserReq } from '../grpc-proto/user/user_pb';
 
-import { UnauthenticatedException, AUTH_CREDENTIALS_INVALID } from '../lib/exceptions';
-
 import { UserDataFinder } from './dal/data-finders/UserDataFinder';
 import { UserDataProducer } from './dal/data-producers/UserDataProducer';
 import { UserDataRemover } from './dal/data-removers/UserDataRemover';
@@ -49,14 +47,6 @@ export class UserService {
     }
 
     public verifyUser(data: VerifyUserReq.AsObject): Observable<User.AsObject> {
-        return this.userDataFinder.getUserByConditions({ ...data }).pipe(
-            map(user => {
-                if (!user) {
-                    throw new UnauthenticatedException(AUTH_CREDENTIALS_INVALID);
-                }
-
-                return user;
-            }),
-        );
+        return this.userDataFinder.getUserByConditions({ ...data });
     }
 }

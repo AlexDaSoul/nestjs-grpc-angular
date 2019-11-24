@@ -10,6 +10,9 @@ export class User extends jspb.Message {
   getEmail(): string;
   setEmail(value: string): void;
 
+  getAvatar(): string;
+  setAvatar(value: string): void;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): User.AsObject;
   static toObject(includeInstance: boolean, msg: User): User.AsObject;
@@ -23,6 +26,7 @@ export namespace User {
     id: string,
     name: string,
     email: string,
+    avatar: string,
   }
 }
 
@@ -40,8 +44,8 @@ export namespace Stub {
   }
 }
 
-export enum EUserStatus { 
-  USER_ACTION_UNKNOWN = 0,
-  USER_ACTION_SUCCESS = 1,
-  USER_ACTION_ERROR = 2,
+export enum EStatus { 
+  UNKNOWN = 0,
+  SUCCESS = 1,
+  ERROR = 2,
 }

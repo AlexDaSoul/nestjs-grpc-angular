@@ -38,11 +38,11 @@ services:
     volumes:
       - ../src/packages/auth:/home/api/auth
 
-##### todo
-  todo:
+##### chat
+  chat:
     image: node:erbium
-    container_name: todo
-    working_dir: /home/api/todo
+    container_name: chat
+    working_dir: /home/api/chat
     command: npm run docker:debug
     depends_on:
       - api-postgres
@@ -51,29 +51,27 @@ services:
       - 8003:9229 # node inspect
     env_file:
       - environments/common.env
-      - environments/todo.env
+      - environments/chat.env
     environment:
       - GRPC_VERBOSITY=DEBUG
     volumes:
-      - ../src/packages/todo:/home/api/todo
+      - ../src/packages/chat:/home/api/chat
 
 #### api postgres
   api-postgres:
     container_name: api-postgres
-    image: api-postgres:latest
+    image: postgres:11
     restart: always
     ports: # for debug puproses, remove in the production
       - 5432:5432
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_MULTIPLE_DATABASES=user,todo
+      - POSTGRES_MULTIPLE_DATABASES=user,chat
       - PGPORT=5432
-    build:
-      context: .
-      dockerfile: Dockerfile.postgres
     volumes:
-      - ../src/packages/todo/services/dal/db:/home/api/todo/db
+      - ./postgres:/docker-entrypoint-initdb.d
+      - ../src/packages/chat/services/dal/db:/home/api/chat/db
       - ../src/packages/user/services/dal/db:/home/api/user/db
 
 #### envoy-api

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { map, filter, tap } from 'rxjs/operators';
 
 import { StatusGrpcService } from '@grpc/services/todo/status.service';
-import { TaskStatus, Task } from '@grpc/proto/todo/todo.types_pb';
+import { TaskStatus, Task } from '@grpc/proto/chat/chat.types_pb';
 import { TaskGrpcService } from '@grpc/services/todo/task.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class BoardComponent implements OnInit {
     public statuses$: Observable<TaskStatus.AsObject[]> = this.statusGrpcService.getStatusesWithTasks().pipe(
         map((data) => data.statusesList),
         filter(statuses => statuses.length > 0),
-       // tap(statuses => statuses.map(status => status.tasksList.sort((a, b) => a.index > b.index))),
+       // tap(statuses => statuses.map(chat => chat.tasksList.sort((a, b) => a.index > b.index))),
         tap(statuses => this.getStatusIds(statuses)),
     );
 

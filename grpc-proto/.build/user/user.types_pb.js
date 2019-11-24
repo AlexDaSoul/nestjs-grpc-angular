@@ -12,7 +12,7 @@ var jspb = require('google-protobuf');
 var goog = jspb;
 var global = Function('return this')();
 
-goog.exportSymbol('proto.api.user.EUserStatus', null, global);
+goog.exportSymbol('proto.api.user.EStatus', null, global);
 goog.exportSymbol('proto.api.user.Stub', null, global);
 goog.exportSymbol('proto.api.user.User', null, global);
 /**
@@ -91,7 +91,8 @@ proto.api.user.User.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
     name: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    email: jspb.Message.getFieldWithDefault(msg, 3, "")
+    email: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    avatar: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -139,6 +140,10 @@ proto.api.user.User.deserializeBinaryFromReader = function(msg, reader) {
     case 3:
       var value = /** @type {string} */ (reader.readString());
       msg.setEmail(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAvatar(value);
       break;
     default:
       reader.skipField();
@@ -190,6 +195,13 @@ proto.api.user.User.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
+  f = message.getAvatar();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
 };
 
 
@@ -235,6 +247,21 @@ proto.api.user.User.prototype.getEmail = function() {
 /** @param {string} value */
 proto.api.user.User.prototype.setEmail = function(value) {
   jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional string avatar = 4;
+ * @return {string}
+ */
+proto.api.user.User.prototype.getAvatar = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/** @param {string} value */
+proto.api.user.User.prototype.setAvatar = function(value) {
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -342,10 +369,10 @@ proto.api.user.Stub.serializeBinaryToWriter = function(message, writer) {
 /**
  * @enum {number}
  */
-proto.api.user.EUserStatus = {
-  USER_ACTION_UNKNOWN: 0,
-  USER_ACTION_SUCCESS: 1,
-  USER_ACTION_ERROR: 2
+proto.api.user.EStatus = {
+  UNKNOWN: 0,
+  SUCCESS: 1,
+  ERROR: 2
 };
 
 goog.object.extend(exports, proto.api.user);

@@ -30,9 +30,13 @@ export const typeorm = {
     database: env.TYPEORM_DATABASE_USER || 'user',
     username: env.TYPEORM_USERNAME || 'postgres',
     password: env.TYPEORM_PASSWORD || 'postgres',
-    entities: [env.TYPEORM_ENTITIES || './entities/*.{ts,js}'],
-    migrations: [env.TYPEORM_MIGRATIONS || './migrations/*.{ts,js}'],
-    subscribers: [env.TYPEORM_SUBSCRIBERS || './subscribers/*.{ts,js}'],
-    synchronize: JSON.parse(env.TYPEORM_SYNCHRONIZE) || true,
-    logging: JSON.parse(env.TYPEORM_LOGGING) || false,
+    entities: [env.TYPEORM_ENTITIES || './**/entities/*.{ts,js}'],
+    migrations: [env.TYPEORM_MIGRATIONS || './**/migrations/*.{ts,js}'],
+    subscribers: [env.TYPEORM_SUBSCRIBERS || './**/subscribers/*.{ts,js}'],
+    synchronize: env.TYPEORM_SYNCHRONIZE === 'true',
+    logging: env.TYPEORM_LOGGING === 'true',
+    cli: {
+        migrationsDir: env.TYPEORM_MIGRATIONS || './**/migrations/*.{ts,js}',
+        subscribersDir: env.TYPEORM_SUBSCRIBERS || './**/subscribers/*.{ts,js}',
+    },
 } as TypeOrmModuleOptions;

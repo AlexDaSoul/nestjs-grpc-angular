@@ -7,7 +7,7 @@ import { JwtGuard } from '../../lib/jwt/jwt.guard';
 import { IJwtMeta } from '../../lib/jwt/jwt.interface';
 import { RpcExceptionFilter } from '../../lib/exceptions';
 
-import { User, EUserStatus, Stub } from '../../grpc-proto/user/user.types_pb';
+import { User, EStatus, Stub } from '../../grpc-proto/user/user.types_pb';
 import { UserRes } from '../../grpc-proto/user/user_pb';
 
 import { UserService } from '../../services/UserService';
@@ -15,6 +15,7 @@ import { UserService } from '../../services/UserService';
 import { CreateUserReqDTO } from './dto/CreateUserReqDTO';
 import { VerifyUserReqDTO } from './dto/VerifyUserReqDTO';
 import { UserReqDTO } from './dto/UserReqDTO';
+import { UpdateUserReqDTO } from './dto/UpdateUserReqDTO';
 
 @Controller()
 export class UserController {
@@ -28,7 +29,7 @@ export class UserController {
         return this.userService.createUser(data).pipe(
             map(res => {
                 return {
-                    status: EUserStatus.USER_ACTION_SUCCESS,
+                    status: EStatus.SUCCESS,
                     message: `User created successfully: ID: ${res.id}`,
                 };
             }),
@@ -38,11 +39,11 @@ export class UserController {
     @UseGuards(JwtGuard)
     @GrpcMethod('UserService', 'UpdateUser')
     @UseFilters(RpcExceptionFilter.for('UserController::updateUser'))
-    public updateUser(data: CreateUserReqDTO, meta: IJwtMeta<{ id: string; }>): Observable<UserRes.AsObject> {
+    public updateUser(data: UpdateUserReqDTO, meta: IJwtMeta<{ id: string; }>): Observable<UserRes.AsObject> {
         return this.userService.updateUser(data, meta.payload.id).pipe(
             map(() => {
                 return {
-                    status: EUserStatus.USER_ACTION_SUCCESS,
+                    status: EStatus.SUCCESS,
                     message: `User update successfully: ID: ${meta.payload.id}`,
                 };
             }),
@@ -56,7 +57,7 @@ export class UserController {
         return this.userService.deleteUser(data.id).pipe(
             map(() => {
                 return {
-                    status: EUserStatus.USER_ACTION_SUCCESS,
+                    status: EStatus.SUCCESS,
                     message: `User delete successfully: ID: ${data.id}`,
                 };
             }),

@@ -2,16 +2,17 @@ syntax = "proto3";
 
 package api.user;
 
-enum EUserStatus {
-    USER_ACTION_UNKNOWN = 0;
-    USER_ACTION_SUCCESS = 1;
-    USER_ACTION_ERROR = 2;
+enum EStatus {
+    UNKNOWN = 0;
+    SUCCESS = 1;
+    ERROR = 2;
 }
 
 message User {
     string id = 1;
     string name = 2;
     string email = 3;
+    string avatar = 4;
 }
 
 message Stub {

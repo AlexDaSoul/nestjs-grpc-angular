@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
-import { TaskStatus } from '@grpc/proto/todo/todo.types_pb';
+import { TaskStatus } from '@grpc/proto/chat/chat.types_pb';
 import { EditStatusComponent } from '@share/components/popups/edit-status/edit-status.component';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class EditStatusService {
     public openEditStatus(data?: TaskStatus.AsObject): MatDialogRef<EditStatusComponent> {
         return this.dialog.open(EditStatusComponent, {
             width: '490px',
-            panelClass: 'todo',
+            panelClass: 'chat',
             data: data || {},
         });
     }

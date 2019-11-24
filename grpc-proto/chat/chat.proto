@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package api.chat;
+
+import "chat.types.proto";
+
+service ChatService {
+    rpc GetChat (Stub) returns (stream ChatList) {
+    }
+}
+
+message ChatList {
+    repeated Message messages = 3;
+}

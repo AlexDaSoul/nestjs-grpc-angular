@@ -9,7 +9,10 @@
     },
     "license": "ISC",
     "scripts": {
-        "docker:debug": "ts-node-dev --inspect=0.0.0.0 --respawn --transpileOnly -r tsconfig-paths/register main.ts"
+        "docker:debug": "ts-node-dev --inspect=0.0.0.0 --respawn --transpileOnly -r tsconfig-paths/register main.ts",
+        "migrate:generate": "ts-node  -r tsconfig-paths/register ./node_modules/typeorm/cli migration:generate -d services/dal/db/migrations -f lib/dal/migrations/migrations.config.ts -n",
+        "migrate:create": "ts-node  -r tsconfig-paths/register ./node_modules/typeorm/cli migration:create -d services/dal/db/migrations -f lib/dal/migrations/migrations.config.ts -n",
+        "migrate:revert": "ts-node  -r tsconfig-paths/register services/dal/db/migrations-common/migrations.config.ts"
     },
     "dependencies": {
         "@grpc/proto-loader": "^0.5.3",

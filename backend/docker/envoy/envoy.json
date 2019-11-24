@@ -57,10 +57,10 @@
                                                     },
                                                     {
                                                         "match": {
-                                                            "prefix": "/api.todo"
+                                                            "prefix": "/api.chat"
                                                         },
                                                         "route": {
-                                                            "cluster": "todo",
+                                                            "cluster": "chat",
                                                             "max_grpc_timeout": "0s"
                                                         }
                                                     }
@@ -150,13 +150,13 @@
                 }
             },
             {
-                "name": "todo",
+                "name": "chat",
                 "connect_timeout": "0.25s",
                 "type": "LOGICAL_DNS",
                 "lb_policy": "ROUND_ROBIN",
                 "http2_protocol_options": {},
                 "load_assignment": {
-                    "cluster_name": "todo",
+                    "cluster_name": "chat",
                     "endpoints": [
                         {
                             "lb_endpoints": [
@@ -164,7 +164,7 @@
                                     "endpoint": {
                                         "address": {
                                             "socket_address": {
-                                                "address": "todo",
+                                                "address": "chat",
                                                 "port_value": 443
                                             }
                                         }

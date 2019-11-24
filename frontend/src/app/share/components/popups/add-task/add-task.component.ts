@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 
-import { Task } from '@grpc/proto/todo/todo.types_pb';
+import { Task } from '@grpc/proto/chat/chat.types_pb';
 import { User } from '@grpc/proto/user/user.types_pb';
 import { UserGrpcService } from '@grpc/services/user/user.service';
 

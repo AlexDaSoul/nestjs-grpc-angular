@@ -4,9 +4,9 @@ import { Metadata } from 'grpc-web';
 
 import { grpcUnary } from '@grpc/helpers/grpc-unary';
 import { grpcJwtMetadata } from '@grpc/helpers/grpc-metadata';
-import { StatusServicePromiseClient } from '@grpc/proto/todo/status_grpc_web_pb';
-import { AddStatusReq, StatusReq, StatusList } from '@grpc/proto/todo/status_pb';
-import { TaskStatus, TaskStatusRes, TodoStub } from '@grpc/proto/todo/todo.types_pb';
+import { StatusServicePromiseClient } from '@grpc/proto/chat/status_grpc_web_pb';
+import { AddStatusReq, StatusReq, StatusList } from '@grpc/proto/chat/status_pb';
+import { TaskStatus, TaskStatusRes, TodoStub } from '@grpc/proto/chat/chat.types_pb';
 
 @Injectable({
     providedIn: 'root',

@@ -180,7 +180,8 @@ proto.api.user.CreateUserReq.toObject = function(includeInstance, msg) {
   var f, obj = {
     name: jspb.Message.getFieldWithDefault(msg, 1, ""),
     email: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    password: jspb.Message.getFieldWithDefault(msg, 3, "")
+    password: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    avatar: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -228,6 +229,10 @@ proto.api.user.CreateUserReq.deserializeBinaryFromReader = function(msg, reader)
     case 3:
       var value = /** @type {string} */ (reader.readString());
       msg.setPassword(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAvatar(value);
       break;
     default:
       reader.skipField();
@@ -279,6 +284,13 @@ proto.api.user.CreateUserReq.serializeBinaryToWriter = function(message, writer)
       f
     );
   }
+  f = message.getAvatar();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
 };
 
 
@@ -327,6 +339,21 @@ proto.api.user.CreateUserReq.prototype.setPassword = function(value) {
 };
 
 
+/**
+ * optional string avatar = 4;
+ * @return {string}
+ */
+proto.api.user.CreateUserReq.prototype.getAvatar = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/** @param {string} value */
+proto.api.user.CreateUserReq.prototype.setAvatar = function(value) {
+  jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
 
 
 
@@ -360,7 +387,8 @@ proto.api.user.UpdateUserReq.prototype.toObject = function(opt_includeInstance) 
 proto.api.user.UpdateUserReq.toObject = function(includeInstance, msg) {
   var f, obj = {
     name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    email: jspb.Message.getFieldWithDefault(msg, 2, "")
+    email: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    avatar: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -405,6 +433,10 @@ proto.api.user.UpdateUserReq.deserializeBinaryFromReader = function(msg, reader)
       var value = /** @type {string} */ (reader.readString());
       msg.setEmail(value);
       break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAvatar(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -448,6 +480,13 @@ proto.api.user.UpdateUserReq.serializeBinaryToWriter = function(message, writer)
       f
     );
   }
+  f = message.getAvatar();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
 };
 
 
@@ -478,6 +517,21 @@ proto.api.user.UpdateUserReq.prototype.getEmail = function() {
 /** @param {string} value */
 proto.api.user.UpdateUserReq.prototype.setEmail = function(value) {
   jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string avatar = 3;
+ * @return {string}
+ */
+proto.api.user.UpdateUserReq.prototype.getAvatar = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.api.user.UpdateUserReq.prototype.setAvatar = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -833,7 +887,7 @@ proto.api.user.UserRes.deserializeBinaryFromReader = function(msg, reader) {
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {!proto.api.user.EUserStatus} */ (reader.readEnum());
+      var value = /** @type {!proto.api.user.EStatus} */ (reader.readEnum());
       msg.setStatus(value);
       break;
     case 2:
@@ -887,15 +941,15 @@ proto.api.user.UserRes.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional EUserStatus status = 1;
- * @return {!proto.api.user.EUserStatus}
+ * optional EStatus status = 1;
+ * @return {!proto.api.user.EStatus}
  */
 proto.api.user.UserRes.prototype.getStatus = function() {
-  return /** @type {!proto.api.user.EUserStatus} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+  return /** @type {!proto.api.user.EStatus} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
 
-/** @param {!proto.api.user.EUserStatus} value */
+/** @param {!proto.api.user.EStatus} value */
 proto.api.user.UserRes.prototype.setStatus = function(value) {
   jspb.Message.setProto3EnumField(this, 1, value);
 };
