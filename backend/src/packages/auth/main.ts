@@ -5,7 +5,7 @@ import { Logger as NestLogger, ValidationPipe } from '@nestjs/common';
 
 import { BootstrapLogger } from './lib/logger';
 
-import { grpc } from './env';
+import { grpcAuth } from './env';
 
 import { AppModule } from './AppModule';
 
@@ -15,7 +15,7 @@ const logger = new BootstrapLogger();
 NestLogger.overrideLogger(logger);
 
 async function bootstrap() {
-    const app = await NestFactory.createMicroservice(AppModule, grpc);
+    const app = await NestFactory.createMicroservice(AppModule, grpcAuth);
 
     app.useLogger(logger);
     app.useGlobalPipes(new ValidationPipe());

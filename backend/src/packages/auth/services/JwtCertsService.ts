@@ -5,12 +5,14 @@ import { AUTH_CREDENTIALS_INVALID, UnauthenticatedException } from '../lib/excep
 
 import { User } from '../grpc-proto/user/user.types_pb';
 
-import { JWT_EXPIRE, pemKeys } from '../env';
+import { JWT_EXPIRE } from '../env';
 
 interface IDecodedUserData {
     id: string;
     email: string;
 }
+
+const env = process.env;
 
 @Injectable()
 export class JwtCertsService {
@@ -32,7 +34,7 @@ export class JwtCertsService {
             email: user.email,
         };
 
-        return sign(payload, pemKeys.JWT_PRIV, {
+        return sign(payload, env.JWT_PRIV, {
             expiresIn,
             algorithm: 'RS256',
         });
@@ -40,7 +42,7 @@ export class JwtCertsService {
 
     public verifyToken(token: string): IDecodedUserData {
         try {
-            return verify(token, pemKeys.JWT_PUB, {
+            return verify(token, env.JWT_PUB, {
                 algorithms: ['RS256'],
             }) as IDecodedUserData;
         } catch (ignored) {

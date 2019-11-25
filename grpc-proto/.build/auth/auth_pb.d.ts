@@ -42,43 +42,21 @@ export namespace AuthRes {
   }
 }
 
-export class VerifyAuthTokenReq extends jspb.Message {
-  getToken(): string;
-  setToken(value: string): void;
+export class GetCertStreamRes extends jspb.Message {
+  getKey(): string;
+  setKey(value: string): void;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): VerifyAuthTokenReq.AsObject;
-  static toObject(includeInstance: boolean, msg: VerifyAuthTokenReq): VerifyAuthTokenReq.AsObject;
-  static serializeBinaryToWriter(message: VerifyAuthTokenReq, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): VerifyAuthTokenReq;
-  static deserializeBinaryFromReader(message: VerifyAuthTokenReq, reader: jspb.BinaryReader): VerifyAuthTokenReq;
+  toObject(includeInstance?: boolean): GetCertStreamRes.AsObject;
+  static toObject(includeInstance: boolean, msg: GetCertStreamRes): GetCertStreamRes.AsObject;
+  static serializeBinaryToWriter(message: GetCertStreamRes, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetCertStreamRes;
+  static deserializeBinaryFromReader(message: GetCertStreamRes, reader: jspb.BinaryReader): GetCertStreamRes;
 }
 
-export namespace VerifyAuthTokenReq {
+export namespace GetCertStreamRes {
   export type AsObject = {
-    token: string,
-  }
-}
-
-export class VerifyAuthTokenRes extends jspb.Message {
-  getId(): string;
-  setId(value: string): void;
-
-  getEmail(): string;
-  setEmail(value: string): void;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): VerifyAuthTokenRes.AsObject;
-  static toObject(includeInstance: boolean, msg: VerifyAuthTokenRes): VerifyAuthTokenRes.AsObject;
-  static serializeBinaryToWriter(message: VerifyAuthTokenRes, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): VerifyAuthTokenRes;
-  static deserializeBinaryFromReader(message: VerifyAuthTokenRes, reader: jspb.BinaryReader): VerifyAuthTokenRes;
-}
-
-export namespace VerifyAuthTokenRes {
-  export type AsObject = {
-    id: string,
-    email: string,
+    key: string,
   }
 }
 

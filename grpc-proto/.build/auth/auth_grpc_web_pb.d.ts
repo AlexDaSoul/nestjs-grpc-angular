@@ -5,8 +5,7 @@ import * as auth_types_pb from './auth.types_pb';
 import {
   AuthReq,
   AuthRes,
-  VerifyAuthTokenReq,
-  VerifyAuthTokenRes} from './auth_pb';
+  GetCertStreamRes} from './auth_pb';
 
 export class AuthServiceClient {
   constructor (hostname: string,
@@ -27,12 +26,10 @@ export class AuthServiceClient {
                response: AuthRes) => void
   ): grpcWeb.ClientReadableStream<AuthRes>;
 
-  verifyAuthToken(
-    request: VerifyAuthTokenReq,
-    metadata: grpcWeb.Metadata | undefined,
-    callback: (err: grpcWeb.Error,
-               response: VerifyAuthTokenRes) => void
-  ): grpcWeb.ClientReadableStream<VerifyAuthTokenRes>;
+  getCertStream(
+    request: auth_types_pb.Stub,
+    metadata?: grpcWeb.Metadata
+  ): grpcWeb.ClientReadableStream<GetCertStreamRes>;
 
 }
 
@@ -51,10 +48,10 @@ export class AuthServicePromiseClient {
     metadata?: grpcWeb.Metadata
   ): Promise<AuthRes>;
 
-  verifyAuthToken(
-    request: VerifyAuthTokenReq,
+  getCertStream(
+    request: auth_types_pb.Stub,
     metadata?: grpcWeb.Metadata
-  ): Promise<VerifyAuthTokenRes>;
+  ): grpcWeb.ClientReadableStream<GetCertStreamRes>;
 
 }
 

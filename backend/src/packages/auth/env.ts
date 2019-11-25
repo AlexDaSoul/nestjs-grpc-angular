@@ -2,14 +2,9 @@ import { Transport, GrpcOptions } from '@nestjs/microservices';
 
 const env = process.env;
 
-export const pemKeys = {
-    JWT_PRIV: null,
-    JWT_PUB: null,
-};
-
 export const JWT_EXPIRE = env.JWT_EXPIRE || 600;
 
-export const grpc = {
+export const grpcAuth = {
     transport: Transport.GRPC,
     options: {
         url: env.GRPC_AUTH_SERVICE || '127.0.0.1:8002',

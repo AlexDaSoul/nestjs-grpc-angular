@@ -5,7 +5,7 @@ const env = process.env;
 
 export const SALT = env.SALT || 'SYqSuijVvyUE';
 
-export const grpc = {
+export const grpcUser = {
     transport: Transport.GRPC,
     options: {
         url: env.GRPC_USER_SERVICE || '127.0.0.1:8001',

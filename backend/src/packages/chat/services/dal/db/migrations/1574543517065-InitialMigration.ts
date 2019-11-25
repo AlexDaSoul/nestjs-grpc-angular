@@ -12,7 +12,7 @@ export class InitialMigration1574543517065 implements MigrationInterface {
                 CONSTRAINT "PK_MESSAGES"
                     PRIMARY KEY (id)
             );
-            
+
             CREATE INDEX IF NOT EXISTS IDX_AUTOR_ID
                 ON api_message USING GIN ((author -> 'userid'));
         `);

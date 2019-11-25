@@ -1,1 +1,19 @@
+:host {
+    padding: 1rem;
+}
 
+.chat-box {
+    position: absolute;
+    top: 5rem;
+    right: 1rem;
+    bottom: 1rem;
+    left: 1rem;
+    max-width: 1400px;
+    margin: auto;
+    background: #1b1b1b;
+    padding: .3rem .3rem .2rem;
+}
+
+.chat-box-messages {
+    overflow: auto;
+}

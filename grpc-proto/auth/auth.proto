@@ -11,7 +11,7 @@ service AuthService {
     rpc UpdateAuth (Stub) returns (AuthRes) {
     }
 
-    rpc VerifyAuthToken (VerifyAuthTokenReq) returns (VerifyAuthTokenRes) {
+    rpc GetCertStream (Stub) returns (stream GetCertStreamRes) {
     }
 }
 
@@ -24,11 +24,6 @@ message AuthRes {
     string token = 1;
 }
 
-message VerifyAuthTokenReq {
-    string token = 1;
-}
-
-message VerifyAuthTokenRes {
-    string id = 1;
-    string email = 2;
+message GetCertStreamRes {
+    string key = 1;
 }

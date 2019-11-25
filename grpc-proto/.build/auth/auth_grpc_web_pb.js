@@ -202,55 +202,50 @@ proto.api.auth.AuthServicePromiseClient.prototype.updateAuth =
 /**
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.api.auth.VerifyAuthTokenReq,
- *   !proto.api.auth.VerifyAuthTokenRes>}
+ *   !proto.api.auth.Stub,
+ *   !proto.api.auth.GetCertStreamRes>}
  */
-const methodInfo_AuthService_VerifyAuthToken = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.api.auth.VerifyAuthTokenRes,
-  /** @param {!proto.api.auth.VerifyAuthTokenReq} request */
+const methodInfo_AuthService_GetCertStream = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.api.auth.GetCertStreamRes,
+  /** @param {!proto.api.auth.Stub} request */
   function(request) {
     return request.serializeBinary();
   },
-  proto.api.auth.VerifyAuthTokenRes.deserializeBinary
+  proto.api.auth.GetCertStreamRes.deserializeBinary
 );
 
 
 /**
- * @param {!proto.api.auth.VerifyAuthTokenReq} request The
- *     request proto
+ * @param {!proto.api.auth.Stub} request The request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.api.auth.VerifyAuthTokenRes)}
- *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.api.auth.VerifyAuthTokenRes>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.api.auth.GetCertStreamRes>}
  *     The XHR Node Readable Stream
  */
-proto.api.auth.AuthServiceClient.prototype.verifyAuthToken =
-    function(request, metadata, callback) {
-  return this.client_.rpcCall(this.hostname_ +
-      '/api.auth.AuthService/VerifyAuthToken',
+proto.api.auth.AuthServiceClient.prototype.getCertStream =
+    function(request, metadata) {
+  return this.client_.serverStreaming(this.hostname_ +
+      '/api.auth.AuthService/GetCertStream',
       request,
       metadata || {},
-      methodInfo_AuthService_VerifyAuthToken,
-      callback);
+      methodInfo_AuthService_GetCertStream);
 };
 
 
 /**
- * @param {!proto.api.auth.VerifyAuthTokenReq} request The
- *     request proto
+ * @param {!proto.api.auth.Stub} request The request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.api.auth.VerifyAuthTokenRes>}
- *     A native promise that resolves to the response
+ * @return {!grpc.web.ClientReadableStream<!proto.api.auth.GetCertStreamRes>}
+ *     The XHR Node Readable Stream
  */
-proto.api.auth.AuthServicePromiseClient.prototype.verifyAuthToken =
+proto.api.auth.AuthServicePromiseClient.prototype.getCertStream =
     function(request, metadata) {
-  return this.client_.unaryCall(this.hostname_ +
-      '/api.auth.AuthService/VerifyAuthToken',
+  return this.client_.serverStreaming(this.hostname_ +
+      '/api.auth.AuthService/GetCertStream',
       request,
       metadata || {},
-      methodInfo_AuthService_VerifyAuthToken);
+      methodInfo_AuthService_GetCertStream);
 };
 
 

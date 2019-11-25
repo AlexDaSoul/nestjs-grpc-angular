@@ -4,7 +4,6 @@ import { RpcException } from '@nestjs/microservices';
 import { status } from 'grpc';
 
 import { UnauthenticatedException } from '../exceptions';
-import { JWT_KEY_PUB } from './keys';
 
 const TOKEN_HEADER_NAME = 'authorization';
 const DECODING_OPTIONS = {
@@ -18,7 +17,7 @@ export class JwtGuard implements CanActivate {
 
         if (token) {
             try {
-                meta.payload = verify(token, JWT_KEY_PUB, DECODING_OPTIONS);
+                meta.payload = verify(token, process.env.JWT_PUB, DECODING_OPTIONS);
 
                 return true;
             } catch (error) {

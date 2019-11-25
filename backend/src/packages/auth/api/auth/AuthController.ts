@@ -10,7 +10,7 @@ import { JwtGuard } from '../../lib/jwt/jwt.guard';
 import { User } from '../../grpc-proto/user/user.types_pb';
 import { UserReq, VerifyUserReq } from '../../grpc-proto/user/user_pb';
 import { Stub } from '../../grpc-proto/auth/auth.types_pb';
-import { AuthRes, VerifyAuthTokenReq, VerifyAuthTokenRes } from '../../grpc-proto/auth/auth_pb';
+import { AuthRes, GetCertStreamRes } from '../../grpc-proto/auth/auth_pb';
 
 import { grpcUser } from '../../env';
 
@@ -18,6 +18,7 @@ import { PemCertsService } from '../../services/PemCertsService';
 import { JwtCertsService } from '../../services/JwtCertsService';
 
 import { AuthReqDTO } from './dto/AuthReqDTO';
+import { CertSubscribeService } from '../../services/CertSubscribeService';
 
 interface IUserService {
     verifyUser(data: VerifyUserReq.AsObject): Observable<User.AsObject>;
@@ -39,6 +40,7 @@ export class AuthController implements OnModuleInit {
     constructor(
         private readonly pemService: PemCertsService,
         private readonly jwtService: JwtCertsService,
+        private readonly certSubscribeService: CertSubscribeService,
         ) {
     }
 
@@ -63,9 +65,10 @@ export class AuthController implements OnModuleInit {
         };
     }
 
-    @GrpcMethod('AuthService', 'VerifyAuthToken')
-    @UseFilters(RpcExceptionFilter.for('AuthController::verifyAuthToken'))
-    public verifyAuthToken(data: VerifyAuthTokenReq.AsObject): VerifyAuthTokenRes.AsObject {
-        return this.jwtService.verifyToken(data.token);
+    @GrpcMethod('AuthService', 'GetCertStream')
+    @UseFilters(RpcExceptionFilter.for('AuthController::getCertStream'))
+    public getCertStream(data: Stub.AsObject): Observable<GetCertStreamRes.AsObject> {
+        return this.certSubscribeService.getCert()
+            .pipe(map(key => ({ key })));
     }
 }

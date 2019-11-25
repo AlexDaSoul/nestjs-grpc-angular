@@ -1,5 +1,5 @@
 import { Controller, UseGuards, UseFilters } from '@nestjs/common';
-import { GrpcMethod } from '@nestjs/microservices';
+import { GrpcStreamMethod } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 
 import { JwtGuard } from '../../lib/jwt/jwt.guard';
@@ -17,7 +17,7 @@ export class ChatController {
     }
 
     @UseGuards(JwtGuard)
-    @GrpcMethod('ChatService', 'GetChat')
+    @GrpcStreamMethod('ChatService', 'GetChat')
     @UseFilters(RpcExceptionFilter.for('ChatService::getChat'))
     public getChat(data: Stub.AsObject): Observable<ChatList.AsObject> {
         return this.chatService.getChatStream();

@@ -1,4 +1,4 @@
-import { IsEmail, IsDefined, IsString, MaxLength } from 'class-validator';
+import { IsEmail, IsDefined, IsString, MaxLength, ValidateIf } from 'class-validator';
 
 import { CreateUserReq } from '../../../grpc-proto/user/user_pb';
 
@@ -18,6 +18,7 @@ export class CreateUserReqDTO implements CreateUserReq.AsObject {
     @MaxLength(128)
     public password: string;
 
+    @ValidateIf(user => user.avatar)
     @IsString()
     @MaxLength(500)
     public avatar: string;

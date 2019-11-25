@@ -3,12 +3,21 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 const env = process.env;
 
-export const grpc = {
+export const grpcChat = {
     transport: Transport.GRPC,
     options: {
         url: env.GRPC_TODO_SERVICE || '127.0.0.1:8003',
         package: 'api.chat',
         protoPath: './grpc-proto/chat/index.proto',
+    },
+} as GrpcOptions;
+
+export const grpcAuth = {
+    transport: Transport.GRPC,
+    options: {
+        url: env.GRPC_AUTH_SERVICE || '127.0.0.1:8002',
+        package: 'api.auth',
+        protoPath: './grpc-proto/auth/index.proto',
     },
 } as GrpcOptions;
 

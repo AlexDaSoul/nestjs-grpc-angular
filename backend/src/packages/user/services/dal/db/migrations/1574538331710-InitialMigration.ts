@@ -19,9 +19,7 @@ export class InitialMigration1574538331710 implements MigrationInterface {
         `);
     }
 
-
     public async down(queryRunner: QueryRunner): Promise<any> {
         await Promise.resolve();
     }
-
 }

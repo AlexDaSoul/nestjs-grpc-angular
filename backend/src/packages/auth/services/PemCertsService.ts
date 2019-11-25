@@ -1,18 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { createCertificate } from 'pem';
 
-import { pemKeys } from '../env';
+import { serviceKey } from '../pki-dev/keys';
+import { CertSubscribeService } from './CertSubscribeService';
+
+const env = process.env;
 
 @Injectable()
 export class PemCertsService {
+    constructor(private readonly certSubscribeService: CertSubscribeService) {
+    }
+
     public createCertificate(): void {
-        createCertificate((err, keys) => {
+        createCertificate({ serviceKey: env.DEVELOPMENT ? serviceKey : null }, (err, keys) => {
             if (err) {
                 throw err;
             }
 
-            pemKeys.JWT_PUB = keys.certificate;
-            pemKeys.JWT_PRIV = keys.serviceKey;
+            env.JWT_PUB = keys.certificate;
+            env.JWT_PRIV = keys.serviceKey;
+
+            this.certSubscribeService.setCert(keys.certificate);
         });
     }
 }
