@@ -1,19 +1,7 @@
 <mat-card class="chat-box">
-    <mat-card-content class="chat-box-messages">
-        <app-message></app-message>
-        <app-message></app-message>
-        <app-message></app-message>
-        <app-message></app-message>
-        <app-message></app-message>
-        <app-message></app-message>
-        <app-message></app-message>
-        <app-message></app-message>
-        <app-message></app-message>
-        <app-message></app-message>
-        <app-message></app-message>
-    </mat-card-content>
-
-    <mat-card-actions class="form-actions">
-
-    </mat-card-actions>
+    <cdk-virtual-scroll-viewport [itemSize]="itemSize" class="chat-box-messages">
+        <app-message *cdkVirtualFor="let message of messages" [message]="message"></app-message>
+    </cdk-virtual-scroll-viewport>
 </mat-card>
+
+<app-form (send)="onSend(data)"></app-form>

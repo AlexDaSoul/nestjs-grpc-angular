@@ -1,0 +1,10 @@
+<mat-card class="chat-form">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <mat-form-field class="form-field">
+            <textarea matInput placeholder="Enter message" formControlName="message" required></textarea>
+            <mat-error *ngIf="form.get('message').getError('required')">Enter message</mat-error>
+        </mat-form-field>
+
+        <button mat-button color="warn" [disabled]="form.invalid" type="submit">SEND</button>
+    </form>
+</mat-card>
