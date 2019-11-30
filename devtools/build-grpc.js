@@ -1,7 +1,6 @@
 #!/usr/bin/node
 
 const cp = require('child_process');
-const glob = require('glob');
 const path = require('path');
 const fs = require('fs-extra');
 const rimraf = require('rimraf');
@@ -9,16 +8,8 @@ const root = require('app-root-path');
 const helpers = require('./helpers');
 
 const grpcDir = root.resolve('grpc-proto/.build');
-const libBackDir = root.resolve('backend/src/lib');
-const packagesBackDir = root.resolve('backend/src/packages');
-const grpcBackDir = root.resolve('backend/src/grpc-proto');
+const grpcBackDir = root.resolve('backend/libs/grpc-proto');
 const grpcFrontDir = root.resolve('frontend/src/app/grpc/proto');
-
-const getBackServices = ()  => {
-    return glob.sync('/*', {
-        root: packagesBackDir
-    });
-};
 
 const IGNORE_PACKAGES = [
     // ...
@@ -60,21 +51,4 @@ rimraf.sync(`${grpcBackDir}/.build`);
 // rimraf.sync(`${grpcBackDir}/**/*.js`);
 rimraf.sync(`${grpcBackDir}/**/*_grpc_web_*`);
 
-console.log(`-----------------------------------------`);
-
-// copy typings to packages
-getBackServices().forEach(pkg => {
-    const grpcProtoDir = `${pkg}/grpc-proto`;
-    const libMsDir = `${pkg}/lib`;
-
-    rimraf.sync(grpcProtoDir);
-    fs.copySync(grpcBackDir, grpcProtoDir);
-
-    rimraf.sync(libMsDir);
-    fs.copySync(libBackDir, libMsDir);
-
-    console.log(`Copy lib to ${libMsDir}`);
-});
-
-rimraf.sync(grpcBackDir);
 process.exit(0);

@@ -1,1 +1,9 @@
-<app-chat-list></app-chat-list>
+<mat-card class="chat-box">
+    <app-chat-list [newMessages]="messages | async"></app-chat-list>
+    <app-form (send)="onSend($event)"></app-form>
+</mat-card>
+
+
+
+
+

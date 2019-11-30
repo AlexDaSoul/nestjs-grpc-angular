@@ -10,5 +10,5 @@ service ChatService {
 }
 
 message ChatList {
-    repeated Message messages = 3;
+    repeated Message messages = 1;
 }

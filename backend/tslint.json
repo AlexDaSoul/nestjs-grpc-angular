@@ -7,6 +7,9 @@
         "no-unused-expression": true
     },
     "rules": {
+        "no-namespace": [
+            false
+        ],
         "quotemark": [
             true,
             "single"

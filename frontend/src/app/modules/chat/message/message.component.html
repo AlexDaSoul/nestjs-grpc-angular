@@ -1,1 +1,12 @@
-{{ message }}
+<mat-card class="message">
+    <mat-card-header>
+        <div mat-card-avatar [style.backgroundImage]="'url('+ message.author.avatar +')'"></div>
+        <mat-card-title>{{ message.author.name }}</mat-card-title>
+        <div class="date">{{ message.updatedat | date: 'short' }}</div>
+    </mat-card-header>
+    <mat-card-content>
+        <p>
+            {{ message.message }}
+        </p>
+    </mat-card-content>
+</mat-card>

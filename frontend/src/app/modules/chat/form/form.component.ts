@@ -12,7 +12,7 @@ export class FormComponent  {
     @Output() send: EventEmitter<string> = new EventEmitter();
 
     public form: FormGroup = this.fb.group({
-        message: [null, Validators.required],
+        message: [null],
     });
 
     constructor(private fb: FormBuilder) {
@@ -21,6 +21,7 @@ export class FormComponent  {
     public onSubmit(): void {
         if (this.form.valid) {
             this.send.emit(this.form.value.message);
+            this.form.reset();
         }
     }
 }

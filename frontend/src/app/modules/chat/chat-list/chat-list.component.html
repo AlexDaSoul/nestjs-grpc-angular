@@ -1,7 +1,4 @@
-<mat-card class="chat-box">
-    <cdk-virtual-scroll-viewport [itemSize]="itemSize" class="chat-box-messages">
-        <app-message *cdkVirtualFor="let message of messages" [message]="message"></app-message>
-    </cdk-virtual-scroll-viewport>
-</mat-card>
-
-<app-form (send)="onSend(data)"></app-form>
+<cdk-virtual-scroll-viewport [itemSize]="itemSize" class="chat-box-messages">
+    <app-message *cdkVirtualFor="let message of messages" [message]="message"
+                 [class.self]="userId === message.author.id"></app-message>
+</cdk-virtual-scroll-viewport>

@@ -1,4 +1,6 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+
+import { Message } from '@grpc/proto/chat/chat.types_pb';
 
 @Component({
     selector: 'app-message',
@@ -6,14 +8,6 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
     styleUrls: ['./message.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MessageComponent implements OnInit {
-
-    @Input() public message: string;
-
-    constructor() {
-    }
-
-    ngOnInit() {
-    }
-
+export class MessageComponent {
+    @Input() public message: Message.AsObject;
 }

@@ -1,5 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+
+import { getUserIdFromJWT } from '@grpc/helpers/grpc-get-id';
+import { Message } from '@grpc/proto/chat/chat.types_pb';
+import { AuthService } from '@share/services/auth.service';
 
 @Component({
     selector: 'app-chat-list',
@@ -7,42 +11,27 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
     styleUrls: ['./chat-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatListComponent implements OnInit {
+export class ChatListComponent implements OnChanges {
 
     @ViewChild(CdkVirtualScrollViewport, { static: true })
     private viewport: CdkVirtualScrollViewport;
 
+    @Input() public newMessages: Message.AsObject[];
+
+    public messages: Message.AsObject[] = [];
+    public userId: string = getUserIdFromJWT(this.authService.getToken());
     public itemSize = 30;
-    public messages = Array.from({length: 100000}).map((_, i) => `Item #${i}`);
 
-    constructor() {
+    constructor(private authService: AuthService) {
     }
 
-    ngOnInit() {
-        setTimeout(() => {
-            this.viewport.scrollToIndex(this.messages.length - 1);
-        }, 1000);
-    }
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.newMessages && Array.isArray(changes.newMessages.currentValue)) {
+            this.messages = [...this.messages, ...changes.newMessages.currentValue];
 
-    public onSend(message: string): void {
-/*        if (this.form.valid) {
-            this.authGrpcService.auth(this.form.value)
-                .subscribe(
-                    res => {
-                        this.authService.loggedIn(res.token);
-                        this.form.reset();
-                        this.router.navigateByUrl('/chat');
-                    },
-                    err => {
-                        const message = err.code === 13 ? 'User not found' : err.message;
-
-                        this.snackBar.open(message, 'close', {
-                            duration: 5000,
-                            horizontalPosition: 'right',
-                            verticalPosition: 'top',
-                            panelClass: 'error-message',
-                        });
-                    });
-        }*/
+            setTimeout(() => {
+                this.viewport.scrollToIndex(this.messages.length * 2);
+            }, 100);
+        }
     }
 }

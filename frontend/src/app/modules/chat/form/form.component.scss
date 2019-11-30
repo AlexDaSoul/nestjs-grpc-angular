@@ -1,7 +1,11 @@
-.chat-form {
-    width: 800px;
-    margin: auto;
-    background: #1b1b1b;
-    padding: .3rem .3rem .2rem;
-    margin-top: 1rem;
+form {
+    margin-top: .5rem;
+    padding-top: .5rem;
+    border-top: 1px #3c3c3c solid;
+}
+
+button {
+    width: 100%;
+    background: #00564d;
+    color: #ffffff;
 }

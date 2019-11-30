@@ -2,12 +2,12 @@ version: "3.7"
 
 services:
 
-##### user
+  ##### user
   user:
     image: node:erbium
     container_name: user
-    working_dir: /home/api/user
-    command: npm run docker:debug
+    working_dir: /home/api/
+    command: ls
     depends_on:
       - api-postgres
     ports:
@@ -15,17 +15,15 @@ services:
     env_file:
       - environments/common.env
       - environments/user.env
-    environment:
-      - GRPC_VERBOSITY=DEBUG
     volumes:
-      - ../src/packages/user:/home/api/user
+      - ..:/home/api
 
-##### auth
+  ##### auth
   auth:
     image: node:erbium
     container_name: auth
-    working_dir: /home/api/auth
-    command: npm run docker:debug
+    working_dir: /home/api/
+    command: node_modules/.bin/nest auth user --debug --watch
     depends_on:
       - user
     ports:
@@ -36,14 +34,14 @@ services:
     environment:
       - GRPC_VERBOSITY=DEBUG
     volumes:
-      - ../src/packages/auth:/home/api/auth
+      - ..:/home/api
 
-##### chat
+  ##### chat
   chat:
     image: node:erbium
     container_name: chat
-    working_dir: /home/api/chat
-    command: npm run docker:debug
+    working_dir: /home/api/
+    command: node_modules/.bin/nest chat user --debug --watch
     depends_on:
       - api-postgres
       - user
@@ -55,9 +53,9 @@ services:
     environment:
       - GRPC_VERBOSITY=DEBUG
     volumes:
-      - ../src/packages/chat:/home/api/chat
+      - ..:/home/api
 
-#### api postgres
+  #### api postgres
   api-postgres:
     container_name: api-postgres
     image: postgres:11
@@ -71,10 +69,10 @@ services:
       - PGPORT=5432
     volumes:
       - ./postgres:/docker-entrypoint-initdb.d
-      - ../src/packages/chat/services/dal/db:/home/api/chat/db
-      - ../src/packages/user/services/dal/db:/home/api/user/db
+      - ../apps/chat/services/dal/db:/home/api/chat/db
+      - ../apps/user/services/dal/db:/home/api/user/db
 
-#### envoy-api
+  #### envoy-api
   envoy-api-dev:
     image: envoyproxy/envoy:latest
     container_name: envoy-api-dev

@@ -10,7 +10,7 @@
 # dependencies
 /node_modules
 node_modules
-backend/src/packages/**/lib
+backend/apps/packages/**/lib
 backend/**/*proto
 frontend/**/*proto
 

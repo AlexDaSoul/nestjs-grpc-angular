@@ -12,7 +12,7 @@ import { ChatRes } from '@grpc/proto/chat/chat.types_pb';
 @Injectable({
     providedIn: 'root',
 })
-export class StatusGrpcService {
+export class MessageGrpcService {
 
     constructor(private client: MessageServicePromiseClient) {
     }

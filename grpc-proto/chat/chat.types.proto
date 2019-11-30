@@ -18,7 +18,7 @@ message Stub {
 }
 
 message Autor {
-    string userId = 1;
+    string id = 1;
     string name = 2;
     string avatar = 3;
 }
@@ -27,5 +27,5 @@ message Message {
     string id = 1;
     Autor author = 2;
     string message = 3;
-    string date = 4;
+    string updatedAt = 4;
 }

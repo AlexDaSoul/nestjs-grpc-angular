@@ -388,7 +388,7 @@ proto.api.chat.Autor.prototype.toObject = function(opt_includeInstance) {
  */
 proto.api.chat.Autor.toObject = function(includeInstance, msg) {
   var f, obj = {
-    userid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    id: jspb.Message.getFieldWithDefault(msg, 1, ""),
     name: jspb.Message.getFieldWithDefault(msg, 2, ""),
     avatar: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
@@ -429,7 +429,7 @@ proto.api.chat.Autor.deserializeBinaryFromReader = function(msg, reader) {
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setUserid(value);
+      msg.setId(value);
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
@@ -468,7 +468,7 @@ proto.api.chat.Autor.prototype.serializeBinary = function() {
  */
 proto.api.chat.Autor.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getUserid();
+  f = message.getId();
   if (f.length > 0) {
     writer.writeString(
       1,
@@ -493,16 +493,16 @@ proto.api.chat.Autor.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional string userId = 1;
+ * optional string id = 1;
  * @return {string}
  */
-proto.api.chat.Autor.prototype.getUserid = function() {
+proto.api.chat.Autor.prototype.getId = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /** @param {string} value */
-proto.api.chat.Autor.prototype.setUserid = function(value) {
+proto.api.chat.Autor.prototype.setId = function(value) {
   jspb.Message.setProto3StringField(this, 1, value);
 };
 
@@ -572,7 +572,7 @@ proto.api.chat.Message.toObject = function(includeInstance, msg) {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
     author: (f = msg.getAuthor()) && proto.api.chat.Autor.toObject(includeInstance, f),
     message: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    date: jspb.Message.getFieldWithDefault(msg, 4, "")
+    updatedat: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -624,7 +624,7 @@ proto.api.chat.Message.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
-      msg.setDate(value);
+      msg.setUpdatedat(value);
       break;
     default:
       reader.skipField();
@@ -677,7 +677,7 @@ proto.api.chat.Message.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getDate();
+  f = message.getUpdatedat();
   if (f.length > 0) {
     writer.writeString(
       4,
@@ -751,16 +751,16 @@ proto.api.chat.Message.prototype.setMessage = function(value) {
 
 
 /**
- * optional string date = 4;
+ * optional string updatedAt = 4;
  * @return {string}
  */
-proto.api.chat.Message.prototype.getDate = function() {
+proto.api.chat.Message.prototype.getUpdatedat = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
 
 /** @param {string} value */
-proto.api.chat.Message.prototype.setDate = function(value) {
+proto.api.chat.Message.prototype.setUpdatedat = function(value) {
   jspb.Message.setProto3StringField(this, 4, value);
 };
 

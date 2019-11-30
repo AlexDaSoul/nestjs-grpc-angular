@@ -37,8 +37,8 @@ export namespace Stub {
 }
 
 export class Autor extends jspb.Message {
-  getUserid(): string;
-  setUserid(value: string): void;
+  getId(): string;
+  setId(value: string): void;
 
   getName(): string;
   setName(value: string): void;
@@ -56,7 +56,7 @@ export class Autor extends jspb.Message {
 
 export namespace Autor {
   export type AsObject = {
-    userid: string,
+    id: string,
     name: string,
     avatar: string,
   }
@@ -74,8 +74,8 @@ export class Message extends jspb.Message {
   getMessage(): string;
   setMessage(value: string): void;
 
-  getDate(): string;
-  setDate(value: string): void;
+  getUpdatedat(): string;
+  setUpdatedat(value: string): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Message.AsObject;
@@ -90,7 +90,7 @@ export namespace Message {
     id: string,
     author?: Autor.AsObject,
     message: string,
-    date: string,
+    updatedat: string,
   }
 }
 

@@ -42,7 +42,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.api.chat.ChatList.repeatedFields_ = [3];
+proto.api.chat.ChatList.repeatedFields_ = [1];
 
 
 
@@ -113,7 +113,7 @@ proto.api.chat.ChatList.deserializeBinaryFromReader = function(msg, reader) {
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 3:
+    case 1:
       var value = new chat_types_pb.Message;
       reader.readMessage(value,chat_types_pb.Message.deserializeBinaryFromReader);
       msg.addMessages(value);
@@ -150,7 +150,7 @@ proto.api.chat.ChatList.serializeBinaryToWriter = function(message, writer) {
   f = message.getMessagesList();
   if (f.length > 0) {
     writer.writeRepeatedMessage(
-      3,
+      1,
       f,
       chat_types_pb.Message.serializeBinaryToWriter
     );
@@ -159,18 +159,18 @@ proto.api.chat.ChatList.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * repeated Message messages = 3;
+ * repeated Message messages = 1;
  * @return {!Array<!proto.api.chat.Message>}
  */
 proto.api.chat.ChatList.prototype.getMessagesList = function() {
   return /** @type{!Array<!proto.api.chat.Message>} */ (
-    jspb.Message.getRepeatedWrapperField(this, chat_types_pb.Message, 3));
+    jspb.Message.getRepeatedWrapperField(this, chat_types_pb.Message, 1));
 };
 
 
 /** @param {!Array<!proto.api.chat.Message>} value */
 proto.api.chat.ChatList.prototype.setMessagesList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 3, value);
+  jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
 
@@ -180,7 +180,7 @@ proto.api.chat.ChatList.prototype.setMessagesList = function(value) {
  * @return {!proto.api.chat.Message}
  */
 proto.api.chat.ChatList.prototype.addMessages = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 3, opt_value, proto.api.chat.Message, opt_index);
+  return jspb.Message.addToRepeatedWrapperField(this, 1, opt_value, proto.api.chat.Message, opt_index);
 };
 
 

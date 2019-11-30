@@ -1,27 +1,42 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "declaration": true,
-    "noImplicitAny": false,
-    "removeComments": true,
-    "noLib": false,
-    "allowSyntheticDefaultImports": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "preserveSymlinks": true,
-    "target": "esnext",
-    "sourceMap": true,
-    "baseUrl": "./src",
-    "paths": {
-      "@app/my-library": [
-        "libs/my-library/src"
-      ],
-      "@app/my-library/*": [
-        "libs/my-library/src/*"
-      ]
+    "compilerOptions": {
+        "module": "commonjs",
+        "declaration": true,
+        "removeComments": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "target": "esnext",
+        "sourceMap": true,
+        "outDir": "./dist",
+        "baseUrl": "./",
+        "incremental": true,
+        "paths": {
+            "@grpc-proto": [
+                "libs/grpc-proto"
+            ],
+            "@grpc-proto/*": [
+                "libs/grpc-proto/*"
+            ],
+            "@lib": [
+                "libs/lib/src"
+            ],
+            "@lib/*": [
+                "libs/lib/src/*"
+            ],
+            "@auth/*": [
+                "apps/auth/src/*"
+            ],
+            "@chat/*": [
+                "apps/chat/src/*"
+            ],
+            "@user/*": [
+                "apps/user/src/*"
+            ]
+        }
     },
-    "noUnusedLocals": true,
-    "noUnusedParameters": false,
-    "newLine": "LF"
-  }
+    "newLine": "LF",
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
 }

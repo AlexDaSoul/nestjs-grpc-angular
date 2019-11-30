@@ -1,7 +1,51 @@
 :host {
-    margin-bottom: .1rem;
+    display: block;
+
+    &.self {
+        text-align: right;
+
+        .message {
+            background: #00564d;
+        }
+    }
+}
+
+.message {
+    margin: 0 .15rem .1rem;
     padding: .5rem;
     background: #424242;
-    border-radius: 3px;
-    display: block;
+    display: inline-block;
+
+    .mat-card-header {
+        padding-bottom: .3rem;
+        border-bottom: 1px rgba(175, 175, 175, 0.16) solid;
+    }
+
+    .mat-card-avatar {
+        background-color: #3c3c3c;
+        background-size: cover;
+        width: 20px;
+        height: 20px;
+    }
+
+    .mat-card-title {
+        font-size: .75rem;
+        margin: 0;
+        display: inline;
+    }
+
+    .date {
+        flex-grow: 1;
+        text-align: right;
+        color: #afafaf;
+        font-size: .6rem;
+        align-self: center;
+        line-height: 1.5rem;
+    }
+
+    .mat-card-content {
+        padding-top: .5rem;
+        margin-bottom: 0;
+        font-size: .75rem;
+    }
 }

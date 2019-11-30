@@ -1,11 +1,59 @@
 {
-  "language": "ts",
-  "collection": "@nestjs/schematics",
-  "sourceRoot": "src",
-  "projects": {
-    "my-library": {
-      "root": "libs/my-library",
-      "sourceRoot": "libs/my-library/src"
+    "collection": "@nestjs/schematics",
+    "sourceRoot": "apps/user/src",
+    "monorepo": true,
+    "root": "apps/user",
+    "compilerOptions": {
+        "webpack": true,
+        "deleteOutDir": true,
+        "webpackConfigPath": "webpack.config.js",
+        "tsConfigPath": "apps/user/tsconfig.app.json"
+    },
+    "projects": {
+        "user": {
+            "type": "application",
+            "root": "apps/user",
+            "entryFile": "main",
+            "sourceRoot": "apps/user/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/user/tsconfig.app.json"
+            }
+        },
+        "auth": {
+            "type": "application",
+            "root": "apps/auth",
+            "entryFile": "main",
+            "sourceRoot": "apps/auth/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/auth/tsconfig.app.json"
+            }
+        },
+        "chat": {
+            "type": "application",
+            "root": "apps/chat",
+            "entryFile": "main",
+            "sourceRoot": "apps/chat/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/chat/tsconfig.app.json"
+            }
+        },
+        "grpc-proto": {
+            "type": "library",
+            "root": "libs/grpc-proto",
+            "entryFile": "index",
+            "sourceRoot": "libs/grpc-proto/src",
+            "compilerOptions": {
+                "tsConfigPath": "libs/grpc-proto/tsconfig.lib.json"
+            }
+        },
+        "lib": {
+            "type": "library",
+            "root": "libs/lib",
+            "entryFile": "index",
+            "sourceRoot": "libs/lib/src",
+            "compilerOptions": {
+                "tsConfigPath": "libs/lib/tsconfig.lib.json"
+            }
+        }
     }
-  }
 }
