@@ -1,0 +1,16 @@
+{
+    "chat": {
+        "driver": "pg",
+        "host": "localhost",
+        "user": "postgres",
+        "password": "postgres",
+        "database": "chat"
+    },
+    "user": {
+        "driver": "pg",
+        "host": "localhost",
+        "user": "postgres",
+        "password": "postgres",
+        "database": "user"
+    }
+}

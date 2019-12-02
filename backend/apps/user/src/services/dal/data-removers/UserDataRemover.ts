@@ -1,25 +1,27 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Client } from 'pg';
 import { from, Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, mapTo } from 'rxjs/operators';
+
+import { User } from '@grpc-proto/user/user.types_pb';
 
 import { UserDataFinder } from '@user/services/dal/data-finders/UserDataFinder';
-import { UserEntity } from '@user/services/dal/db/entities/UserEntity';
 
 @Injectable()
 export class UserDataRemover {
 
     constructor(
-        @InjectRepository(UserEntity)
-        private readonly userRepository: Repository<UserEntity>,
+        private readonly db: Client,
         private readonly userDataFinder: UserDataFinder,
     ) {
     }
 
-    public deleteUser(id: string): Observable<UserEntity[]> {
+    public deleteUser(id: string): Observable<void> {
+        const query = `delete from api_user where id = $1`;
+
         return this.userDataFinder.getUserOne(id).pipe(
-            switchMap(user => from(this.userRepository.remove([user]))),
+            switchMap(() => from(this.db.query<User.AsObject>(query, [id]))),
+            mapTo(null),
         );
     }
 }

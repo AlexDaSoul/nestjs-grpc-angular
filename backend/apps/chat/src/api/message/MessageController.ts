@@ -3,8 +3,8 @@ import { GrpcMethod } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators';
 
-import { JwtGuard } from '@lib/jwt/jwt.guard';
-import { IJwtMeta } from '@lib/jwt/jwt.interface';
+import { JwtGuard } from '@lib/jwt/JwtGuard';
+import { IJwtMeta } from '@lib/jwt/JwtInterface';
 import { RpcExceptionFilter } from '@lib/exceptions';
 
 import { EStatus, ChatRes } from '@grpc-proto/chat/chat.types_pb';

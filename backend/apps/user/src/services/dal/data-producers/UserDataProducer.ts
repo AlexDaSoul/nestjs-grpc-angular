@@ -1,33 +1,41 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, DeepPartial } from 'typeorm';
+import { Client } from 'pg';
+import { createHmac } from 'crypto';
 import { from, Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, mapTo } from 'rxjs/operators';
 
 import { AlreadyExistsException, EMAIL_ALREADY_EXISTS } from '@lib/exceptions/impl';
 
+import { CreateUserReq, VerifyUserReq } from '@grpc-proto/user/user_pb';
+import { Message } from '@grpc-proto/chat/chat.types_pb';
+
 import { UserDataFinder } from '@user/services/dal/data-finders/UserDataFinder';
-import { UserEntity } from '@user/services/dal/db/entities/UserEntity';
+
+import { SALT } from '@user/env';
 
 @Injectable()
 export class UserDataProducer {
 
     constructor(
-        @InjectRepository(UserEntity)
-        private readonly userRepository: Repository<UserEntity>,
+        private readonly db: Client,
         private readonly userDataFinder: UserDataFinder,
     ) {
     }
 
-    public createUser(data: DeepPartial<UserEntity>): Observable<UserEntity> {
+    public createUser(data: CreateUserReq.AsObject): Observable<void> {
+        data.password = createHmac('sha512', SALT).update(data.password).digest('hex');
+
+        const query = `insert into api_user (email, name, avatar, password) values ($1, $2, $3, $4)`;
+
         return this.checkEmailExistence(data.email).pipe(
-            map(() => this.userRepository.create(data)),
-            switchMap(user => from(this.userRepository.save(user))),
+            switchMap(() => from(this.db.query<Message.AsObject>(query,
+                [data.email, data.name, data.avatar, data.password]))),
+            mapTo(null),
         );
     }
 
     private checkEmailExistence(email: string): Observable<void> {
-        return from(this.userDataFinder.getUserByConditions({email})).pipe(
+        return from(this.userDataFinder.getUserByConditions({ email } as VerifyUserReq.AsObject)).pipe(
             map(user => {
                 if (user) {
                     throw new AlreadyExistsException(EMAIL_ALREADY_EXISTS);

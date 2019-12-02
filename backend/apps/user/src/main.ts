@@ -4,8 +4,7 @@ import { NestFactory } from '@nestjs/core';
 import { Logger as NestLogger, ValidationPipe } from '@nestjs/common';
 
 import { BootstrapLogger } from '@lib/logger';
-
-import { grpcUser } from './env';
+import { grpcUser } from '@lib/utils/GrpcConfigs';
 
 import { AppModule } from './AppModule';
 

@@ -1,26 +1,27 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, DeepPartial } from 'typeorm';
+import { Client } from 'pg';
 import { from, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
-import { MessageEntity } from '@chat/services/dal/db/entities/MessageEntity';
 import { MessageDataFinder } from '@chat/services/dal/data-finders/MessageDataFinder';
+import { Message } from '@grpc-proto/chat/chat.types_pb';
+import { EditMessageReq } from '@grpc-proto/chat/message_pb';
 
 @Injectable()
 export class MessageDataUpdater {
 
     constructor(
-        @InjectRepository(MessageEntity)
-        private readonly messageRepository: Repository<MessageEntity>,
+        private readonly db: Client,
         private readonly messageDataFinder: MessageDataFinder,
     ) {
     }
 
-    public updateMessage(data: DeepPartial<MessageEntity>): Observable<MessageEntity> {
+    public updateMessage(data: EditMessageReq.AsObject): Observable<Message.AsObject> {
+        const query = `update api_message set message = $1 where id = $2`;
+
         return from(this.messageDataFinder.getMessageOne(data.id)).pipe(
-            map(message => this.messageRepository.merge(message, data)),
-            switchMap(message => from(this.messageRepository.save(message))),
+            switchMap(() => from(this.db.query<Message.AsObject>(query, [data.message, data.id]))),
+            map(res => res.rows[0]),
         );
     }
 }

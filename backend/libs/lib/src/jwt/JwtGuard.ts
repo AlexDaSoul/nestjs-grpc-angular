@@ -3,7 +3,7 @@ import { CanActivate, ExecutionContext } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { status } from 'grpc';
 
-import { UnauthenticatedException } from '../exceptions';
+import { UnauthenticatedException } from '@lib/exceptions';
 
 const TOKEN_HEADER_NAME = 'authorization';
 const DECODING_OPTIONS = {

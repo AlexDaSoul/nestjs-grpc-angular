@@ -1,44 +1,73 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, FindConditions } from 'typeorm';
+import { Client } from 'pg';
+import { createHmac } from 'crypto';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { NotFoundException, USER_NOT_FOUND } from '@lib/exceptions';
 
-import { UserEntity } from '@user/services/dal/db/entities/UserEntity';
+import { User } from '@grpc-proto/user/user.types_pb';
+import { VerifyUserReq } from '@grpc-proto/user/user_pb';
+
+import { SALT } from '@user/env';
 
 @Injectable()
 export class UserDataFinder {
 
-    constructor(
-        @InjectRepository(UserEntity)
-        private readonly userRepository: Repository<UserEntity>,
-    ) {
+    constructor(private readonly db: Client) {
     }
 
-    public getUserOne(id: string): Observable<UserEntity> {
-        return from(this.userRepository.findOne(id))
+    private getConditionQuery(data: VerifyUserReq.AsObject): string {
+        if (data.password) {
+            data.password = createHmac('sha512', SALT).update(data.password).digest('hex');
+        }
+
+        const keys = Object.keys(data);
+        const conditions = keys.map((key, index) => {
+            const and = keys.length > 1 && index < keys.length - 1 ? ' and ' : '';
+            return `${key}='${data[key]}'${and}`;
+        }).join('');
+
+        return `select * from api_user where ${conditions}`;
+    }
+
+    public getUserOne(id: string): Observable<User.AsObject> {
+        const query = `select * from api_user where id = $1`;
+
+        return from(this.db.query<User.AsObject>(query, [id]))
             .pipe(
-                map(user => {
-                    if (!user) {
+                map(res => {
+                    if (!res.rowCount) {
                         throw new NotFoundException(USER_NOT_FOUND);
                     }
 
-                    return user;
+                    return res.rows[0];
                 }),
             );
     }
 
-    public getUserByConditions(conditions: FindConditions<UserEntity>): Observable<UserEntity> {
-        return from(this.userRepository.findOne(conditions));
+    public getUserByConditions(data: VerifyUserReq.AsObject): Observable<User.AsObject> {
+        const query = this.getConditionQuery(data);
+
+        return from(this.db.query<User.AsObject>(query))
+            .pipe(map(res => res.rows[0]));
     }
 
-    public getUsersByIds(ids: string[]): Observable<UserEntity[]> {
-        return from(this.userRepository.findByIds(ids));
+    public getUsersByIds(ids: string[]): Observable<User.AsObject[]> {
+        let query = `select * from api_user where id in (`;
+        ids.forEach((id, index) => {
+            const end = index === ids.length - 1 ? `)` : `,`;
+            query += `'${id}'${end}`;
+        });
+
+        return from(this.db.query<User.AsObject>(query))
+            .pipe(map(res => res.rows));
     }
 
-    public getUsersAll(): Observable<UserEntity[]> {
-        return from(this.userRepository.find());
+    public getUsersAll(): Observable<User.AsObject[]> {
+        const query = `select * from api_user`;
+
+        return from(this.db.query<User.AsObject>(query))
+            .pipe(map(res => res.rows));
     }
 }

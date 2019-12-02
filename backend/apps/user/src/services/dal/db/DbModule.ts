@@ -1,44 +1,41 @@
 import { Module, OnModuleInit } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Connection } from 'typeorm';
+import { Client } from 'pg';
+import * as DBMigrate from 'db-migrate';
 import { from } from 'rxjs';
-import { take, tap } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 
 import { Logger } from '@lib/logger';
-
-import { typeorm } from '@chat/env';
-
-import { UserEntity } from './entities/UserEntity';
+import { dbConfig, migrateConfig } from '@user/env';
 
 @Module({
-    imports: [
-        TypeOrmModule.forRoot(typeorm),
-        TypeOrmModule.forFeature([UserEntity]),
+    exports: [Client],
+    providers: [
+        {
+            provide: Client,
+            useFactory: () => new Client(dbConfig),
+        },
     ],
-    exports: [TypeOrmModule],
 })
 export class DbModule implements OnModuleInit {
     private readonly logger = new Logger('DbModule');
+    private readonly dbmigrate = DBMigrate.getInstance(true, migrateConfig);
 
-    constructor(
-        private readonly connection: Connection,
-    ) {
+    constructor(private readonly db: Client) {
     }
 
-    public onModuleInit(): Promise<any> {
-        if (this.connection.isConnected) {
-            return from(this.connection.runMigrations({transaction: 'each'}))
-                .pipe(
-                    tap(() => {
+    onModuleInit() {
+        if (this.dbmigrate) {
+            from(this.dbmigrate.up())
+                .pipe(take(1))
+                .subscribe(
+                    () => {
                         this.logger.info('Migrations applied successfully');
-                    }),
-                    take(1),
-                )
-                .toPromise();
+                        this.db.connect();
+                    },
+                    (error) => {
+                        this.logger.error(error);
+                    },
+                );
         }
-
-        return Promise.resolve(true);
     }
 }
-
-export * from './entities/UserEntity';

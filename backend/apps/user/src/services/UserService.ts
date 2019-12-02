@@ -22,12 +22,12 @@ export class UserService {
     ) {
     }
 
-    public createUser(data: CreateUserReq.AsObject): Observable<User.AsObject> {
+    public createUser(data: CreateUserReq.AsObject): Observable<void> {
         return this.userDataProducer.createUser(data);
     }
 
     public updateUser(data: UpdateUserReq.AsObject, id: string): Observable<void> {
-        return this.userDataUpdater.updateUser(data)
+        return this.userDataUpdater.updateUser(data, id)
             .pipe(mapTo(null));
     }
 

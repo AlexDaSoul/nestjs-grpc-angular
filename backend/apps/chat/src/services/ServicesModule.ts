@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 
 import { DalModule } from './dal/DalModule';
+import { ChatEventService } from './ChatEventService';
 
 @Module({
     imports: [DalModule],
-    exports: [DalModule],
+    providers: [ChatEventService],
+    exports: [DalModule, ChatEventService],
 })
 export class ServicesModule {
 }

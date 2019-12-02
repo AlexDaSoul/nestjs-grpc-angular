@@ -37,15 +37,6 @@
                 "tsConfigPath": "apps/chat/tsconfig.app.json"
             }
         },
-        "grpc-proto": {
-            "type": "library",
-            "root": "libs/grpc-proto",
-            "entryFile": "index",
-            "sourceRoot": "libs/grpc-proto/src",
-            "compilerOptions": {
-                "tsConfigPath": "libs/grpc-proto/tsconfig.lib.json"
-            }
-        },
         "lib": {
             "type": "library",
             "root": "libs/lib",

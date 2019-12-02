@@ -5,7 +5,7 @@ import { Logger as NestLogger, ValidationPipe } from '@nestjs/common';
 
 import { BootstrapLogger } from '@lib/logger';
 
-import { grpcChat } from './env';
+import { grpcChat } from '@lib/utils/GrpcConfigs';
 
 import { AppModule } from './AppModule';
 

@@ -3,8 +3,8 @@ import { GrpcMethod } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { JwtGuard } from '@lib/jwt/jwt.guard';
-import { IJwtMeta } from '@lib/jwt/jwt.interface';
+import { JwtGuard } from '@lib/jwt/JwtGuard';
+import { IJwtMeta } from '@lib/jwt/JwtInterface';
 import { RpcExceptionFilter } from '@lib/exceptions';
 
 import { User, EStatus, Stub } from '@grpc-proto/user/user.types_pb';
@@ -27,10 +27,10 @@ export class UserController {
     @UseFilters(RpcExceptionFilter.for('UserController::createUser'))
     public createUser(data: CreateUserReqDTO): Observable<UserRes.AsObject> {
         return this.userService.createUser(data).pipe(
-            map(res => {
+            map(() => {
                 return {
                     status: EStatus.SUCCESS,
-                    message: `User created successfully: ID: ${res.id}`,
+                    message: `User created successfully`,
                 };
             }),
         );

@@ -1,26 +1,29 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, DeepPartial } from 'typeorm';
+import { Client } from 'pg';
 import { from, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
-import { UserEntity } from '@user/services/dal/db/entities/UserEntity';
+import { User } from '@grpc-proto/user/user.types_pb';
+import { UpdateUserReq } from '@grpc-proto/user/user_pb';
+
 import { UserDataFinder } from '@user/services/dal/data-finders/UserDataFinder';
 
 @Injectable()
 export class UserDataUpdater {
 
     constructor(
-        @InjectRepository(UserEntity)
-        private readonly userRepository: Repository<UserEntity>,
+        private readonly db: Client,
         private readonly userDataFinder: UserDataFinder,
     ) {
     }
 
-    public updateUser(data: DeepPartial<UserEntity>): Observable<UserEntity> {
-        return this.userDataFinder.getUserOne(data.id).pipe(
-            map(user => this.userRepository.merge(user, data)),
-            switchMap(user => from(this.userRepository.save(user))),
+    public updateUser(data: UpdateUserReq.AsObject, id: string): Observable<User.AsObject> {
+        const query = `update api_user set name = $1, email = $2, avatar = $3 where id = $4`;
+
+        return from(this.userDataFinder.getUserOne(id)).pipe(
+            switchMap(() => from(this.db.query<User.AsObject>(query,
+                [data.name, data.email, data.avatar, id]))),
+            map(res => res.rows[0]),
         );
     }
 }

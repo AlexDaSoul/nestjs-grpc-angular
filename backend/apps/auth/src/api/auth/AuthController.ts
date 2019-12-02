@@ -5,14 +5,13 @@ import { map } from 'rxjs/internal/operators';
 import { Metadata } from 'grpc';
 
 import { RpcExceptionFilter } from '@lib/exceptions';
-import { JwtGuard } from '@lib/jwt/jwt.guard';
+import { JwtGuard } from '@lib/jwt/JwtGuard';
+import { grpcUser } from '@lib/utils/GrpcConfigs';
 
 import { User } from '@grpc-proto/user/user.types_pb';
 import { UserReq, VerifyUserReq } from '@grpc-proto/user/user_pb';
 import { Stub } from '@grpc-proto/auth/auth.types_pb';
 import { AuthRes, GetCertStreamRes } from '@grpc-proto/auth/auth_pb';
-
-import { grpcUser } from '@auth/env';
 
 import { PemCertsService } from '@auth/services/PemCertsService';
 import { JwtCertsService } from '@auth/services/JwtCertsService';

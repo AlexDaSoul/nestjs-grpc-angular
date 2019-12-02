@@ -2,7 +2,7 @@ import { Controller, UseGuards, UseFilters } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 
-import { JwtGuard } from '@lib/jwt/jwt.guard';
+import { JwtGuard } from '@lib/jwt/JwtGuard';
 import { RpcExceptionFilter } from '@lib/exceptions';
 
 import { Message, Stub } from '@grpc-proto/chat/chat.types_pb';

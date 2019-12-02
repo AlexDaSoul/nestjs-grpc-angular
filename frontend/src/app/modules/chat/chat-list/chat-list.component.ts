@@ -30,7 +30,8 @@ export class ChatListComponent implements OnChanges {
             this.messages = [...this.messages, ...changes.newMessages.currentValue];
 
             setTimeout(() => {
-                this.viewport.scrollToIndex(this.messages.length * 2);
+                // TODO: trash
+                this.viewport.scrollToIndex(this.messages.length * 100);
             }, 100);
         }
     }

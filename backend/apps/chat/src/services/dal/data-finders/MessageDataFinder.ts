@@ -1,32 +1,27 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { from, Observable, concat } from 'rxjs';
+import { Client } from 'pg';
+import { from, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import { MessageEntity } from '@chat/services/dal/db/entities/MessageEntity';
+import { Message } from '@grpc-proto/chat/chat.types_pb';
 
 @Injectable()
 export class MessageDataFinder {
 
-    constructor(
-        @InjectRepository(MessageEntity)
-        private readonly messageRepository: Repository<MessageEntity>,
-    ) {
+    constructor(private readonly db: Client) {
     }
 
-    public getMessageOne(id: string): Observable<MessageEntity> {
-        return from(this.messageRepository.findOne(id));
+    public getMessageOne(id: string): Observable<Message.AsObject> {
+        const query = `select * from api_message where id = $1`;
+
+        return from(this.db.query<Message.AsObject>(query, [id]))
+            .pipe(map(res => res.rows[0]));
     }
 
-    public getMessageAll(): Observable<MessageEntity[]> {
-        return from(this.messageRepository.find({
-            order: {
-                createdAt: 'ASC',
-            },
-        }));
-    }
+    public getMessageAll(): Observable<Message.AsObject[]> {
+        const query = `select * from api_message order by "updatedAt" ASC`;
 
-    public getChatStream(): Observable<MessageEntity[]> {
-        return concat(this.getMessageAll(), MessageEntity.subscribe());
+        return from(this.db.query<Message.AsObject>(query))
+            .pipe(map(res => res.rows));
     }
 }

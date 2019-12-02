@@ -3,11 +3,10 @@ import { Client, ClientGrpc } from '@nestjs/microservices';
 import { Observable, timer, throwError } from 'rxjs';
 import { retryWhen, tap, mergeMap } from 'rxjs/operators';
 
-import { grpcAuth } from '../../env';
-
 import { GetCertStreamRes } from '@grpc-proto/auth/auth_pb';
 
-import { Logger } from '../logger';
+import { Logger } from '@lib/logger';
+import { grpcAuth } from '@lib/utils/GrpcConfigs';
 
 interface IAuthService {
     getCertStream(): Observable<GetCertStreamRes.AsObject>;

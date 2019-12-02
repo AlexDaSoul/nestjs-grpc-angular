@@ -1,23 +1,26 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, DeepPartial } from 'typeorm';
-
+import { Client } from 'pg';
 import { from, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import { MessageEntity } from '@chat/services/dal/db/entities/MessageEntity';
+import { Message } from '@grpc-proto/chat/chat.types_pb';
+
+interface IInsertMessage {
+    message: string;
+    author: { id: string; name: string; avatar: string; };
+}
 
 @Injectable()
 export class MessageDataProducer {
 
-    constructor(
-        @InjectRepository(MessageEntity)
-        private readonly messageRepository: Repository<MessageEntity>,
-    ) {
+    constructor(private readonly db: Client) {
     }
 
-    public sendMessage(data: DeepPartial<MessageEntity>): Observable<MessageEntity> {
-        const message = this.messageRepository.create(data);
+    public sendMessage(data: IInsertMessage): Observable<Message.AsObject> {
+        const autor = JSON.stringify(data.author);
+        const query = `insert into api_message (author, message) values ($1, $2) returning *`;
 
-        return from(this.messageRepository.save(message));
+        return from(this.db.query<Message.AsObject>(query, [autor, data.message]))
+            .pipe(map(res => res.rows[0]));
     }
 }
