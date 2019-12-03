@@ -16,8 +16,8 @@ import { AuthService } from '@share/services/auth.service';
 export class AuthComponent implements OnInit {
 
     public form: FormGroup = this.fb.group({
-        email: ['johndoe@mail.com', [Validators.required, Validators.email]],
-        password: ['demo', [Validators.required, Validators.minLength(4)]],
+        email: [null, [Validators.required, Validators.email]],
+        password: [null, [Validators.required, Validators.minLength(4)]],
     });
 
     constructor(

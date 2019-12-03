@@ -1,7 +1,7 @@
 import { Controller, UseFilters, OnModuleInit, UseGuards } from '@nestjs/common';
 import { Client, ClientGrpc, GrpcMethod } from '@nestjs/microservices';
 import { from, Observable } from 'rxjs';
-import { map } from 'rxjs/internal/operators';
+import { map, tap } from 'rxjs/internal/operators';
 import { Metadata } from 'grpc';
 
 import { RpcExceptionFilter } from '@lib/exceptions';

@@ -21,20 +21,13 @@
         "test:watch": "jest --watch",
         "test:cov": "jest --coverage",
         "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-        "test:e2e": "jest --config ./apps/account/test/jest-e2e.json",
-        "migrate:user:generate": "ts-node  -r tsconfig-paths/register ./node_modules/typeorm/cli migration:generate -d apps/user/src/services/dal/db/migrations -f apps/user/src/env.ts -n",
-        "migrate:user:create": "ts-node  -r tsconfig-paths/register ./node_modules/typeorm/cli migration:create -d apps/user/src/services/dal/db/migrations -f apps/user/src/env.ts -n",
-        "migrate:user:revert": "ts-node  -r tsconfig-paths/register apps/user/src/env.ts",
-        "migrate:chat:generate": "ts-node  -r tsconfig-paths/register ./node_modules/typeorm/cli migration:generate -d apps/chat/src/services/dal/db/migrations -f apps/chat/src/env.ts -n",
-        "migrate:chat:create": "ts-node  -r tsconfig-paths/register ./node_modules/typeorm/cli migration:create -d apps/chat/src/services/dal/db/migrations -f apps/chat/src/env.ts -n",
-        "migrate:chat:revert": "ts-node  -r tsconfig-paths/register apps/chat/src/env.ts"
+        "test:e2e": "jest --config ./apps/account/test/jest-e2e.json"
     },
     "dependencies": {
         "@grpc/proto-loader": "^0.5.3",
         "@nestjs/common": "^6.10.2",
         "@nestjs/core": "^6.10.2",
         "@nestjs/microservices": "^6.10.2",
-        "@nestjs/typeorm": "^6.2.0",
         "class-transformer": "^0.2.3",
         "class-validator": "^0.10.0",
         "db-migrate": "^0.11.6",
@@ -45,8 +38,7 @@
         "pg": "^7.14.0",
         "reflect-metadata": "^0.1.13",
         "rimraf": "^3.0.0",
-        "rxjs": "^6.5.3",
-        "typeorm": "^0.2.20"
+        "rxjs": "^6.5.3"
     },
     "devDependencies": {
         "@nestjs/cli": "^6.9.0",
