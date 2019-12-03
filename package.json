@@ -5,7 +5,7 @@
     "author": "@AlexDaSoul",
     "license": "MIT",
     "scripts": {
-        "build:grpc:lib": "node devtools/build-grpc.js"
+        "build:grpc": "node devtools/build-grpc.js"
     },
     "dependencies": {
         "app-root-path": "^2.2.1",
