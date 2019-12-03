@@ -12,8 +12,7 @@ Exapmle of [Nestjs](https://nestjs.com/) microservices with [gRPC](https://grpc.
 * Install [grpcurl](https://github.com/fullstorydev/grpcurl)
 * Install [docker](https://docs.docker.com/install/) and [docker-compose](https://docs.docker.com/compose/install/)
 * `npm install` in project root directory /
-* `npm install` in /backend
-* `npm install` in /frontend
+* `lerna bootstrap` for install packages
 
 ### Usage
 

@@ -28,6 +28,8 @@ speed-measure-plugin.json
 .settings/
 *.sublime-workspace
 grpc-proto/.build/*
+packages/backend/libs/grpc-proto/*
+packages/frontend/src/app/grpc/proto/*
 
 # IDE - VSCode
 .vscode/*

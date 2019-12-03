@@ -8,8 +8,8 @@ const root = require('app-root-path');
 const helpers = require('./helpers');
 
 const grpcDir = root.resolve('grpc-proto/.build');
-const grpcBackDir = root.resolve('backend/libs/grpc-proto');
-const grpcFrontDir = root.resolve('frontend/src/app/grpc/proto');
+const grpcBackDir = root.resolve('packages/backend/libs/grpc-proto');
+const grpcFrontDir = root.resolve('packages/frontend/src/app/grpc/proto');
 
 const IGNORE_PACKAGES = [
     // ...
