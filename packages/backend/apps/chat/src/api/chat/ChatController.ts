@@ -4,8 +4,10 @@ import { Observable } from 'rxjs';
 
 import { JwtGuard } from '@lib/jwt/JwtGuard';
 import { RpcExceptionFilter } from '@lib/exceptions';
+import { Identity } from '@lib/utils/identity';
 
-import { Message, Stub } from '@grpc-proto/chat/chat.types_pb';
+import { api as chatApiTypes } from '@grpc-proto/chat/chat.types';
+import { api as chatApi } from '@grpc-proto/chat/chat';
 
 import { ChatService } from './ChatService';
 
@@ -18,7 +20,7 @@ export class ChatController {
     @UseGuards(JwtGuard)
     @GrpcMethod('ChatService', 'GetChat')
     @UseFilters(RpcExceptionFilter.for('ChatService::getChat'))
-    public getChat(data: Stub.AsObject): Observable<{ messages: Message.AsObject[] }> {
+    public getChat(data: Identity<chatApiTypes.chat.Stub>): Observable<chatApi.chat.ChatList> {
         return this.chatService.getChatStream();
     }
 }

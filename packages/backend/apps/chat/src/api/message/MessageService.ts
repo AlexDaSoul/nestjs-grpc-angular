@@ -3,26 +3,21 @@ import { Client, ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import { mapTo, switchMap, tap } from 'rxjs/operators';
 
-import { SendMessageReq, EditMessageReq } from '@grpc-proto/chat/message_pb';
-import { UserReq } from '@grpc-proto/user/user_pb';
-import { User } from '@grpc-proto/user/user.types_pb';
-
 import { grpcUser } from '@lib/utils/GrpcConfigs';
+
+import { api as chatApi } from '@grpc-proto/chat/message';
+import { api as userApi } from '@grpc-proto/user/user';
 
 import { MessageDataProducer } from '@chat/services/dal/data-producers/MessageDataProducer';
 import { MessageDataRemover } from '@chat/services/dal/data-removers/MessageDataRemover';
 import { MessageDataUpdater } from '@chat/services/dal/data-updaters/MessageDataUpdater';
 import { ChatEventService } from '@chat/services/ChatEventService';
 
-interface IUserService {
-    getUser(data: UserReq.AsObject): Observable<User.AsObject>;
-}
-
 @Injectable()
 export class MessageService implements OnModuleInit {
 
     @Client(grpcUser) private readonly grpcUserClient: ClientGrpc;
-    private grpcUserService: IUserService;
+    private grpcUserService: userApi.user.UserService;
 
     constructor(
         private readonly messageDataProducer: MessageDataProducer,
@@ -33,10 +28,10 @@ export class MessageService implements OnModuleInit {
     }
 
     onModuleInit() {
-        this.grpcUserService = this.grpcUserClient.getService<IUserService>('UserService');
+        this.grpcUserService = this.grpcUserClient.getService<userApi.user.UserService>('UserService');
     }
 
-    public sendMessage(data: SendMessageReq.AsObject, userId: string): Observable<void> {
+    public sendMessage(data: chatApi.chat.SendMessageReq, userId: string): Observable<void> {
         return this.grpcUserService.getUser({id: userId})
             .pipe(
                 switchMap(user => this.messageDataProducer.sendMessage({
@@ -52,7 +47,7 @@ export class MessageService implements OnModuleInit {
             );
     }
 
-    public editMessage(data: EditMessageReq.AsObject): Observable<void> {
+    public editMessage(data: chatApi.chat.EditMessageReq): Observable<void> {
         return this.messageDataUpdater.updateMessage(data)
             .pipe(mapTo(null));
     }

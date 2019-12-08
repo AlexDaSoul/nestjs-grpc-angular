@@ -5,7 +5,9 @@
     "author": "@AlexDaSoul",
     "license": "MIT",
     "scripts": {
-        "build:grpc": "node devtools/build-grpc.js"
+        "build:grpc": "npm run build:grpc:back && npm run build:grpc:front",
+        "build:grpc:back": "node devtools/build-grpc-back.js",
+        "build:grpc:front": "node devtools/build-grpc-front.js"
     },
     "dependencies": {
         "app-root-path": "^2.2.1",
@@ -15,6 +17,7 @@
         "rimraf": "^2.6.3"
     },
     "devDependencies": {
-        "lerna": "^3.19.0"
+        "lerna": "^3.19.0",
+        "protobufjs": "^6.8.8"
     }
 }

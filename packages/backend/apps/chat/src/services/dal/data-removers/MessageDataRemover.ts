@@ -3,7 +3,7 @@ import { Client } from 'pg';
 import { from, Observable } from 'rxjs';
 import { switchMap, mapTo } from 'rxjs/operators';
 
-import { Message } from '@grpc-proto/chat/chat.types_pb';
+import { api } from '@grpc-proto/chat/chat.types';
 import { MessageDataFinder } from '@chat/services/dal/data-finders/MessageDataFinder';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class MessageDataRemover {
         const query = `delete from api_message where id = $1`;
 
         return this.messageDataFinder.getMessageOne(id).pipe(
-            switchMap(() => from(this.db.query<Message.AsObject>(query, [id]))),
+            switchMap(() => from(this.db.query<api.chat.Message>(query, [id]))),
             mapTo(null),
         );
     }

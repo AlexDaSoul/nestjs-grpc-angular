@@ -1,8 +1,8 @@
 import { IsEmail, IsDefined, IsString, MaxLength } from 'class-validator';
 
-import { VerifyUserReq } from '@grpc-proto/user/user_pb';
+import { api } from '@grpc-proto/user/user';
 
-export class VerifyUserReqDTO implements VerifyUserReq.AsObject {
+export class VerifyUserReqDTO implements api.user.VerifyUserReq {
     @IsDefined()
     @IsEmail()
     @MaxLength(50)

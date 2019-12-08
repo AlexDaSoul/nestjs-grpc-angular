@@ -3,9 +3,9 @@ import { Client } from 'pg';
 import { from, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
+import { api as chatApi } from '@grpc-proto/chat/message';
+import { api as chatTypes } from '@grpc-proto/chat/chat.types';
 import { MessageDataFinder } from '@chat/services/dal/data-finders/MessageDataFinder';
-import { Message } from '@grpc-proto/chat/chat.types_pb';
-import { EditMessageReq } from '@grpc-proto/chat/message_pb';
 
 @Injectable()
 export class MessageDataUpdater {
@@ -16,11 +16,11 @@ export class MessageDataUpdater {
     ) {
     }
 
-    public updateMessage(data: EditMessageReq.AsObject): Observable<Message.AsObject> {
+    public updateMessage(data: chatApi.chat.EditMessageReq): Observable<chatTypes.chat.Message> {
         const query = `update api_message set message = $1 where id = $2`;
 
         return from(this.messageDataFinder.getMessageOne(data.id)).pipe(
-            switchMap(() => from(this.db.query<Message.AsObject>(query, [data.message, data.id]))),
+            switchMap(() => from(this.db.query<chatTypes.chat.Message>(query, [data.message, data.id]))),
             map(res => res.rows[0]),
         );
     }

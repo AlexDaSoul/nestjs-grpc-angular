@@ -3,4 +3,5 @@ syntax = "proto3";
 package api.user;
 
 import public "user.types.proto";
+import public "user.enum.proto";
 import public "user.proto";

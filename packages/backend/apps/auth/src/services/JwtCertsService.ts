@@ -3,7 +3,7 @@ import { sign, verify, SignOptions } from 'jsonwebtoken';
 
 import { AUTH_CREDENTIALS_INVALID, UnauthenticatedException } from '@lib/exceptions';
 
-import { User } from '@grpc-proto/user/user.types_pb';
+import { api } from '@grpc-proto/user/user.types';
 
 import { JWT_EXPIRE } from '@auth/env';
 
@@ -16,7 +16,7 @@ const env = process.env;
 
 @Injectable()
 export class JwtCertsService {
-    public addToken(user: User.AsObject, expiresIn: number = +JWT_EXPIRE): string {
+    public addToken(user: api.user.User, expiresIn: number = +JWT_EXPIRE): string {
         if (!user) {
             throw new UnauthenticatedException(AUTH_CREDENTIALS_INVALID);
         }

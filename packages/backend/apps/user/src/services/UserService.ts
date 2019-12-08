@@ -3,8 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map, mapTo } from 'rxjs/operators';
 
-import { User } from '@grpc-proto/user/user.types_pb';
-import { CreateUserReq, UpdateUserReq, VerifyUserReq } from '@grpc-proto/user/user_pb';
+import { api as userTypes } from '@grpc-proto/user/user.types';
+import { api as userApi } from '@grpc-proto/user/user';
 
 import { UserDataFinder } from './dal/data-finders/UserDataFinder';
 import { UserDataProducer } from './dal/data-producers/UserDataProducer';
@@ -22,11 +22,11 @@ export class UserService {
     ) {
     }
 
-    public createUser(data: CreateUserReq.AsObject): Observable<void> {
+    public createUser(data: userApi.user.CreateUserReq): Observable<void> {
         return this.userDataProducer.createUser(data);
     }
 
-    public updateUser(data: UpdateUserReq.AsObject, id: string): Observable<void> {
+    public updateUser(data: userApi.user.UpdateUserReq, id: string): Observable<void> {
         return this.userDataUpdater.updateUser(data, id)
             .pipe(mapTo(null));
     }
@@ -36,17 +36,17 @@ export class UserService {
             .pipe(mapTo(null));
     }
 
-    public getUser(id: string): Observable<User.AsObject> {
+    public getUser(id: string): Observable<userTypes.user.User> {
         return this.userDataFinder.getUserOne(id);
     }
 
-    public getUsersAll(): Observable<{ users: User.AsObject[] }> {
+    public getUsersAll(): Observable<{ users: userTypes.user.User[] }> {
         return this.userDataFinder.getUsersAll().pipe(
             map(users => ({users})),
         );
     }
 
-    public verifyUser(data: VerifyUserReq.AsObject): Observable<User.AsObject> {
+    public verifyUser(data: userApi.user.VerifyUserReq): Observable<userTypes.user.User> {
         return this.userDataFinder.getUserByConditions({...data});
     }
 }

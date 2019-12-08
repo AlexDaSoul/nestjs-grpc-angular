@@ -7,7 +7,8 @@ import { JwtGuard } from '@lib/jwt/JwtGuard';
 import { IJwtMeta } from '@lib/jwt/JwtInterface';
 import { RpcExceptionFilter } from '@lib/exceptions';
 
-import { EStatus, ChatRes } from '@grpc-proto/chat/chat.types_pb';
+import { api as chatEnum } from '@grpc-proto/chat/chat.enum';
+import { api as chatApi } from '@grpc-proto/chat/chat';
 
 import { MessageService } from './MessageService';
 
@@ -24,11 +25,11 @@ export class MessageController {
     @UseGuards(JwtGuard)
     @GrpcMethod('MessageService', 'SendMessage')
     @UseFilters(RpcExceptionFilter.for('MessageService::sendMessage'))
-    public sendMessage(data: AddMessageReqDTO, meta: IJwtMeta<{ id: string; }>): Observable<ChatRes.AsObject> {
+    public sendMessage(data: AddMessageReqDTO, meta: IJwtMeta<{ id: string; }>): Observable<chatApi.chat.ChatRes> {
         return this.messageService.sendMessage(data, meta.payload.id).pipe(
             map(res => {
                 return {
-                    status: EStatus.SUCCESS,
+                    status: chatEnum.chat.EStatus.SUCCESS,
                     message: `Message created successfully`,
                 };
             }),
@@ -38,11 +39,11 @@ export class MessageController {
     @UseGuards(JwtGuard)
     @GrpcMethod('MessageService', 'EditMessage')
     @UseFilters(RpcExceptionFilter.for('MessageService::editMessage'))
-    public editMessage(data: EditMessageReqDTO): Observable<ChatRes.AsObject> {
+    public editMessage(data: EditMessageReqDTO): Observable<chatApi.chat.ChatRes> {
         return this.messageService.editMessage(data).pipe(
             map(() => {
                 return {
-                    status: EStatus.SUCCESS,
+                    status: chatEnum.chat.EStatus.SUCCESS,
                     message: `Messages update successfully`,
                 };
             }),
@@ -52,11 +53,11 @@ export class MessageController {
     @UseGuards(JwtGuard)
     @GrpcMethod('MessageService', 'DeleteMessage')
     @UseFilters(RpcExceptionFilter.for('MessageService::deleteMessage'))
-    public deleteMessage(data: DeleteMessageReqDTO): Observable<ChatRes.AsObject> {
+    public deleteMessage(data: DeleteMessageReqDTO): Observable<chatApi.chat.ChatRes> {
         return this.messageService.deleteMessage(data.id).pipe(
             map(() => {
                 return {
-                    status: EStatus.SUCCESS,
+                    status: chatEnum.chat.EStatus.SUCCESS,
                     message: `Message delete successfully`,
                 };
             }),

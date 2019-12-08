@@ -1,8 +1,8 @@
 import { IsUUID, IsDefined, IsString, MaxLength } from 'class-validator';
 
-import { EditMessageReq } from '@grpc-proto/chat/message_pb';
+import { api } from '@grpc-proto/chat/message';
 
-export class EditMessageReqDTO implements EditMessageReq.AsObject {
+export class EditMessageReqDTO implements api.chat.EditMessageReq {
     @IsDefined()
     @IsUUID()
     public id: string;

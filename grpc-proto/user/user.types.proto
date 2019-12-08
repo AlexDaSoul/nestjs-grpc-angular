@@ -2,12 +2,6 @@ syntax = "proto3";
 
 package api.user;
 
-enum EStatus {
-    UNKNOWN = 0;
-    SUCCESS = 1;
-    ERROR = 2;
-}
-
 message User {
     string id = 1;
     string name = 2;

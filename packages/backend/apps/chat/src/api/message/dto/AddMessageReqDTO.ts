@@ -1,8 +1,8 @@
 import { IsDefined, IsString, MaxLength } from 'class-validator';
 
-import { SendMessageReq } from '@grpc-proto/chat/message_pb';
+import { api } from '@grpc-proto/chat/message';
 
-export class AddMessageReqDTO implements SendMessageReq.AsObject {
+export class AddMessageReqDTO implements api.chat.SendMessageReq {
     @IsDefined()
     @IsString()
     @MaxLength(500)

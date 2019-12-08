@@ -7,8 +7,7 @@ const rimraf = require('rimraf');
 const root = require('app-root-path');
 const helpers = require('./helpers');
 
-const grpcDir = root.resolve('grpc-proto/.build');
-const grpcBackDir = root.resolve('packages/backend/libs/grpc-proto');
+const grpcDir = root.resolve('grpc-proto/.tmp');
 const grpcFrontDir = root.resolve('packages/frontend/src/app/grpc/proto');
 
 const IGNORE_PACKAGES = [
@@ -19,7 +18,6 @@ const IGNORE_PROTO_FILES = ['**/index.proto'];
 
 // copy grpc-proto
 rimraf.sync(grpcDir);
-rimraf.sync(grpcBackDir);
 rimraf.sync(grpcFrontDir);
 
 // **** build grpc-web
@@ -42,13 +40,7 @@ helpers.getPackages(IGNORE_PACKAGES, root.resolve('grpc-proto')).forEach(package
     }
 });
 
-fs.copySync(root.resolve('grpc-proto'), grpcBackDir);
-fs.copySync(root.resolve('grpc-proto/.build'), grpcFrontDir);
-
-// copy typings and remove js and web typings
-fs.copySync(`${grpcBackDir}/.build`, grpcBackDir);
-rimraf.sync(`${grpcBackDir}/.build`);
-// rimraf.sync(`${grpcBackDir}/**/*.js`);
-rimraf.sync(`${grpcBackDir}/**/*_grpc_web_*`);
+fs.copySync(root.resolve('grpc-proto/.tmp'), grpcFrontDir);
+rimraf.sync(grpcDir);
 
 process.exit(0);

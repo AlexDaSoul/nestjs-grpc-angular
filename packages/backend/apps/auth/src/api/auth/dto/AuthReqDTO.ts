@@ -1,8 +1,8 @@
 import { IsEmail, IsDefined, IsString, MaxLength } from 'class-validator';
 
-import { AuthReq } from '@grpc-proto/auth/auth_pb';
+import { api } from '@grpc-proto/auth/auth';
 
-export class AuthReqDTO implements AuthReq.AsObject {
+export class AuthReqDTO implements api.auth.AuthReq {
     @IsDefined()
     @IsEmail()
     @MaxLength(50)

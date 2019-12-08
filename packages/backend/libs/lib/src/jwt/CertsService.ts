@@ -1,16 +1,12 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Client, ClientGrpc } from '@nestjs/microservices';
-import { Observable, timer, throwError } from 'rxjs';
+import { timer, throwError } from 'rxjs';
 import { retryWhen, tap, mergeMap } from 'rxjs/operators';
-
-import { GetCertStreamRes } from '@grpc-proto/auth/auth_pb';
 
 import { Logger } from '@lib/logger';
 import { grpcAuth } from '@lib/utils/GrpcConfigs';
 
-interface IAuthService {
-    getCertStream(): Observable<GetCertStreamRes.AsObject>;
-}
+import { api } from '@grpc-proto/auth/auth';
 
 const RETRY = 10;
 
@@ -19,12 +15,12 @@ export class CertsService implements OnModuleInit {
     private readonly logger = new Logger('CertsService');
 
     @Client(grpcAuth) private readonly grpcAuthClient: ClientGrpc;
-    private grpcAuthService: IAuthService;
+    private grpcAuthService: api.auth.AuthService;
 
     public onModuleInit(): void {
-        this.grpcAuthService = this.grpcAuthClient.getService<IAuthService>('AuthService');
+        this.grpcAuthService = this.grpcAuthClient.getService<api.auth.AuthService>('AuthService');
 
-        this.grpcAuthService.getCertStream()
+        this.grpcAuthService.getCertStream({})
             .pipe(
                 retryWhen(errors =>
                     errors.pipe(

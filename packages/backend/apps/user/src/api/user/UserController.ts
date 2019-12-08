@@ -6,9 +6,11 @@ import { map } from 'rxjs/operators';
 import { JwtGuard } from '@lib/jwt/JwtGuard';
 import { IJwtMeta } from '@lib/jwt/JwtInterface';
 import { RpcExceptionFilter } from '@lib/exceptions';
+import { Identity } from '@lib/utils/identity';
 
-import { User, EStatus, Stub } from '@grpc-proto/user/user.types_pb';
-import { UserRes } from '@grpc-proto/user/user_pb';
+import { api as userTypes } from '@grpc-proto/user/user.types';
+import { api as userEnum } from '@grpc-proto/user/user.enum';
+import { api as userApi } from '@grpc-proto/user/user';
 
 import { UserService } from '@user/services/UserService';
 
@@ -25,11 +27,11 @@ export class UserController {
 
     @GrpcMethod('UserService', 'CreateUser')
     @UseFilters(RpcExceptionFilter.for('UserController::createUser'))
-    public createUser(data: CreateUserReqDTO): Observable<UserRes.AsObject> {
+    public createUser(data: CreateUserReqDTO): Observable<userApi.user.UserRes> {
         return this.userService.createUser(data).pipe(
             map(() => {
                 return {
-                    status: EStatus.SUCCESS,
+                    status: userEnum.user.EStatus.SUCCESS,
                     message: `User created successfully`,
                 };
             }),
@@ -39,11 +41,11 @@ export class UserController {
     @UseGuards(JwtGuard)
     @GrpcMethod('UserService', 'UpdateUser')
     @UseFilters(RpcExceptionFilter.for('UserController::updateUser'))
-    public updateUser(data: UpdateUserReqDTO, meta: IJwtMeta<{ id: string; }>): Observable<UserRes.AsObject> {
+    public updateUser(data: UpdateUserReqDTO, meta: IJwtMeta<{ id: string; }>): Observable<userApi.user.UserRes> {
         return this.userService.updateUser(data, meta.payload.id).pipe(
             map(() => {
                 return {
-                    status: EStatus.SUCCESS,
+                    status: userEnum.user.EStatus.SUCCESS,
                     message: `User update successfully: ID: ${meta.payload.id}`,
                 };
             }),
@@ -53,11 +55,11 @@ export class UserController {
     @UseGuards(JwtGuard)
     @GrpcMethod('UserService', 'DeleteUser')
     @UseFilters(RpcExceptionFilter.for('UserController::deleteUser'))
-    public deleteUser(data: UserReqDTO): Observable<UserRes.AsObject> {
+    public deleteUser(data: UserReqDTO): Observable<userApi.user.UserRes> {
         return this.userService.deleteUser(data.id).pipe(
             map(() => {
                 return {
-                    status: EStatus.SUCCESS,
+                    status: userEnum.user.EStatus.SUCCESS,
                     message: `User delete successfully: ID: ${data.id}`,
                 };
             }),
@@ -66,19 +68,19 @@ export class UserController {
 
     @GrpcMethod('UserService', 'VerifyUser')
     @UseFilters(RpcExceptionFilter.for('UserController::verifyUser'))
-    public verifyUser(data: VerifyUserReqDTO): Observable<User.AsObject> {
+    public verifyUser(data: VerifyUserReqDTO): Observable<userTypes.user.User> {
         return this.userService.verifyUser(data);
     }
 
     @GrpcMethod('UserService', 'GetUser')
     @UseFilters(RpcExceptionFilter.for('UserController::getUser'))
-    public getUser(data: UserReqDTO): Observable<User.AsObject> {
+    public getUser(data: UserReqDTO): Observable<userTypes.user.User> {
         return this.userService.getUser(data.id);
     }
 
     @GrpcMethod('UserService', 'GetUsersAll')
     @UseFilters(RpcExceptionFilter.for('UserController::getUsersAll'))
-    public getUsersAll(data: Stub.AsObject): Observable<{ users: User.AsObject[] }> {
+    public getUsersAll(data: Identity<userTypes.user.Stub>): Observable<userApi.user.UsersRes> {
         return this.userService.getUsersAll();
     }
 }

@@ -17,3 +17,10 @@ exports.getProtosList = (ignore, root) => {
     return files.map(file => path.basename(file)).join(' ');
 };
 
+exports.getProtosListPath = (ignore, root) => {
+    return glob.sync('/*.proto', {
+        root,
+        ignore
+    });
+};
+

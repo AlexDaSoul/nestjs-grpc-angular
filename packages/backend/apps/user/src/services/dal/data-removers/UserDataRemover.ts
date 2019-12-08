@@ -3,7 +3,7 @@ import { Client } from 'pg';
 import { from, Observable } from 'rxjs';
 import { switchMap, mapTo } from 'rxjs/operators';
 
-import { User } from '@grpc-proto/user/user.types_pb';
+import { api } from '@grpc-proto/user/user.types';
 
 import { UserDataFinder } from '@user/services/dal/data-finders/UserDataFinder';
 
@@ -20,7 +20,7 @@ export class UserDataRemover {
         const query = `delete from api_user where id = $1`;
 
         return this.userDataFinder.getUserOne(id).pipe(
-            switchMap(() => from(this.db.query<User.AsObject>(query, [id]))),
+            switchMap(() => from(this.db.query<api.user.User>(query, [id]))),
             mapTo(null),
         );
     }

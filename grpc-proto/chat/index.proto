@@ -3,5 +3,6 @@ syntax = "proto3";
 package api.chat;
 
 import public "chat.types.proto";
+import public "chat.enum.proto";
 import public "chat.proto";
 import public "message.proto";

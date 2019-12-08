@@ -3,6 +3,7 @@ syntax = "proto3";
 package api.user;
 
 import "user.types.proto";
+import "user.enum.proto";
 
 service UserService {
     rpc CreateUser (CreateUserReq) returns (UserRes) {

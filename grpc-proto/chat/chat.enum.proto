@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package api.chat;
+
+enum EStatus {
+    UNKNOWN = 0;
+    SUCCESS = 1;
+    ERROR = 2;
+}

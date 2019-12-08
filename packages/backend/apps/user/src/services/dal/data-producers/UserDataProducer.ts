@@ -6,8 +6,8 @@ import { map, switchMap, mapTo } from 'rxjs/operators';
 
 import { AlreadyExistsException, EMAIL_ALREADY_EXISTS } from '@lib/exceptions/impl';
 
-import { CreateUserReq, VerifyUserReq } from '@grpc-proto/user/user_pb';
-import { Message } from '@grpc-proto/chat/chat.types_pb';
+import { api as userApi } from '@grpc-proto/user/user';
+import { api as chatTypes } from '@grpc-proto/chat/chat.types';
 
 import { UserDataFinder } from '@user/services/dal/data-finders/UserDataFinder';
 
@@ -22,20 +22,20 @@ export class UserDataProducer {
     ) {
     }
 
-    public createUser(data: CreateUserReq.AsObject): Observable<void> {
+    public createUser(data: userApi.user.CreateUserReq): Observable<void> {
         data.password = createHmac('sha512', SALT).update(data.password).digest('hex');
 
         const query = `insert into api_user (email, name, avatar, password) values ($1, $2, $3, $4)`;
 
         return this.checkEmailExistence(data.email).pipe(
-            switchMap(() => from(this.db.query<Message.AsObject>(query,
+            switchMap(() => from(this.db.query<chatTypes.chat.Message>(query,
                 [data.email, data.name, data.avatar, data.password]))),
             mapTo(null),
         );
     }
 
     private checkEmailExistence(email: string): Observable<void> {
-        return from(this.userDataFinder.getUserByConditions({ email } as VerifyUserReq.AsObject)).pipe(
+        return from(this.userDataFinder.getUserByConditions({ email } as userApi.user.VerifyUserReq)).pipe(
             map(user => {
                 if (user) {
                     throw new AlreadyExistsException(EMAIL_ALREADY_EXISTS);
