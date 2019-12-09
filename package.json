@@ -5,9 +5,14 @@
     "author": "@AlexDaSoul",
     "license": "MIT",
     "scripts": {
+        "postinstall": "lerna bootstrap && npm run build:grpc",
         "build:grpc": "npm run build:grpc:back && npm run build:grpc:front",
         "build:grpc:back": "node devtools/build-grpc-back.js",
-        "build:grpc:front": "node devtools/build-grpc-front.js"
+        "build:grpc:front": "node devtools/build-grpc-front.js",
+        "clean:all": "npm run clean:proto:back && npm run clean:proto:front && npm run clean:nm",
+        "clean:proto:back": "rimraf packages/backend/libs/grpc-proto",
+        "clean:proto:front": "rimraf packages/frontend/src/app/grpc/proto",
+        "clean:nm": "rimraf **/node_modules/**"
     },
     "dependencies": {
         "app-root-path": "^2.2.1",

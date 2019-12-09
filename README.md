@@ -11,14 +11,13 @@ Exapmle of [Nestjs](https://nestjs.com/) microservices with [gRPC](https://grpc.
 * Install [db-migrate](https://github.com/db-migrate/node-db-migrate)
 * Install [grpcurl](https://github.com/fullstorydev/grpcurl)
 * Install [docker](https://docs.docker.com/install/) and [docker-compose](https://docs.docker.com/compose/install/)
-* `npm install` in project root directory /
-* `lerna bootstrap` for install packages
+* `npm install` in project root directory
 
 ### Usage
 
 Backend:
-* `npm run build:grpc` for build grpc boilerplate
-* `cd backend && npm run docker:dev:up` for start backend with docker
+* `npm run docker:dev:[up|down|restart]` for backend with docker and all microservices. Debug in `docker logs -f
+ [auth|chat|user]`
 * `docker logs [auth|chat|user]` or use plugins for docker in your IDE
 * `nest start [--debug --watch] [auth|chat|user]` for start without docker
 * `nest build [auth|chat|user]` for build dist
@@ -28,3 +27,8 @@ Backend:
 Frontend:
 * `cd frontend && npm run start`
 * `npm run build --prod`
+
+If need regenerate grpc use:
+* `npm run build:grpc:back` for backend
+* `npm run build:grpc:front` for frontend
+* `npm run build:grpc` for all
