@@ -1,6 +1,6 @@
 import { Controller, UseFilters, OnModuleInit, UseGuards } from '@nestjs/common';
 import { Client, ClientGrpc, GrpcMethod } from '@nestjs/microservices';
-import { from, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators';
 import { Metadata } from 'grpc';
 
@@ -42,9 +42,14 @@ export class AuthController implements OnModuleInit {
     @GrpcMethod('AuthService', 'Auth')
     @UseFilters(RpcExceptionFilter.for('AuthController::auth'))
     public auth(data: AuthReqDTO): Observable<authApi.auth.AuthRes> {
-        return this.grpcUserService.verifyUser(data).pipe(
+        /* for example metadata */
+        const meta = new Metadata();
+        meta.add('X-Grpc-From', 'auth');
+        /* for example metadata */
+
+        return this.grpcUserService.verifyUser(data, meta).pipe(
             map(user => this.jwtService.addToken(user)),
-            map(token => ({token})),
+            map(token => ({ token })),
         );
     }
 
@@ -64,6 +69,6 @@ export class AuthController implements OnModuleInit {
     @UseFilters(RpcExceptionFilter.for('AuthController::getCertStream'))
     public getCertStream(data: Identity<authTypes.auth.Stub>): Observable<authApi.auth.GetCertStreamRes> {
         return this.certSubscribeService.getCert()
-            .pipe(map(key => ({key})));
+            .pipe(map(key => ({ key })));
     }
 }

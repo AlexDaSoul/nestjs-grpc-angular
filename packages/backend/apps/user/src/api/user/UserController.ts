@@ -7,6 +7,7 @@ import { JwtGuard } from '@lib/jwt/JwtGuard';
 import { IJwtMeta } from '@lib/jwt/JwtInterface';
 import { RpcExceptionFilter } from '@lib/exceptions';
 import { Identity } from '@lib/utils/identity';
+import { Logger } from '@lib/logger';
 
 import { api as userTypes } from '@grpc-proto/user/user.types';
 import { api as userEnum } from '@grpc-proto/user/user.enum';
@@ -18,9 +19,12 @@ import { CreateUserReqDTO } from './dto/CreateUserReqDTO';
 import { VerifyUserReqDTO } from './dto/VerifyUserReqDTO';
 import { UserReqDTO } from './dto/UserReqDTO';
 import { UpdateUserReqDTO } from './dto/UpdateUserReqDTO';
+import { Metadata } from 'grpc';
 
 @Controller()
 export class UserController {
+
+    private readonly logger = new Logger('UserController');
 
     constructor(private readonly userService: UserService) {
     }
@@ -68,7 +72,11 @@ export class UserController {
 
     @GrpcMethod('UserService', 'VerifyUser')
     @UseFilters(RpcExceptionFilter.for('UserController::verifyUser'))
-    public verifyUser(data: VerifyUserReqDTO): Observable<userTypes.user.User> {
+    public verifyUser(data: VerifyUserReqDTO, meta: Metadata): Observable<userTypes.user.User> {
+        /* for example metadata */
+        this.logger.info(meta);
+        /* for example metadata */
+
         return this.userService.verifyUser(data);
     }
 
