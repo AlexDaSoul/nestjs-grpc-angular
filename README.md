@@ -6,7 +6,7 @@ Exapmle of [Nestjs](https://nestjs.com/) microservices with [gRPC](https://grpc.
 
 ### installation
 
-* Install [protoc](https://github.com/protocolbuffers/protobuf) on your OS
+* Install [protoc](https://github.com/protocolbuffers/protobuf) and [protoc-gen-grpc-web](https://github.com/grpc/grpc-web/releases) for your OS
 * Install [nest cli](https://docs.nestjs.com/cli/overview)
 * Install [db-migrate](https://github.com/db-migrate/node-db-migrate)
 * Install [grpcurl](https://github.com/fullstorydev/grpcurl)
