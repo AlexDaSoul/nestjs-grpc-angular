@@ -11,9 +11,10 @@
 # dependencies
 /node_modules
 node_modules
-backend/apps/packages/**/lib
-backend/**/*proto
-frontend/**/*proto
+packages/backend/**/*proto
+packages/frontend/**/*proto
+grpc-proto/.tmp/*
+packages/backend/dist/*
 
 # profiling files
 chrome-profiler-events.json
@@ -27,9 +28,6 @@ speed-measure-plugin.json
 *.launch
 .settings/
 *.sublime-workspace
-grpc-proto/.build/*
-packages/backend/libs/grpc-proto/*
-packages/frontend/src/app/grpc/proto/*
 
 # IDE - VSCode
 .vscode/*
