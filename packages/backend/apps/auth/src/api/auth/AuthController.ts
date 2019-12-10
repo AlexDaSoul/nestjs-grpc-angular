@@ -42,7 +42,7 @@ export class AuthController implements OnModuleInit {
     @GrpcMethod('AuthService', 'Auth')
     @UseFilters(RpcExceptionFilter.for('AuthController::auth'))
     public auth(data: AuthReqDTO): Observable<authApi.auth.AuthRes> {
-        return from(this.grpcUserService.verifyUser(data)).pipe(
+        return this.grpcUserService.verifyUser(data).pipe(
             map(user => this.jwtService.addToken(user)),
             map(token => ({token})),
         );
