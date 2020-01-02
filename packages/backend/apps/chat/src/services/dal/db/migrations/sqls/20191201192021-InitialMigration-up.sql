@@ -10,5 +10,5 @@ create table if not exists api_message (
         PRIMARY KEY (id)
 );
 
-create index if not exists IDX_AUTOR_ID
+create index if not exists IDX_AUTHOR_ID
     on api_message using GIN ((author -> 'id'));

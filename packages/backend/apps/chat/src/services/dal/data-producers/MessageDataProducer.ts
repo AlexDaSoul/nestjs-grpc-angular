@@ -17,10 +17,10 @@ export class MessageDataProducer {
     }
 
     public sendMessage(data: IInsertMessage): Observable<api.chat.Message> {
-        const autor = JSON.stringify(data.author);
+        const author = JSON.stringify(data.author);
         const query = `insert into api_message (author, message) values ($1, $2) returning *`;
 
-        return from(this.db.query<api.chat.Message>(query, [autor, data.message]))
+        return from(this.db.query<api.chat.Message>(query, [author, data.message]))
             .pipe(map(res => res.rows[0]));
     }
 }
