@@ -1,5 +1,7 @@
 # NestJs gRPC Angular
 
+https://medium.com/ngx/nestjs-angular-grpc-f8eca5404fc7
+
 Exapmle of [Nestjs](https://nestjs.com/) microservices with [gRPC](https://grpc.io/) and [Angular](https://angular.io/) SPA. Chat with JWT
  (JWS) authorization
  and message stream.
