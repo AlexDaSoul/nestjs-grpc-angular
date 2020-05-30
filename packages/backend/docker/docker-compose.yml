@@ -68,7 +68,7 @@ services:
 
   #### envoy-api
   envoy-api-dev:
-    image: envoyproxy/envoy:latest
+    image: envoyproxy/envoy-alpine:v1.12.3
     container_name: envoy-api-dev
     working_dir: /home/envoy
     command: /usr/local/bin/envoy -c /home/envoy/envoy.json
