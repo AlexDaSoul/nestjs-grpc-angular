@@ -29,7 +29,7 @@
         "@nestjs/core": "^6.10.2",
         "@nestjs/microservices": "^6.10.2",
         "class-transformer": "^0.2.3",
-        "class-validator": "^0.10.0",
+        "class-validator": "^0.14.0",
         "db-migrate": "^0.11.6",
         "db-migrate-pg": "^1.0.0",
         "grpc": "^1.24.2",
